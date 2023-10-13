@@ -1,5 +1,6 @@
 package grupo8.restapi.app.controllers;
 
+import grupo8.restapi.app.model.dto.AdminDTO;
 import grupo8.restapi.app.model.entity.usuarios.Admin;
 import grupo8.restapi.app.service.intefaces.IAdminService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -16,8 +18,14 @@ public class AdminController {
     private IAdminService adminService;
 
     @GetMapping("/admins")
-    public List<Admin> getAll() {
-        return adminService.getAll();
+    public List<AdminDTO> getAll() {
+        List<AdminDTO> adminDTOList = new ArrayList<>();
+
+        for (Admin i : adminService.getAll()) {
+            adminDTOList.add(parseDTO(i));
+        }
+
+        return adminDTOList;
     }
 
     @GetMapping("/admin/{id}")
@@ -29,25 +37,27 @@ public class AdminController {
             return new ResponseEntity<>(mensaje, null, 404);
         }
 
-        return new ResponseEntity<>(admin, null, HttpStatus.OK);
+        AdminDTO retorno = parseDTO(admin);
+
+        return new ResponseEntity<>(retorno, null, HttpStatus.OK);
     }
 
-//    @GetMapping("/admin/adminParam")
-//    public ResponseEntity<?> getAdminPararm(@RequestParam("adminId") long adminId){
-//        Admin admin = adminService.getById(adminId);
-//
-//        if(admin == null) {
-//            String mensaje = "El admin con id " + adminId + " no existe";
-//            return new ResponseEntity<>(mensaje, null, 404);
-//        }
-//
-//        return new ResponseEntity<>(admin, null, HttpStatus.OK);
-//    }
+    @GetMapping("/adminParam")
+    public ResponseEntity<?> getAdminPararm(@RequestParam(name = "id") long adminId){
+        Admin admin = adminService.getById(adminId);
+
+        if(admin == null) {
+            String mensaje = "El admin con id " + adminId + " no existe";
+            return new ResponseEntity<>(mensaje, null, 404);
+        }
+
+        return new ResponseEntity<>(parseDTO(admin), null, HttpStatus.OK);
+    }
 
     @PostMapping("/admin")
     public ResponseEntity<?> addAdmin(@RequestBody Admin admin) {
         adminService.save(admin);
-        return new ResponseEntity<>(admin, null, HttpStatus.CREATED);
+        return new ResponseEntity<>(parseDTO(admin), null, HttpStatus.CREATED);
     }
 
     @PutMapping("/admin/{id}")
@@ -61,7 +71,7 @@ public class AdminController {
 
         adminService.update(id, admin);
 
-        return new ResponseEntity<>(admin, null, HttpStatus.OK);
+        return new ResponseEntity<>(parseDTO(admin), null, HttpStatus.OK);
     }
 
     @DeleteMapping("/admin/{adminId}")
@@ -79,4 +89,19 @@ public class AdminController {
         return new ResponseEntity<>(mensaje, null, HttpStatus.OK);
     }
 
+    // -- CONVERTIR A DTO -> ENTITY y ENTITY -> DTO -- //
+    private AdminDTO parseDTO(Admin admin){
+        return new AdminDTO(admin.getNombre(), admin.getNombreUs(), admin.getTelefono(), admin.getEmail(), admin.getDirecion());
+    }
+
+    private Admin parseToEntity(AdminDTO adminDTO){
+        Admin admin = new Admin();
+        admin.setNombre(adminDTO.getNombre());
+        admin.setNombreUs(adminDTO.getNombreUs());
+        admin.setTelefono(adminDTO.getTelefono());
+        admin.setEmail(adminDTO.getEmail());
+        admin.setDirecion(adminDTO.getDirecion());
+
+        return admin;
+    }
 }

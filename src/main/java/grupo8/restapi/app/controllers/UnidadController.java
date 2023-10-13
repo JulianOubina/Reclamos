@@ -31,6 +31,18 @@ public class UnidadController {
         return new ResponseEntity<>(unidad, null, 200);
     }
 
+    @GetMapping("/unidadParam")
+    public ResponseEntity<?> getUnidadPararm(@RequestParam("unidadId") long unidadId){
+        Unidad unidad = unidadService.getById(unidadId);
+
+        if (unidad == null){
+            String mensaje = "La unidad con id " + unidadId + " no existe";
+            return new ResponseEntity<>(mensaje, null, 404);
+        }
+
+        return new ResponseEntity<>(unidad, null, 200);
+    }
+
     @PostMapping("/unidad")
     public ResponseEntity<?> addUnidad(@RequestBody Unidad unidad) {
         unidadService.save(unidad);

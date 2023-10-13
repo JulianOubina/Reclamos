@@ -33,17 +33,17 @@ public class ReclamoGeneralController { // TODO NO FUNCIONA ERROR java.sql.SQLSy
         return new ResponseEntity<>(reclamoGeneral, null, HttpStatus.OK);
     }
 
-//    @GetMapping("/reclamoGeneral/reclamoGeneralParam")
-//    public ResponseEntity<?> getReclamoGeneralPararm(@RequestParam("reclamoGeneralId") long reclamoGeneralId) {
-//        ReclamoGeneral reclamoGeneral = reclamoGeneralService.getById(reclamoGeneralId);
-//
-//        if (reclamoGeneral == null) {
-//            String mensaje = "El reclamoGeneral con id " + reclamoGeneralId + " no existe";
-//            return new ResponseEntity<>(mensaje, null, 404);
-//        }
-//
-//        return new ResponseEntity<>(reclamoGeneral, null, HttpStatus.OK);
-//    }
+    @GetMapping("/reclamoGeneralParam")
+    public ResponseEntity<?> getReclamoGeneralPararm(@RequestParam("reclamoGeneralId") long reclamoGeneralId) {
+        ReclamoGeneral reclamoGeneral = reclamoGeneralService.getById(reclamoGeneralId);
+
+        if (reclamoGeneral == null) {
+            String mensaje = "El reclamoGeneral con id " + reclamoGeneralId + " no existe";
+            return new ResponseEntity<>(mensaje, null, 404);
+        }
+
+        return new ResponseEntity<>(reclamoGeneral, null, HttpStatus.OK);
+    }
 
     @PostMapping("/reclamoGeneral")
     public ResponseEntity<?> addReclamoGeneral(@RequestBody ReclamoGeneral reclamoGeneral) {

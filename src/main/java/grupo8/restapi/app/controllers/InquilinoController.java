@@ -33,17 +33,17 @@ public class InquilinoController {
         return new ResponseEntity<>(inquilino, null, HttpStatus.OK);
     }
 
-//    @GetMapping("/inquilino/inquilinoParam")
-//    public ResponseEntity<?> getInquilinoPararm(@RequestParam("inquilinoId") long inquilinoId) {
-//        Inquilino inquilino = inquilinoService.getById(inquilinoId);
-//
-//        if (inquilino == null) {
-//            String mensaje = "El inquilino con id " + inquilinoId + " no existe";
-//            return new ResponseEntity<>(mensaje, null, 404);
-//        }
-//
-//        return new ResponseEntity<>(inquilino, null, HttpStatus.OK);
-//    }
+    @GetMapping("/inquilinoParam")
+    public ResponseEntity<?> getInquilinoPararm(@RequestParam("inquilinoId") long inquilinoId) {
+        Inquilino inquilino = inquilinoService.getById(inquilinoId);
+
+        if (inquilino == null) {
+            String mensaje = "El inquilino con id " + inquilinoId + " no existe";
+            return new ResponseEntity<>(mensaje, null, 404);
+        }
+
+        return new ResponseEntity<>(inquilino, null, HttpStatus.OK);
+    }
 
     @PostMapping("/inquilino")
     public ResponseEntity<?> addInquilino(@RequestBody Inquilino inquilino) {

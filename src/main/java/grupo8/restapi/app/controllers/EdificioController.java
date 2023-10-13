@@ -33,17 +33,17 @@ public class EdificioController {
         return new ResponseEntity<>(edificio, null, HttpStatus.OK);
     }
 
-//    @GetMapping("/edificio/edificioParam")
-//    public ResponseEntity<?> getAdminParam(@RequestParam("edificioId") long edificioId){
-//        Edificio edificio = edificioService.getById(edificioId);
-//
-//        if(edificio == null) {
-//            String mensaje = "El edificio con id " + edificioId + " no existe";
-//            return new ResponseEntity<>(mensaje, null, 404);
-//        }
-//
-//        return new ResponseEntity<>(edificio, null, HttpStatus.OK);
-//    }
+    @GetMapping("/edificioParam")
+    public ResponseEntity<?> getAdminParam(@RequestParam("edificioId") long edificioId){
+        Edificio edificio = edificioService.getById(edificioId);
+
+        if(edificio == null) {
+            String mensaje = "El edificio con id " + edificioId + " no existe";
+            return new ResponseEntity<>(mensaje, null, 404);
+        }
+
+        return new ResponseEntity<>(edificio, null, HttpStatus.OK);
+    }
 
     @PostMapping("/edificio")
     public ResponseEntity<?> addEdificio(@RequestBody Edificio edificio) {

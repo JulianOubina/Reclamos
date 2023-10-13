@@ -4,7 +4,7 @@ import grupo8.restapi.app.model.entity.unidad.Unidad;
 
 import java.util.List;
 
-public class DueñoDTO {
+public class DuenoDTO {
     private String nombre;
     private String nombreUs;
     private int telefono;
@@ -12,10 +12,10 @@ public class DueñoDTO {
     private String direcion;
     private List<Unidad> unidades;
 
-    public DueñoDTO() {
+    public DuenoDTO() {
     }
 
-    public DueñoDTO(String nombre, String nombreUs, int telefono, String email, String direcion, List<Unidad> unidades) {
+    public DuenoDTO(String nombre, String nombreUs, int telefono, String email, String direcion, List<Unidad> unidades) {
         this.nombre = nombre;
         this.nombreUs = nombreUs;
         this.telefono = telefono;

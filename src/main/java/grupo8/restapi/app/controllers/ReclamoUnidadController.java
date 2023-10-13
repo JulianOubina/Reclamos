@@ -33,17 +33,17 @@ public class ReclamoUnidadController {
         return ResponseEntity.ok(reclamoUnidad);
     }
 
-//    @GetMapping("/reclamoUnidad/reclamoUnidadParam")
-//    public ResponseEntity<?> getReclamoUnidadPararm(@PathVariable long reclamoUnidadId){
-//        ReclamoUnidad reclamoUnidad = reclamoUnidadService.getById(reclamoUnidadId);
-//
-//        if(reclamoUnidad == null) {
-//            String mensaje = "El reclamoUnidad con id " + reclamoUnidadId + " no existe";
-//            return ResponseEntity.notFound().build();
-//        }
-//
-//        return ResponseEntity.ok(reclamoUnidad);
-//    }
+    @GetMapping("/reclamoUnidadParam")
+    public ResponseEntity<?> getReclamoUnidadPararm(@PathVariable long reclamoUnidadId){
+        ReclamoUnidad reclamoUnidad = reclamoUnidadService.getById(reclamoUnidadId);
+
+        if(reclamoUnidad == null) {
+            String mensaje = "El reclamoUnidad con id " + reclamoUnidadId + " no existe";
+            return ResponseEntity.notFound().build();
+        }
+
+        return ResponseEntity.ok(reclamoUnidad);
+    }
 
     @PostMapping("/reclamoUnidad")
     public ResponseEntity<?> addReclamoUnidad(@RequestBody ReclamoUnidad reclamoUnidad) {
