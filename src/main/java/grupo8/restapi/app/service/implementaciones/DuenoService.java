@@ -5,6 +5,7 @@ import grupo8.restapi.app.model.entity.usuarios.Dueno;
 
 import grupo8.restapi.app.service.intefaces.IDuenoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -26,6 +27,8 @@ public class DuenoService implements IDuenoService {
 
     @Override
     public void save(Dueno dueno) {
+        dueno.setContraseña(new BCryptPasswordEncoder().encode(dueno.getContraseña()));
+
         duenoDAO.save(dueno);
     }
 
@@ -36,7 +39,6 @@ public class DuenoService implements IDuenoService {
         if(duenoExiste != null){
             duenoExiste.setNombre(dueno.getNombre());
             duenoExiste.setNombreUs(dueno.getNombreUs());
-            duenoExiste.setContraseña(dueno.getContraseña());
             duenoExiste.setTelefono(dueno.getTelefono());
             duenoExiste.setEmail(dueno.getEmail());
             duenoExiste.setDirecion(dueno.getDirecion());

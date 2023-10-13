@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -17,8 +18,14 @@ public class DuenoController {
     private IDuenoService duenoService;
 
     @GetMapping("/duenos")
-    public List<Dueno> getAll() {
-        return duenoService.findAll();
+    public List<DuenoDTO> getAll() {
+        List<DuenoDTO> dtoList = new ArrayList<>();
+
+        for (Dueno i : duenoService.findAll()) {
+            dtoList.add(parseDTOs(i));
+        }
+
+        return dtoList;
     }
 
     @GetMapping("/dueno/{id}")
@@ -30,7 +37,9 @@ public class DuenoController {
             return new ResponseEntity<>(mensaje, null, 404);
         }
 
-        return new ResponseEntity<>(dueno, null, HttpStatus.OK);
+        DuenoDTO duenoDTO = parseDTOs(dueno);
+
+        return new ResponseEntity<>(duenoDTO, null, HttpStatus.OK);
     }
 
     @GetMapping("/dueno/duenoParam")
@@ -42,17 +51,19 @@ public class DuenoController {
             return new ResponseEntity<>(mensaje, null, 404);
         }
 
-        return new ResponseEntity<>(dueno, null, HttpStatus.OK);
+        DuenoDTO duenoDTO = parseDTOs(dueno);
+
+        return new ResponseEntity<>(duenoDTO, null, HttpStatus.OK);
     }
 
     @PostMapping("/dueno")
     public ResponseEntity<?> addDueno(@RequestBody Dueno dueno) {
         duenoService.save(dueno);
-        return new ResponseEntity<>(dueno, null, HttpStatus.CREATED);
+        return new ResponseEntity<>(parseDTOs(dueno), null, HttpStatus.CREATED);
     }
 
     @PutMapping("/dueno/{id}")
-    public ResponseEntity<?> updateDueno(@PathVariable long id, @RequestBody Dueno dueno){
+    public ResponseEntity<?> updateDueno(@PathVariable long id, @RequestBody DuenoDTO dto){
         Dueno duenoViejo = duenoService.findById(id);
 
         if(duenoViejo == null) {
@@ -60,9 +71,11 @@ public class DuenoController {
             return new ResponseEntity<>(mensaje, null, 404);
         }
 
+        Dueno dueno = parseEntity(dto);
+
         duenoService.update(id, dueno);
 
-        return new ResponseEntity<>(dueno, null, HttpStatus.OK);
+        return new ResponseEntity<>(dto, null, HttpStatus.OK);
     }
 
     @DeleteMapping("/dueno/{id}")
