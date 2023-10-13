@@ -6,9 +6,11 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.Query;
 import org.hibernate.Session;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.SQLOutput;
 import java.util.List;
 
 @Repository
@@ -56,8 +58,9 @@ public class UsuarioDAO implements IUsuarioDAO {
     public Usuario findUser(String nombreUs, String contraseña) {
         Session session = entityManager.unwrap(Session.class);
 
-        Query q = session.createQuery("FROM Usuario WHERE nombreUs = :nombreUs", Usuario.class);
+        Query q = session.createQuery("FROM Usuario WHERE nombreUs=:nombreUs", Usuario.class);
         q.setParameter("nombreUs", nombreUs);
+
         Usuario retorno = (Usuario) q.getSingleResult();
 
         if(retorno != null && checkPassword(contraseña, retorno.getContraseña())) {
@@ -68,7 +71,14 @@ public class UsuarioDAO implements IUsuarioDAO {
         }
     }
 
-    private boolean checkPassword(String contraseña, String contraseña1) {
-        return contraseña.equals(contraseña1);
+    private boolean checkPassword(String contraseña, String contraseñaBD) {
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        String hashedPassword = passwordEncoder.encode(contraseña);
+//        System.out.println("Password: " + hashedPassword);
+//        System.out.println("passwordDB: " + contraseñaBD);
+        boolean isPasswordMatch = passwordEncoder.matches(contraseña, contraseñaBD);
+//        System.out.println(isPasswordMatch);
+
+        return isPasswordMatch;
     }
 }

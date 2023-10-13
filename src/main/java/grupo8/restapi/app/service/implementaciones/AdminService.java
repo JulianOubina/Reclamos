@@ -4,6 +4,7 @@ import grupo8.restapi.app.model.dao.implementacion.AdminDAO;
 import grupo8.restapi.app.model.entity.usuarios.Admin;
 import grupo8.restapi.app.service.intefaces.IAdminService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -25,6 +26,8 @@ public class AdminService implements IAdminService {
 
     @Override
     public void save(Admin admin) {
+        admin.setContraseña(new BCryptPasswordEncoder().encode(admin.getContraseña()));
+
         adminDAO.save(admin);
     }
 
@@ -35,7 +38,6 @@ public class AdminService implements IAdminService {
         if(adminExiste != null) {
             adminExiste.setNombre(admin.getNombre());
             adminExiste.setNombreUs(admin.getNombreUs());
-            adminExiste.setContraseña(admin.getContraseña());
             adminExiste.setTelefono(admin.getTelefono());
             adminExiste.setEmail(admin.getEmail());
             adminExiste.setDirecion(admin.getDirecion());

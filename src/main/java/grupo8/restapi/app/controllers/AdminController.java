@@ -61,7 +61,7 @@ public class AdminController {
     }
 
     @PutMapping("/admin/{id}")
-    public ResponseEntity<?> updateAdmin(@PathVariable long id, @RequestBody Admin admin){
+    public ResponseEntity<?> updateAdmin(@PathVariable long id, @RequestBody AdminDTO dto){
         Admin adminViejo = adminService.getById(id);
 
         if(adminViejo == null) {
@@ -69,9 +69,11 @@ public class AdminController {
             return new ResponseEntity<>(mensaje, null, 404);
         }
 
+        Admin admin = parseToEntity(dto);
+
         adminService.update(id, admin);
 
-        return new ResponseEntity<>(parseDTO(admin), null, HttpStatus.OK);
+        return new ResponseEntity<>(dto, null, HttpStatus.OK);
     }
 
     @DeleteMapping("/admin/{adminId}")
@@ -96,6 +98,7 @@ public class AdminController {
 
     private Admin parseToEntity(AdminDTO adminDTO){
         Admin admin = new Admin();
+
         admin.setNombre(adminDTO.getNombre());
         admin.setNombreUs(adminDTO.getNombreUs());
         admin.setTelefono(adminDTO.getTelefono());
