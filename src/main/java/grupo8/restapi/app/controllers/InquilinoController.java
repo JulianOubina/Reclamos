@@ -1,5 +1,8 @@
 package grupo8.restapi.app.controllers;
 
+import grupo8.restapi.app.model.dto.AdminDTO;
+import grupo8.restapi.app.model.dto.InquilinoDTO;
+import grupo8.restapi.app.model.entity.usuarios.Admin;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -8,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import grupo8.restapi.app.service.intefaces.IInquilinoService;
 import grupo8.restapi.app.model.entity.usuarios.Inquilino;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -17,8 +21,14 @@ public class InquilinoController {
     private IInquilinoService inquilinoService;
 
     @GetMapping("/inquilinos")
-    public List<Inquilino> getAll() {
-        return inquilinoService.getAll();
+    public List<InquilinoDTO> getAll() {
+        List<InquilinoDTO> inquilinoDTOList = new ArrayList<>();
+
+        for (Inquilino i : inquilinoService.getAll()){
+            inquilinoDTOList.add(parseDTO(i));
+        }
+
+        return inquilinoDTOList;
     }
 
     @GetMapping("/inquilino/{id}")
@@ -30,7 +40,7 @@ public class InquilinoController {
             return new ResponseEntity<>(mensaje, null, 404);
         }
 
-        return new ResponseEntity<>(inquilino, null, HttpStatus.OK);
+        return new ResponseEntity<>(parseDTO(inquilino), null, HttpStatus.OK);
     }
 
     @GetMapping("/inquilinoParam")
@@ -42,17 +52,17 @@ public class InquilinoController {
             return new ResponseEntity<>(mensaje, null, 404);
         }
 
-        return new ResponseEntity<>(inquilino, null, HttpStatus.OK);
+        return new ResponseEntity<>(parseDTO(inquilino), null, HttpStatus.OK);
     }
 
     @PostMapping("/inquilino")
     public ResponseEntity<?> addInquilino(@RequestBody Inquilino inquilino) {
         inquilinoService.save(inquilino);
-        return new ResponseEntity<>(inquilino, null, HttpStatus.CREATED);
+        return new ResponseEntity<>(parseDTO(inquilino), null, HttpStatus.CREATED);
     }
 
     @PutMapping("/inquilino/{id}")
-    public ResponseEntity<?> updateInquilino(@PathVariable long id, @RequestBody Inquilino inquilino) {
+    public ResponseEntity<?> updateInquilino(@PathVariable long id, @RequestBody InquilinoDTO inquilinoDTO) {
         Inquilino inquilinoViejo = inquilinoService.getById(id);
 
         if (inquilinoViejo == null) {
@@ -60,9 +70,11 @@ public class InquilinoController {
             return new ResponseEntity<>(mensaje, null, 404);
         }
 
+        Inquilino inquilino = parseToEntity(inquilinoDTO);
+
         inquilinoService.update(id, inquilino);
 
-        return new ResponseEntity<>(inquilino, null, HttpStatus.CREATED);
+        return new ResponseEntity<>(inquilinoDTO, null, HttpStatus.CREATED);
     }
 
     @DeleteMapping("/inquilino/{id}")
@@ -79,5 +91,23 @@ public class InquilinoController {
         String mensaje = "El inquilino con id " + id + " fue eliminado";
 
         return new ResponseEntity<>(mensaje, null, HttpStatus.OK);
+    }
+
+    // PASAR ENTITY -> DTO o DTO -> ENTITY //
+    private InquilinoDTO parseDTO(Inquilino inquilino){
+        return new InquilinoDTO(inquilino.getNombre(), inquilino.getNombreUs(), inquilino.getTelefono(), inquilino.getEmail(), inquilino.getDirecion(), inquilino.getUnidad());
+    }
+
+    private Inquilino parseToEntity(InquilinoDTO inquilinoDTO){
+        Inquilino inquilino = new Inquilino();
+
+        inquilino.setNombre(inquilinoDTO.getNombre());
+        inquilino.setNombreUs(inquilinoDTO.getNombreUs());
+        inquilino.setTelefono(inquilinoDTO.getTelefono());
+        inquilino.setEmail(inquilinoDTO.getEmail());
+        inquilino.setDirecion(inquilinoDTO.getDirecion());
+        inquilino.setUnidad(inquilinoDTO.getUnidad());
+
+        return inquilino;
     }
 }

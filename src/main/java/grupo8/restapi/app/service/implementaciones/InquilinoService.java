@@ -3,6 +3,7 @@ package grupo8.restapi.app.service.implementaciones;
 import grupo8.restapi.app.model.entity.usuarios.Inquilino;
 import grupo8.restapi.app.service.intefaces.IInquilinoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import grupo8.restapi.app.model.dao.implementacion.InquilinoDAO;
@@ -27,6 +28,8 @@ public class InquilinoService implements IInquilinoService {
 
     @Override
     public void save(Inquilino inquilino) {
+        inquilino.setContraseña(new BCryptPasswordEncoder().encode(inquilino.getContraseña()));
+
         inquilinoDAO.save(inquilino);
     }
 
@@ -37,7 +40,6 @@ public class InquilinoService implements IInquilinoService {
         if(inquilinoExiste != null){
             inquilinoExiste.setNombre(inquilino.getNombre());
             inquilinoExiste.setNombreUs(inquilino.getNombreUs());
-            inquilinoExiste.setContraseña(inquilino.getContraseña());
             inquilinoExiste.setTelefono(inquilino.getTelefono());
             inquilinoExiste.setEmail(inquilino.getEmail());
             inquilinoExiste.setDirecion(inquilino.getDirecion());
