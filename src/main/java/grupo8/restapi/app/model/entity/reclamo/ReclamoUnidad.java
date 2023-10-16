@@ -1,11 +1,14 @@
 package grupo8.restapi.app.model.entity.reclamo;
 
 import grupo8.restapi.app.model.entity.reclamo.estado.EstadoReclamo;
+import grupo8.restapi.app.model.entity.reclamo.imagen.ImagenReclamo;
 import grupo8.restapi.app.model.entity.unidad.Unidad;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
+
+import java.util.List;
 
 @Entity
 public class ReclamoUnidad extends Reclamo {
@@ -13,7 +16,7 @@ public class ReclamoUnidad extends Reclamo {
     @JoinColumn(name = "id_unidad")
     private Unidad unidad;
 
-    public ReclamoUnidad(String descripcion, String imagen, EstadoReclamo estado) {
+    public ReclamoUnidad(String descripcion, List<ImagenReclamo> imagen, EstadoReclamo estado) {
         super(descripcion, imagen, estado);
     }
 

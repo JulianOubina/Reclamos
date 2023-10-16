@@ -1,17 +1,20 @@
 package grupo8.restapi.app.model.entity.reclamo;
 
 import grupo8.restapi.app.model.entity.reclamo.estado.EstadoReclamo;
+import grupo8.restapi.app.model.entity.reclamo.imagen.ImagenReclamo;
 import jakarta.persistence.Entity;
+
+import java.util.List;
 
 @Entity
 public class ReclamoGeneral extends Reclamo{
     private String lugar;
 
-    public ReclamoGeneral(String descripcion, String imagen, EstadoReclamo estado) {
+    public ReclamoGeneral(String descripcion, List<ImagenReclamo> imagen, EstadoReclamo estado) {
         super(descripcion, imagen, estado);
     }
 
-    public ReclamoGeneral(String descripcion, String imagen, EstadoReclamo estado, String lugar) {
+    public ReclamoGeneral(String descripcion, List<ImagenReclamo> imagen, EstadoReclamo estado, String lugar) {
         super(descripcion, imagen, estado);
         this.lugar = lugar;
     }

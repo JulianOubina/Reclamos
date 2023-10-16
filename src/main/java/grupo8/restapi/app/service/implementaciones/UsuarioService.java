@@ -35,7 +35,6 @@ public class UsuarioService implements IUsuarioService {
         if(usuarioExiste != null) {
             usuarioExiste.setNombre(usuario.getNombre());
             usuarioExiste.setNombreUs(usuario.getNombreUs());
-            usuarioExiste.setContraseña(usuario.getContraseña());
             usuarioExiste.setTelefono(usuario.getTelefono());
             usuarioExiste.setEmail(usuario.getEmail());
             usuarioExiste.setDirecion(usuario.getDirecion());

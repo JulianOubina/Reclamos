@@ -2,11 +2,13 @@ package grupo8.restapi.app.model.entity.reclamo;
 
 import grupo8.restapi.app.model.entity.reclamo.estado.EstadoReclamo;
 import grupo8.restapi.app.model.entity.edificio.Edificio;
+import grupo8.restapi.app.model.entity.reclamo.imagen.ImagenReclamo;
 import grupo8.restapi.app.model.entity.usuarios.Usuario;
 import org.hibernate.annotations.CreationTimestamp;
 
 import jakarta.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
@@ -21,7 +23,8 @@ public abstract class Reclamo {
     @CreationTimestamp
     protected Date fecha;
     protected String descripcion;
-    protected String imagen;
+    @OneToMany(mappedBy = "reclamo", cascade = CascadeType.ALL)
+    protected List<ImagenReclamo> imagen;
     @OneToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "id_edificio")
     protected Edificio Edificio;
@@ -31,7 +34,7 @@ public abstract class Reclamo {
     @Embedded
     protected EstadoReclamo estado;
 
-    public Reclamo(String descripcion, String imagen, EstadoReclamo estado) {
+    public Reclamo(String descripcion, List<ImagenReclamo> imagen, EstadoReclamo estado) {
         this.descripcion = descripcion;
         this.imagen = imagen;
         this.estado = estado;
@@ -64,11 +67,11 @@ public abstract class Reclamo {
         this.descripcion = descripcion;
     }
 
-    public String getImagen() {
+    public List<ImagenReclamo> getImagen() {
         return imagen;
     }
 
-    public void setImagen(String imagen) {
+    public void setImagen(List<ImagenReclamo> imagen) {
         this.imagen = imagen;
     }
 
