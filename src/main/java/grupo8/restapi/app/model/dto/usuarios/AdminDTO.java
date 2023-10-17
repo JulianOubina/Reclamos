@@ -1,4 +1,4 @@
-package grupo8.restapi.app.model.dto;
+package grupo8.restapi.app.model.dto.usuarios;
 
 public class AdminDTO {
     private String nombre;

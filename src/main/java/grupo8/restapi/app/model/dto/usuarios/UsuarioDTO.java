@@ -1,13 +1,13 @@
-package grupo8.restapi.app.model.dto;
+package grupo8.restapi.app.model.dto.usuarios;
 
-public class UserDTO {
+public class UsuarioDTO {
     private String nombreUs;
     private String contraseña;
 
-    public UserDTO() {
+    public UsuarioDTO() {
     }
 
-    public UserDTO(String nombreUs, String contraseña) {
+    public UsuarioDTO(String nombreUs, String contraseña) {
         this.nombreUs = nombreUs;
         this.contraseña = contraseña;
     }

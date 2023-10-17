@@ -1,25 +1,25 @@
-package grupo8.restapi.app.model.dto;
+package grupo8.restapi.app.model.dto.usuarios;
 
+import grupo8.restapi.app.model.dto.unidad.UnidadDTO;
 import grupo8.restapi.app.model.entity.unidad.Unidad;
 
-public class InquilinoDTO {
+import java.util.List;
+
+public class DuenoDTO {
     private String nombre;
     private String nombreUs;
     private int telefono;
     private String email;
     private String direcion;
-    private Unidad unidad;
-
-    public InquilinoDTO() {
+    public DuenoDTO() {
     }
 
-    public InquilinoDTO(String nombre, String nombreUs, int telefono, String email, String direcion, Unidad unidad) {
+    public DuenoDTO(String nombre, String nombreUs, int telefono, String email, String direcion) {
         this.nombre = nombre;
         this.nombreUs = nombreUs;
         this.telefono = telefono;
         this.email = email;
         this.direcion = direcion;
-        this.unidad = unidad;
     }
 
     public String getNombre() {
@@ -42,9 +42,6 @@ public class InquilinoDTO {
         return direcion;
     }
 
-    public Unidad getUnidad() {
-        return unidad;
-    }
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
@@ -64,9 +61,5 @@ public class InquilinoDTO {
 
     public void setDirecion(String direcion) {
         this.direcion = direcion;
-    }
-
-    public void setUnidad(Unidad unidad) {
-        this.unidad = unidad;
     }
 }

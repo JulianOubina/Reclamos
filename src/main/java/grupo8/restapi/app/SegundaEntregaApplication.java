@@ -12,10 +12,8 @@ public class SegundaEntregaApplication {
 
 	/*
 	* TODO:
-	*  	Poder ingresar las unidades al edificio desde api
-	* 	Poder ingresar las unidades al dueno
-	* 	JWT
-	* 		HAY Q FIJARSE QUE AL UNIRSE NO SE CREEN!!!
+	*  	AUTORIZAR POR ROLES
+	* 	CONEXIONES SIN CREATES
 	*
 	* */
 }

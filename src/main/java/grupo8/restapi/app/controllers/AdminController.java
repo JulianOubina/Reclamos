@@ -1,12 +1,14 @@
 package grupo8.restapi.app.controllers;
 
-import grupo8.restapi.app.model.dto.AdminDTO;
+import grupo8.restapi.app.model.dto.usuarios.AdminDTO;
 import grupo8.restapi.app.model.entity.usuarios.Admin;
 import grupo8.restapi.app.service.intefaces.IAdminService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import static grupo8.restapi.app.extra.Parser.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -92,19 +94,19 @@ public class AdminController {
     }
 
     // -- CONVERTIR A DTO -> ENTITY y ENTITY -> DTO -- //
-    private AdminDTO parseDTO(Admin admin){
-        return new AdminDTO(admin.getNombre(), admin.getNombreUs(), admin.getTelefono(), admin.getEmail(), admin.getDirecion());
-    }
-
-    private Admin parseToEntity(AdminDTO adminDTO){
-        Admin admin = new Admin();
-
-        admin.setNombre(adminDTO.getNombre());
-        admin.setNombreUs(adminDTO.getNombreUs());
-        admin.setTelefono(adminDTO.getTelefono());
-        admin.setEmail(adminDTO.getEmail());
-        admin.setDirecion(adminDTO.getDirecion());
-
-        return admin;
-    }
+//    private AdminDTO parseDTO(Admin admin){
+//        return new AdminDTO(admin.getNombre(), admin.getNombreUs(), admin.getTelefono(), admin.getEmail(), admin.getDirecion());
+//    }
+//
+//    private Admin parseToEntity(AdminDTO adminDTO){
+//        Admin admin = new Admin();
+//
+//        admin.setNombre(adminDTO.getNombre());
+//        admin.setNombreUs(adminDTO.getNombreUs());
+//        admin.setTelefono(adminDTO.getTelefono());
+//        admin.setEmail(adminDTO.getEmail());
+//        admin.setDirecion(adminDTO.getDirecion());
+//
+//        return admin;
+//    }
 }
