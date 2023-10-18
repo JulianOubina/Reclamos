@@ -1,11 +1,7 @@
 package grupo8.restapi.app.model.dto.unidad;
 
-import grupo8.restapi.app.model.dto.edificio.EdificioDTO;
-import grupo8.restapi.app.model.dto.usuarios.DuenoDTO;
-
-
 public class UnidadDTO {
-    private DuenoDTO dueno;
+    private Long idDueno;
     private int piso;
     private String departamento;
     private String estado;
@@ -14,36 +10,36 @@ public class UnidadDTO {
     public UnidadDTO() {
     }
 
-    public UnidadDTO(DuenoDTO dueno, int piso, String departamento, String estado, Long edificio) {
-        this.dueno = dueno;
+    public UnidadDTO(Long idDueno, int piso, String departamento, String estado, Long edificio) {
+        this.idDueno = idDueno;
         this.piso = piso;
         this.departamento = departamento;
         this.estado = estado;
         this.idEdificio = edificio;
     }
 
-    public DuenoDTO dueno() {
-        return dueno;
+    public Long getIdDueno() {
+        return idDueno;
     }
 
-    public int piso() {
+    public int getPiso() {
         return piso;
     }
 
-    public String departamento() {
+    public String getDepartamento() {
         return departamento;
     }
 
-    public String estado() {
+    public String getEstado() {
         return estado;
     }
 
-    public Long edificio() {
+    public Long getIdEdificio() {
         return idEdificio;
     }
 
-    public void setDueno(DuenoDTO dueno) {
-        this.dueno = dueno;
+    public void setIdDueno(Long idDueno) {
+        this.idDueno = idDueno;
     }
 
     public void setPiso(int piso) {
@@ -58,14 +54,14 @@ public class UnidadDTO {
         this.estado = estado;
     }
 
-    public void setEdificio(Long edificio) {
-        this.idEdificio = edificio;
+    public void setIdEdificio(Long idEdificio) {
+        this.idEdificio = idEdificio;
     }
 
     @Override
     public String toString() {
         return "UnidadDTO{" +
-                "dueno=" + dueno +
+                "dueno=" + idDueno +
                 ", piso=" + piso +
                 ", departamento='" + departamento + '\'' +
                 ", estado='" + estado + '\'' +

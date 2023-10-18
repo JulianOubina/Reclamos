@@ -12,9 +12,6 @@ import grupo8.restapi.app.model.entity.edificio.Edificio;
 import java.util.ArrayList;
 import java.util.List;
 
-import static grupo8.restapi.app.extra.Parser.parseDTO;
-import static grupo8.restapi.app.extra.Parser.parseToEntity;
-
 @RestController
 @RequestMapping("api")
 public class EdificioController {
@@ -89,5 +86,22 @@ public class EdificioController {
         edificioService.delete(edificio);
 
         return new ResponseEntity<>("Edificio eliminado", null, HttpStatus.OK);
+    }
+
+    // PASER METHODS
+
+    public static EdificioDTO parseDTO(Edificio edificio){
+        return new EdificioDTO(edificio.getDireccion(), edificio.getCiudad(), edificio.getCodigoPostal(), edificio.getPais());
+    }
+
+    public static Edificio parseToEntity(EdificioDTO edificioDTO){
+        Edificio edificio = new Edificio();
+
+        edificio.setDireccion(edificioDTO.getDireccion());
+        edificio.setCiudad(edificioDTO.getCiudad());
+        edificio.setCodigoPostal(edificioDTO.getCodigoPostal());
+        edificio.setPais(edificioDTO.getPais());
+
+        return edificio;
     }
 }

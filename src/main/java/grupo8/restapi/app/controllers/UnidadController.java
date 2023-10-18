@@ -2,6 +2,8 @@ package grupo8.restapi.app.controllers;
 
 import grupo8.restapi.app.model.dto.unidad.UnidadDTO;
 import grupo8.restapi.app.model.entity.unidad.Unidad;
+import grupo8.restapi.app.service.intefaces.IDuenoService;
+import grupo8.restapi.app.service.intefaces.IEdificioService;
 import grupo8.restapi.app.service.intefaces.IUnidadService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -10,14 +12,15 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import static grupo8.restapi.app.extra.Parser.parseDTO;
-import static grupo8.restapi.app.extra.Parser.parseToEntity;
-
 @RestController
 @RequestMapping("api")
 public class UnidadController {
     @Autowired
     private IUnidadService unidadService;
+    @Autowired
+    private IDuenoService duenoService;
+    @Autowired
+    private IEdificioService edificioService;
 
     @GetMapping("/unidades")
     public List<UnidadDTO> getAll() {
@@ -55,9 +58,9 @@ public class UnidadController {
     }
 
     @PostMapping("/unidad")
-    public ResponseEntity<?> addUnidad(@RequestBody Unidad unidad) {
-        unidadService.save(unidad);
-        return new ResponseEntity<>(parseDTO(unidad), null, 201);
+    public ResponseEntity<?> addUnidad(@RequestBody UnidadDTO unidad) {
+        unidadService.save(parseToEntity(unidad));  // TODO SE ROMPE CON NULLS
+        return new ResponseEntity<>(unidad, null, 201);
     }
 
     @PutMapping("/unidad/{id}")
@@ -89,6 +92,33 @@ public class UnidadController {
 
         String mensaje = "La unidad con id " + id + " fue eliminada";
         return new ResponseEntity<>(mensaje, null, 200);
+    }
+
+    //PARSER METHOD
+    public UnidadDTO parseDTO(Unidad unidad){
+        UnidadDTO unidadDTO = new UnidadDTO();
+        if(unidad.getDueño() != null)
+            unidadDTO.setIdDueno(unidad.getDueño().getIdUsuario());
+        unidadDTO.setDepartamento(unidad.getDepartamento());
+        unidadDTO.setPiso(unidad.getPiso());
+        unidadDTO.setEstado(unidad.getEstado());
+        if (unidad.getEdificio() != null)
+            unidadDTO.setIdEdificio(unidad.getEdificio().getIdEdificio());
+        return unidadDTO;
+    }
+
+    public Unidad parseToEntity(UnidadDTO unidadDTO){
+        Unidad unidad = new Unidad();
+
+        if(unidadDTO.getIdDueno() != 0)
+            unidad.setDueño(duenoService.findById(unidadDTO.getIdDueno()));
+        unidad.setPiso(unidadDTO.getPiso());
+        unidad.setDepartamento(unidadDTO.getDepartamento());
+        unidad.setEstado(unidadDTO.getEstado());
+        if (unidadDTO.getIdEdificio() != 0)
+            unidad.setEdificio(edificioService.getById(unidadDTO.getIdEdificio()));
+
+        return unidad;
     }
 
 }

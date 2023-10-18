@@ -1,6 +1,5 @@
 package grupo8.restapi.app.controllers;
 
-import grupo8.restapi.app.extra.Parser;
 import grupo8.restapi.app.model.dto.usuarios.DuenoDTO;
 import grupo8.restapi.app.model.entity.usuarios.Dueno;
 import grupo8.restapi.app.service.intefaces.IDuenoService;
@@ -8,8 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import static grupo8.restapi.app.extra.Parser.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +22,7 @@ public class DuenoController {
         List<DuenoDTO> dtoList = new ArrayList<>();
 
         for (Dueno i : duenoService.findAll()) {
-            dtoList.add(Parser.parseDTO(i));
+            dtoList.add(parseDTO(i));
         }
 
         return dtoList;
@@ -40,7 +37,7 @@ public class DuenoController {
             return new ResponseEntity<>(mensaje, null, 404);
         }
 
-        DuenoDTO duenoDTO = Parser.parseDTO(dueno);
+        DuenoDTO duenoDTO = parseDTO(dueno);
 
         return new ResponseEntity<>(duenoDTO, null, HttpStatus.OK);
     }
@@ -54,7 +51,7 @@ public class DuenoController {
             return new ResponseEntity<>(mensaje, null, 404);
         }
 
-        DuenoDTO duenoDTO = Parser.parseDTO(dueno);
+        DuenoDTO duenoDTO = parseDTO(dueno);
 
         return new ResponseEntity<>(duenoDTO, null, HttpStatus.OK);
     }
@@ -62,7 +59,7 @@ public class DuenoController {
     @PostMapping("/dueno")
     public ResponseEntity<?> addDueno(@RequestBody Dueno dueno) {
         duenoService.save(dueno);
-        return new ResponseEntity<>(Parser.parseDTO(dueno), null, HttpStatus.CREATED);
+        return new ResponseEntity<>(parseDTO(dueno), null, HttpStatus.CREATED);
     }
 
     @PutMapping("/dueno/{id}")
@@ -97,20 +94,19 @@ public class DuenoController {
 
     // CONVERTIN ENTITY -> DTO y DTO -> ENTITY
 
-//    private DuenoDTO parseDTOs(Dueno dueno){
-//        return new DuenoDTO(dueno.getNombre(), dueno.getNombreUs(), dueno.getTelefono(), dueno.getEmail(), dueno.getDirecion(), dueno.getUnidades());
-//    }
-//
-//    private Dueno parseEntity(DuenoDTO duenoDTO){
-//        Dueno retorno = new Dueno();
-//
-//        retorno.setNombre(duenoDTO.getNombre());
-//        retorno.setNombreUs(duenoDTO.getNombreUs());
-//        retorno.setTelefono(duenoDTO.getTelefono());
-//        retorno.setEmail(duenoDTO.getEmail());
-//        retorno.setDirecion(duenoDTO.getDirecion());
-////        retorno.setUnidades(duenoDTO.getUnidades());
-//
-//        return retorno;
-//    }
+    private DuenoDTO parseDTO(Dueno dueno){
+        return new DuenoDTO(dueno.getNombre(), dueno.getNombreUs(), dueno.getTelefono(), dueno.getEmail(), dueno.getDirecion());
+    }
+
+    private Dueno parseEntity(DuenoDTO duenoDTO){
+        Dueno retorno = new Dueno();
+
+        retorno.setNombre(duenoDTO.getNombre());
+        retorno.setNombreUs(duenoDTO.getNombreUs());
+        retorno.setTelefono(duenoDTO.getTelefono());
+        retorno.setEmail(duenoDTO.getEmail());
+        retorno.setDirecion(duenoDTO.getDirecion());
+
+        return retorno;
+    }
 }
