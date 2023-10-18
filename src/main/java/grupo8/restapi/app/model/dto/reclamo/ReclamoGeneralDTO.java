@@ -4,24 +4,23 @@ import grupo8.restapi.app.model.dto.edificio.EdificioDTO;
 import grupo8.restapi.app.model.dto.usuarios.UsuarioDTO;
 
 import java.util.Date;
-import java.util.List;
 
 public class ReclamoGeneralDTO {
     private Date fecha;
     private String descripcion;
-    private EdificioDTO edificio;
-    private UsuarioDTO usuario;
+    private Long idEdificio;
+    private Long idUsuario;
     private EstadoReclamoDTO estadoReclamo;
     private String lugar;
 
     public ReclamoGeneralDTO() {
     }
 
-    public ReclamoGeneralDTO(Date fecha, String descripcion, EdificioDTO edificio, UsuarioDTO usuario, EstadoReclamoDTO estadoReclamo, String lugar) {
+    public ReclamoGeneralDTO(Date fecha, String descripcion, Long idEdificio, Long usuario, EstadoReclamoDTO estadoReclamo, String lugar) {
         this.fecha = fecha;
         this.descripcion = descripcion;
-        this.edificio = edificio;
-        this.usuario = usuario;
+        this.idEdificio = idEdificio;
+        this.idUsuario = usuario;
         this.estadoReclamo = estadoReclamo;
         this.lugar = lugar;
     }
@@ -34,12 +33,12 @@ public class ReclamoGeneralDTO {
         return descripcion;
     }
 
-    public EdificioDTO getEdificio() {
-        return edificio;
+    public Long getIdEdificio() {
+        return idEdificio;
     }
 
-    public UsuarioDTO getUsuario() {
-        return usuario;
+    public Long getIdUsuario() {
+        return idUsuario;
     }
 
     public EstadoReclamoDTO getEstadoReclamo() {
@@ -58,12 +57,12 @@ public class ReclamoGeneralDTO {
         this.descripcion = descripcion;
     }
 
-    public void setEdificio(EdificioDTO edificio) {
-        this.edificio = edificio;
+    public void setIdEdificio(Long idEdificio) {
+        this.idEdificio = idEdificio;
     }
 
-    public void setUsuario(UsuarioDTO usuario) {
-        this.usuario = usuario;
+    public void setIdUsuario(Long idUsuario) {
+        this.idUsuario = idUsuario;
     }
 
     public void setEstadoReclamo(EstadoReclamoDTO estadoReclamo) {
@@ -79,8 +78,8 @@ public class ReclamoGeneralDTO {
         return "ReclamoGeneralDTO{" +
                 "fecha=" + fecha +
                 ", descripcion='" + descripcion + '\'' +
-                ", edificio=" + edificio +
-                ", usuario=" + usuario +
+                ", edificio=" + idEdificio +
+                ", usuario=" + idUsuario +
                 ", estadoReclamo=" + estadoReclamo +
                 ", lugar='" + lugar + '\'' +
                 '}';

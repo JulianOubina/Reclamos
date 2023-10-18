@@ -9,19 +9,19 @@ import java.util.Date;
 public class ReclamoUnidadDTO {
     private Date fecha;
     private String descripcion;
-    private EdificioDTO edificio;
-    private UsuarioDTO usuario;
+    private Long idEdificio;
+    private Long idUsuario;
     private EstadoReclamoDTO estadoReclamo;
     private UnidadDTO unidad;
 
     public ReclamoUnidadDTO() {
     }
 
-    public ReclamoUnidadDTO(Date fecha, String descripcion, EdificioDTO edificio, UsuarioDTO usuario, EstadoReclamoDTO estadoReclamo, UnidadDTO unidad) {
+    public ReclamoUnidadDTO(Date fecha, String descripcion, Long edificio, Long usuario, EstadoReclamoDTO estadoReclamo, UnidadDTO unidad) {
         this.fecha = fecha;
         this.descripcion = descripcion;
-        this.edificio = edificio;
-        this.usuario = usuario;
+        this.idEdificio = edificio;
+        this.idUsuario = usuario;
         this.estadoReclamo = estadoReclamo;
         this.unidad = unidad;
     }
@@ -34,12 +34,12 @@ public class ReclamoUnidadDTO {
         return descripcion;
     }
 
-    public EdificioDTO getEdificio() {
-        return edificio;
+    public Long getIdEdificio() {
+        return idEdificio;
     }
 
-    public UsuarioDTO getUsuario() {
-        return usuario;
+    public Long getIdUsuario() {
+        return idUsuario;
     }
 
     public EstadoReclamoDTO getEstadoReclamo() {
@@ -58,12 +58,12 @@ public class ReclamoUnidadDTO {
         this.descripcion = descripcion;
     }
 
-    public void setEdificio(EdificioDTO edificio) {
-        this.edificio = edificio;
+    public void setIdEdificio(Long idEdificio) {
+        this.idEdificio = idEdificio;
     }
 
-    public void setUsuario(UsuarioDTO usuario) {
-        this.usuario = usuario;
+    public void setIdUsuario(Long idUsuario) {
+        this.idUsuario = idUsuario;
     }
 
     public void setEstadoReclamo(EstadoReclamoDTO estadoReclamo) {
@@ -79,8 +79,8 @@ public class ReclamoUnidadDTO {
         return "ReclamoUnidadDTO{" +
                 "fecha=" + fecha +
                 ", descripcion='" + descripcion + '\'' +
-                ", edificio=" + edificio +
-                ", usuario=" + usuario +
+                ", edificio=" + idEdificio +
+                ", usuario=" + idUsuario +
                 ", estadoReclamo=" + estadoReclamo +
                 ", unidad=" + unidad +
                 '}';

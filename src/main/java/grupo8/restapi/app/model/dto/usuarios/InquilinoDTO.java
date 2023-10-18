@@ -1,7 +1,6 @@
 package grupo8.restapi.app.model.dto.usuarios;
 
 import grupo8.restapi.app.model.dto.unidad.UnidadDTO;
-import grupo8.restapi.app.model.entity.unidad.Unidad;
 
 public class InquilinoDTO {
     private String nombre;
@@ -9,18 +8,18 @@ public class InquilinoDTO {
     private int telefono;
     private String email;
     private String direcion;
-    private UnidadDTO unidad;
+    private Long idUnidad;
 
     public InquilinoDTO() {
     }
 
-    public InquilinoDTO(String nombre, String nombreUs, int telefono, String email, String direcion, UnidadDTO unidad) {
+    public InquilinoDTO(String nombre, String nombreUs, int telefono, String email, String direcion, Long unidad) {
         this.nombre = nombre;
         this.nombreUs = nombreUs;
         this.telefono = telefono;
         this.email = email;
         this.direcion = direcion;
-        this.unidad = unidad;
+        this.idUnidad = unidad;
     }
 
     public String getNombre() {
@@ -43,8 +42,8 @@ public class InquilinoDTO {
         return direcion;
     }
 
-    public UnidadDTO getUnidad() {
-        return unidad;
+    public Long getIdUnidad() {
+        return idUnidad;
     }
 
     public void setNombre(String nombre) {
@@ -67,7 +66,7 @@ public class InquilinoDTO {
         this.direcion = direcion;
     }
 
-    public void setUnidad(UnidadDTO unidad) {
-        this.unidad = unidad;
+    public void setIdUnidad(Long idUnidad) {
+        this.idUnidad = idUnidad;
     }
 }

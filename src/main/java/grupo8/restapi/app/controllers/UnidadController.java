@@ -1,12 +1,17 @@
 package grupo8.restapi.app.controllers;
 
+import grupo8.restapi.app.model.dto.unidad.UnidadDTO;
 import grupo8.restapi.app.model.entity.unidad.Unidad;
 import grupo8.restapi.app.service.intefaces.IUnidadService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import static grupo8.restapi.app.extra.Parser.parseDTO;
+import static grupo8.restapi.app.extra.Parser.parseToEntity;
 
 @RestController
 @RequestMapping("api")
@@ -15,8 +20,14 @@ public class UnidadController {
     private IUnidadService unidadService;
 
     @GetMapping("/unidades")
-    public List<Unidad> getAll() {
-        return unidadService.getAll();
+    public List<UnidadDTO> getAll() {
+        List<UnidadDTO> unidadDTOList = new ArrayList<>();
+
+        for (Unidad i : unidadService.getAll()) {
+            unidadDTOList.add(parseDTO(i));
+        }
+
+        return unidadDTOList;
     }
 
     @GetMapping("/unidad/{id}")
@@ -28,7 +39,7 @@ public class UnidadController {
             return new ResponseEntity<>(mensaje, null, 404);
         }
 
-        return new ResponseEntity<>(unidad, null, 200);
+        return new ResponseEntity<>(parseDTO(unidad), null, 200);
     }
 
     @GetMapping("/unidadParam")
@@ -40,17 +51,17 @@ public class UnidadController {
             return new ResponseEntity<>(mensaje, null, 404);
         }
 
-        return new ResponseEntity<>(unidad, null, 200);
+        return new ResponseEntity<>(parseDTO(unidad), null, 200);
     }
 
     @PostMapping("/unidad")
     public ResponseEntity<?> addUnidad(@RequestBody Unidad unidad) {
         unidadService.save(unidad);
-        return new ResponseEntity<>(unidad, null, 201);
+        return new ResponseEntity<>(parseDTO(unidad), null, 201);
     }
 
     @PutMapping("/unidad/{id}")
-    public ResponseEntity<?> updateUnidad(@PathVariable long id, @RequestBody Unidad unidad){
+    public ResponseEntity<?> updateUnidad(@PathVariable long id, @RequestBody UnidadDTO unidadDTO){
         Unidad unidadViejo = unidadService.getById(id);
 
         if (unidadViejo == null){
@@ -58,9 +69,11 @@ public class UnidadController {
             return new ResponseEntity<>(mensaje, null, 404);
         }
 
+        Unidad unidad = parseToEntity(unidadDTO);
+
         unidadService.update(id, unidad);
 
-        return new ResponseEntity<>(unidad, null, 200);
+        return new ResponseEntity<>(unidadDTO, null, 200);
     }
 
     @DeleteMapping("/unidad/{id}")

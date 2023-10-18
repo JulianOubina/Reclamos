@@ -42,7 +42,7 @@ public class Parser {
         inquilino.setTelefono(inquilinoDTO.getTelefono());
         inquilino.setEmail(inquilinoDTO.getEmail());
         inquilino.setDirecion(inquilinoDTO.getDirecion());
-        inquilino.setUnidad(parseToEntity(inquilinoDTO.getUnidad()));
+        inquilino.setUnidad(parseToEntity(inquilinoDTO.getIdUnidad()));
 
         return inquilino;
     }
@@ -64,7 +64,15 @@ public class Parser {
     }
     // -- UNIDAD --
     public static UnidadDTO parseDTO(Unidad unidad){
-        return new UnidadDTO(parseDTO(unidad.getDueño()), unidad.getPiso(), unidad.getDepartamento(), unidad.getEstado(), parseDTO(unidad.getEdificio()));
+        UnidadDTO unidadDTO = new UnidadDTO();
+        if(unidad.getDueño() != null)
+            unidadDTO.setDueno(parseDTO(unidad.getDueño()));
+        unidadDTO.setDepartamento(unidad.getDepartamento());
+        unidadDTO.setPiso(unidad.getPiso());
+        unidadDTO.setEstado(unidad.getEstado());
+        if (unidad.getEdificio() != null)
+            unidadDTO.setEdificio(parseDTO(unidad.getEdificio()));
+        return unidadDTO;
     }
 
     public static Unidad parseToEntity(UnidadDTO unidadDTO){

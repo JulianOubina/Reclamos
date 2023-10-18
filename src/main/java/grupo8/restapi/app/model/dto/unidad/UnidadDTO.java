@@ -9,17 +9,17 @@ public class UnidadDTO {
     private int piso;
     private String departamento;
     private String estado;
-    private EdificioDTO edificio;
+    private Long idEdificio;
 
     public UnidadDTO() {
     }
 
-    public UnidadDTO(DuenoDTO dueno, int piso, String departamento, String estado, EdificioDTO edificio) {
+    public UnidadDTO(DuenoDTO dueno, int piso, String departamento, String estado, Long edificio) {
         this.dueno = dueno;
         this.piso = piso;
         this.departamento = departamento;
         this.estado = estado;
-        this.edificio = edificio;
+        this.idEdificio = edificio;
     }
 
     public DuenoDTO dueno() {
@@ -38,8 +38,8 @@ public class UnidadDTO {
         return estado;
     }
 
-    public EdificioDTO edificio() {
-        return edificio;
+    public Long edificio() {
+        return idEdificio;
     }
 
     public void setDueno(DuenoDTO dueno) {
@@ -58,7 +58,18 @@ public class UnidadDTO {
         this.estado = estado;
     }
 
-    public void setEdificio(EdificioDTO edificio) {
-        this.edificio = edificio;
+    public void setEdificio(Long edificio) {
+        this.idEdificio = edificio;
+    }
+
+    @Override
+    public String toString() {
+        return "UnidadDTO{" +
+                "dueno=" + dueno +
+                ", piso=" + piso +
+                ", departamento='" + departamento + '\'' +
+                ", estado='" + estado + '\'' +
+                ", edificio=" + idEdificio +
+                '}';
     }
 }
