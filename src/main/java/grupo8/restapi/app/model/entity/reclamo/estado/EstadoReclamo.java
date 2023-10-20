@@ -6,7 +6,7 @@ public class EstadoReclamo {
     private String estado;
     private String mensaje;
 
-    public EstadoReclamo(Estados estado, String mensaje) {
+    public EstadoReclamo(String estado, String mensaje) {
         this.estado = estado.toString();
         this.mensaje = mensaje;
     }
@@ -17,8 +17,8 @@ public class EstadoReclamo {
     public String getEstado() {
         return estado;
     }
-    public void setEstadoR(Estados estado) {
-        this.estado = estado.toString();
+    public void setEstado(String estado) {
+        this.estado = estado;
     }
     public String getMensaje() {
         return mensaje;

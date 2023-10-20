@@ -10,8 +10,9 @@ public class ReclamoGeneralDTO {
     private String descripcion;
     private Long idEdificio;
     private Long idUsuario;
-    private EstadoReclamoDTO estadoReclamo;
     private String lugar;
+    private String estado;
+    private String mensaje;
 
     public ReclamoGeneralDTO() {
     }
@@ -21,7 +22,6 @@ public class ReclamoGeneralDTO {
         this.descripcion = descripcion;
         this.idEdificio = idEdificio;
         this.idUsuario = usuario;
-        this.estadoReclamo = estadoReclamo;
         this.lugar = lugar;
     }
 
@@ -41,12 +41,16 @@ public class ReclamoGeneralDTO {
         return idUsuario;
     }
 
-    public EstadoReclamoDTO getEstadoReclamo() {
-        return estadoReclamo;
-    }
-
     public String getLugar() {
         return lugar;
+    }
+
+    public String getEstado() {
+        return estado;
+    }
+
+    public String getMensaje() {
+        return mensaje;
     }
 
     public void setFecha(Date fecha) {
@@ -65,12 +69,16 @@ public class ReclamoGeneralDTO {
         this.idUsuario = idUsuario;
     }
 
-    public void setEstadoReclamo(EstadoReclamoDTO estadoReclamo) {
-        this.estadoReclamo = estadoReclamo;
-    }
-
     public void setLugar(String lugar) {
         this.lugar = lugar;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
+    }
+
+    public void setMensaje(String mensaje) {
+        this.mensaje = mensaje;
     }
 
     @Override
@@ -80,7 +88,6 @@ public class ReclamoGeneralDTO {
                 ", descripcion='" + descripcion + '\'' +
                 ", edificio=" + idEdificio +
                 ", usuario=" + idUsuario +
-                ", estadoReclamo=" + estadoReclamo +
                 ", lugar='" + lugar + '\'' +
                 '}';
     }

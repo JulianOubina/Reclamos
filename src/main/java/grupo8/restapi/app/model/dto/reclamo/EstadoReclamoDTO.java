@@ -1,6 +1,8 @@
 package grupo8.restapi.app.model.dto.reclamo;
 
-public class EstadoReclamoDTO {
+import java.io.Serializable;
+
+public class EstadoReclamoDTO implements Serializable {
     private String estado;
     private String mensaje;
 

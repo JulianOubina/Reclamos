@@ -110,12 +110,12 @@ public class UnidadController {
     public Unidad parseToEntity(UnidadDTO unidadDTO){
         Unidad unidad = new Unidad();
 
-        if(unidadDTO.getIdDueno() != 0)
+        if(unidadDTO.getIdDueno() != null)
             unidad.setDueño(duenoService.findById(unidadDTO.getIdDueno()));
         unidad.setPiso(unidadDTO.getPiso());
         unidad.setDepartamento(unidadDTO.getDepartamento());
         unidad.setEstado(unidadDTO.getEstado());
-        if (unidadDTO.getIdEdificio() != 0)
+        if (unidadDTO.getIdEdificio() != null)
             unidad.setEdificio(edificioService.getById(unidadDTO.getIdEdificio()));
 
         return unidad;

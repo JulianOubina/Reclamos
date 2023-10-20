@@ -1,6 +1,7 @@
 package grupo8.restapi.app.controllers;
 
 import grupo8.restapi.app.model.entity.reclamo.imagen.ImagenReclamo;
+import grupo8.restapi.app.service.intefaces.IReclamosService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -16,6 +17,8 @@ import java.io.IOException;
 public class ImagenReclamoController {
     @Autowired
     private IImagenReclamoService imagenReclamoService;
+    @Autowired
+    private IReclamosService reclamosService;
 
     @GetMapping("/{id}")
     public ResponseEntity<?> download(@PathVariable Long id){
@@ -30,10 +33,11 @@ public class ImagenReclamoController {
     }
 
     @PostMapping("/subir")
-    public ResponseEntity<String> upload(@RequestParam("archivo") MultipartFile archivo) {
+    public ResponseEntity<String> upload(@RequestParam("archivo") MultipartFile archivo, @RequestParam("id") Long id) {
         try {
             ImagenReclamo imagenReclamo = new ImagenReclamo();
             imagenReclamo.setDatosImagen(archivo.getBytes());
+            imagenReclamo.setReclamo(reclamosService.findById(id));
             imagenReclamoService.save(imagenReclamo);
             return ResponseEntity.ok("Imagen subida exitosamente.");
         } catch (IOException e) {

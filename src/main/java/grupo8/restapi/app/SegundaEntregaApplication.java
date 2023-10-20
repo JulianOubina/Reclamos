@@ -13,7 +13,6 @@ public class SegundaEntregaApplication {
 	/*
 	* TODO:
 	*  	AUTORIZAR POR ROLES
-	* 	CONEXIONES SIN CREATES
 	*
 	* */
 }

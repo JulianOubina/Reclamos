@@ -14,7 +14,9 @@ public class Dueno extends Usuario {
     @OneToMany(mappedBy = "dueño", cascade = CascadeType.PERSIST)
     private List<Unidad> unidades = new ArrayList<Unidad>();
 
-    public Dueno() {    }
+    public Dueno() {
+
+    }
     public Dueno(String nombre, String nombreUs, String contraseña, int telefono, String email, String direcion) {
         super(nombre, nombreUs, contraseña, telefono, email, direcion);
     }

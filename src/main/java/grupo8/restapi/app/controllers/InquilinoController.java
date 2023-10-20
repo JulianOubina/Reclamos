@@ -59,7 +59,7 @@ public class InquilinoController {
     }
 
     @PostMapping("/inquilino")
-    public ResponseEntity<?> addInquilino(@RequestBody Inquilino inquilino) {
+    public ResponseEntity<?> addInquilino(@RequestBody Inquilino inquilino) {   // TODO METODO SE ROMPE
         inquilinoService.save(inquilino);
         return new ResponseEntity<>(parseDTO(inquilino), null, HttpStatus.CREATED);
     }
@@ -98,7 +98,18 @@ public class InquilinoController {
 
     // PASAR ENTITY -> DTO o DTO -> ENTITY //
     private InquilinoDTO parseDTO(Inquilino inquilino){
-        return new InquilinoDTO(inquilino.getNombre(), inquilino.getNombreUs(), inquilino.getTelefono(), inquilino.getEmail(), inquilino.getDirecion(), inquilino.getUnidad().getIdUnidad());
+        InquilinoDTO inquilinoDTO = new InquilinoDTO();
+
+        inquilinoDTO.setNombre(inquilino.getNombre());
+        inquilinoDTO.setNombreUs(inquilino.getNombreUs());
+        inquilinoDTO.setTelefono(inquilino.getTelefono());
+        inquilinoDTO.setEmail(inquilino.getEmail());
+        inquilinoDTO.setDirecion(inquilino.getDirecion());
+
+        if (inquilino.getUnidad() != null)
+            inquilinoDTO.setIdUnidad(inquilino.getUnidad().getIdUnidad());
+
+        return inquilinoDTO;
     }
 
     private Inquilino parseToEntity(InquilinoDTO inquilinoDTO){
@@ -110,7 +121,7 @@ public class InquilinoController {
         inquilino.setEmail(inquilinoDTO.getEmail());
         inquilino.setDirecion(inquilinoDTO.getDirecion());
 
-        if(inquilinoDTO.getIdUnidad() != 0 && inquilinoDTO.getIdUnidad() != null) {
+        if(inquilinoDTO.getIdUnidad() != null) {
             inquilino.setUnidad(unidadService.getById(inquilinoDTO.getIdUnidad()));
         }
 
