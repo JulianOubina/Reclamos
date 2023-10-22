@@ -1,10 +1,5 @@
 package grupo8.restapi.app.model.dto.usuarios;
 
-import grupo8.restapi.app.model.dto.unidad.UnidadDTO;
-import grupo8.restapi.app.model.entity.unidad.Unidad;
-
-import java.util.List;
-
 public class DuenoDTO {
     private String nombre;
     private String nombreUs;

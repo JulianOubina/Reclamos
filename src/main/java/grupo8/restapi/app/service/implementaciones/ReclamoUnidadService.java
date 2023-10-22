@@ -34,6 +34,7 @@ public class ReclamoUnidadService implements IReclamoUnidadService {
         ReclamoUnidad reclamoExiste = reclamoUnidadDAO.getById(id);
 
         if(reclamoExiste != null){
+
             reclamoExiste.setDescripcion(reclamo.getDescripcion());
             reclamoExiste.setEstado(reclamo.getEstado());
             reclamoExiste.setFecha(reclamo.getFecha());

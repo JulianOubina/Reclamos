@@ -3,16 +3,13 @@ package grupo8.restapi.app.model.entity.reclamo;
 import grupo8.restapi.app.model.entity.reclamo.estado.EstadoReclamo;
 import grupo8.restapi.app.model.entity.reclamo.imagen.ImagenReclamo;
 import grupo8.restapi.app.model.entity.unidad.Unidad;
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Entity;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.*;
 
 import java.util.List;
 
 @Entity
 public class ReclamoUnidad extends Reclamo {
-    @OneToOne(cascade = CascadeType.PERSIST)
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "id_unidad")
     private Unidad unidad;
 

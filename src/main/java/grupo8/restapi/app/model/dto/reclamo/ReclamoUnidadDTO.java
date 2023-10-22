@@ -1,8 +1,6 @@
 package grupo8.restapi.app.model.dto.reclamo;
 
-import grupo8.restapi.app.model.dto.edificio.EdificioDTO;
 import grupo8.restapi.app.model.dto.unidad.UnidadDTO;
-import grupo8.restapi.app.model.dto.usuarios.UsuarioDTO;
 
 import java.util.Date;
 
@@ -11,19 +9,21 @@ public class ReclamoUnidadDTO {
     private String descripcion;
     private Long idEdificio;
     private Long idUsuario;
-    private EstadoReclamoDTO estadoReclamo;
-    private UnidadDTO unidad;
+    private Long idUnidad;
+    private String estado;
+    private String mensaje;
 
     public ReclamoUnidadDTO() {
     }
 
-    public ReclamoUnidadDTO(Date fecha, String descripcion, Long edificio, Long usuario, EstadoReclamoDTO estadoReclamo, UnidadDTO unidad) {
+    public ReclamoUnidadDTO(Date fecha, String descripcion, Long idEdificio, Long idUsuario, Long idUnidad, String estado, String mensaje) {
         this.fecha = fecha;
         this.descripcion = descripcion;
-        this.idEdificio = edificio;
-        this.idUsuario = usuario;
-        this.estadoReclamo = estadoReclamo;
-        this.unidad = unidad;
+        this.idEdificio = idEdificio;
+        this.idUsuario = idUsuario;
+        this.idUnidad = idUnidad;
+        this.estado = estado;
+        this.mensaje = mensaje;
     }
 
     public Date getFecha() {
@@ -42,12 +42,16 @@ public class ReclamoUnidadDTO {
         return idUsuario;
     }
 
-    public EstadoReclamoDTO getEstadoReclamo() {
-        return estadoReclamo;
+    public Long getUnidad() {
+        return this.idUnidad;
     }
 
-    public UnidadDTO getUnidad() {
-        return unidad;
+    public String getEstado() {
+        return estado;
+    }
+
+    public String getMensaje() {
+        return mensaje;
     }
 
     public void setFecha(Date fecha) {
@@ -65,13 +69,16 @@ public class ReclamoUnidadDTO {
     public void setIdUsuario(Long idUsuario) {
         this.idUsuario = idUsuario;
     }
-
-    public void setEstadoReclamo(EstadoReclamoDTO estadoReclamo) {
-        this.estadoReclamo = estadoReclamo;
+    public void setUnidad(Long unidad) {
+        this.idUnidad = unidad;
     }
 
-    public void setUnidad(UnidadDTO unidad) {
-        this.unidad = unidad;
+    public void setEstado(String estado) {
+        this.estado = estado;
+    }
+
+    public void setMensaje(String mensaje) {
+        this.mensaje = mensaje;
     }
 
     @Override
@@ -81,8 +88,7 @@ public class ReclamoUnidadDTO {
                 ", descripcion='" + descripcion + '\'' +
                 ", edificio=" + idEdificio +
                 ", usuario=" + idUsuario +
-                ", estadoReclamo=" + estadoReclamo +
-                ", unidad=" + unidad +
+                ", unidad=" + idUnidad +
                 '}';
     }
 }

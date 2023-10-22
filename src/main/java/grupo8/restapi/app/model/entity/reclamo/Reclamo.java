@@ -25,10 +25,10 @@ public class Reclamo {
     protected String descripcion;
     @OneToMany(mappedBy = "reclamo", cascade = CascadeType.ALL)
     protected List<ImagenReclamo> imagen;
-    @OneToOne(cascade = CascadeType.PERSIST)
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "id_edificio")
     protected Edificio Edificio;
-    @OneToOne(cascade = CascadeType.PERSIST)
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "id_usuario")
     protected Usuario usuario;
     @Embedded

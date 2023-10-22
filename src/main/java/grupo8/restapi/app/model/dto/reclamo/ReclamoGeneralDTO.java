@@ -17,7 +17,7 @@ public class ReclamoGeneralDTO {
     public ReclamoGeneralDTO() {
     }
 
-    public ReclamoGeneralDTO(Date fecha, String descripcion, Long idEdificio, Long usuario, EstadoReclamoDTO estadoReclamo, String lugar) {
+    public ReclamoGeneralDTO(Date fecha, String descripcion, Long idEdificio, Long usuario, String lugar) {
         this.fecha = fecha;
         this.descripcion = descripcion;
         this.idEdificio = idEdificio;

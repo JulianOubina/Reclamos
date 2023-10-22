@@ -1,5 +1,6 @@
 package grupo8.restapi.app.model.entity.edificio;
 
+import grupo8.restapi.app.model.entity.reclamo.Reclamo;
 import grupo8.restapi.app.model.entity.unidad.Unidad;
 
 import jakarta.persistence.*;

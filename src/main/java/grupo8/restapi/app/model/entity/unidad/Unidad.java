@@ -35,7 +35,7 @@ public class Unidad {
     public Unidad() {
     }
 
-    public long getIdUnidad() {
+    public Long getIdUnidad() {
         return idUnidad;
     }
 

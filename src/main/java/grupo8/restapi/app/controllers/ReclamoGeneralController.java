@@ -1,6 +1,5 @@
 package grupo8.restapi.app.controllers;
 
-import grupo8.restapi.app.model.dto.reclamo.EstadoReclamoDTO;
 import grupo8.restapi.app.model.dto.reclamo.ReclamoGeneralDTO;
 import grupo8.restapi.app.model.entity.reclamo.estado.EstadoReclamo;
 import grupo8.restapi.app.service.intefaces.IEdificioService;
@@ -139,23 +138,5 @@ public class ReclamoGeneralController {
         reclamoGeneral.setLugar(reclamoGeneralDTO.getLugar());
 
         return reclamoGeneral;
-    }
-    private EstadoReclamoDTO parseDTO(EstadoReclamo estadoReclamo){
-        EstadoReclamoDTO estadoReclamoDTO = new EstadoReclamoDTO();
-
-        if(estadoReclamo != null) {
-            estadoReclamoDTO.setEstado(estadoReclamo.getEstado());
-            estadoReclamoDTO.setMensaje(estadoReclamo.getMensaje());
-        }
-
-        return estadoReclamoDTO;
-    }
-    private EstadoReclamo parseEntity(EstadoReclamoDTO estadoReclamoDTO) {
-        EstadoReclamo estadoReclamo = new EstadoReclamo();
-
-        estadoReclamo.setEstado(estadoReclamoDTO.estado());
-        estadoReclamo.setMensaje(estadoReclamoDTO.mensaje());
-
-        return estadoReclamo;
     }
 }

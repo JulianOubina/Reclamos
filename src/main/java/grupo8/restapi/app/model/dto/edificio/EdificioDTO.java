@@ -1,11 +1,5 @@
 package grupo8.restapi.app.model.dto.edificio;
 
-import grupo8.restapi.app.model.dto.unidad.UnidadDTO;
-import grupo8.restapi.app.model.entity.unidad.Unidad;
-
-import java.util.ArrayList;
-import java.util.List;
-
 public class EdificioDTO {
     private String direccion;
     private String ciudad;
