@@ -17,6 +17,8 @@ public class ReclamosController {
     @Autowired
     private IReclamosService reclamosService;
 
+    // NO FUNCIONA NO SE PORQUE //
+
     @GetMapping("/reclamos")
     public List<Reclamo> getAll() {
         return reclamosService.findAll();
