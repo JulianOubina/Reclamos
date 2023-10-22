@@ -4,7 +4,7 @@ import java.util.List;
 
 public class UnidadDTO {
 
-	private Usuario dueño;
+	private UsuarioDTO dueño;
 	private List<UsuarioDTO> inquilinos;
 	private EdificioDTO edificio;
 	private List<ReclamoUnidadDTO> reclamos;
@@ -12,7 +12,7 @@ public class UnidadDTO {
 	public UnidadDTO() {
 	}
 
-	public UnidadDTO(Usuario dueño, List<UsuarioDTO> inquilinos, EdificioDTO edificio, List<ReclamoUnidadDTO> reclamos) {
+	public UnidadDTO(UsuarioDTO dueño, List<UsuarioDTO> inquilinos, EdificioDTO edificio, List<ReclamoUnidadDTO> reclamos) {
 		this.dueño = dueño;
 		this.inquilinos = inquilinos;
 		this.edificio = edificio;
