@@ -1,6 +1,9 @@
 package grupo8.restapi.app.service.implementaciones;
 
 import grupo8.restapi.app.model.dao.implementacion.UsuarioDAO;
+import grupo8.restapi.app.model.entity.usuarios.Admin;
+import grupo8.restapi.app.model.entity.usuarios.Dueno;
+import grupo8.restapi.app.model.entity.usuarios.Inquilino;
 import grupo8.restapi.app.model.entity.usuarios.Usuario;
 import grupo8.restapi.app.service.intefaces.IUsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,5 +54,17 @@ public class UsuarioService implements IUsuarioService {
     @Override
     public Usuario findUser(String nombreUs, String contraseña) {
         return usuarioDAO.findUser(nombreUs, contraseña);
+    }
+
+    public String darRol(Usuario usuario){
+        if (usuario instanceof Admin){
+            return "admin";
+        } else if (usuario instanceof Dueno) {
+            return "dueno";
+        }else if (usuario instanceof Inquilino) {
+            return "inquilino";
+        } else {
+            return null;
+        }
     }
 }

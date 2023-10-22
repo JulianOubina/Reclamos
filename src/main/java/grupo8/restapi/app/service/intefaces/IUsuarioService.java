@@ -11,4 +11,5 @@ public interface IUsuarioService {
     void update(long id, Usuario usuario);
     void delete(Usuario usuario);
     public Usuario findUser(String nombreUs, String contraseña);
+    String darRol(Usuario usuario);
 }

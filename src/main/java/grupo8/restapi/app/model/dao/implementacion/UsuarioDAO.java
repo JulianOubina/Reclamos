@@ -70,7 +70,6 @@ public class UsuarioDAO implements IUsuarioDAO {
             return null;
         }
     }
-
     private boolean checkPassword(String contraseña, String contraseñaBD) {
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         String hashedPassword = passwordEncoder.encode(contraseña);
