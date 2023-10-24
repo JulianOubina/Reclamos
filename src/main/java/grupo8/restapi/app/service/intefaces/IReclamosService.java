@@ -7,4 +7,5 @@ import java.util.List;
 public interface IReclamosService {
     Reclamo findById(Long id);
     List<Reclamo> findAll();
+    List<Reclamo> findByIdEdificio(long idEdificio);
 }

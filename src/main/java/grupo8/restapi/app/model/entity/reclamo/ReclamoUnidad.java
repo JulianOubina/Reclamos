@@ -35,7 +35,6 @@ public class ReclamoUnidad extends Reclamo {
                 ", idReclamo=" + idReclamo +
                 ", fecha=" + fecha +
                 ", descripcion='" + descripcion + '\'' +
-                ", imagen='" + imagen + '\'' +
                 ", Edificio=" + Edificio.getIdEdificio() +
                 ", usuario=" + usuario.getIdUsuario() +
                 ", estado='" + estado + '\'' +

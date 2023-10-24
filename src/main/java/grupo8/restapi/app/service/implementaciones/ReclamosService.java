@@ -22,4 +22,9 @@ public class ReclamosService implements IReclamosService {
     public List<Reclamo> findAll() {
         return reclamoDAO.findAll();
     }
+
+    @Override
+    public List<Reclamo> findByIdEdificio(long idEdificio) {
+        return reclamoDAO.findByIdEdificio(idEdificio);
+    }
 }

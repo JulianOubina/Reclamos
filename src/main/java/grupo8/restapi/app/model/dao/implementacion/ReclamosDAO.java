@@ -20,7 +20,7 @@ public class ReclamosDAO implements IReclamosDAO {
     public Reclamo findById(Long id) {
         Session session = entityManager.unwrap(Session.class);
 
-        System.out.println("PASO POR ACA");
+//        System.out.println("PASO POR ACA");
         Reclamo retorno = session.get(Reclamo.class, id);
 
         return retorno;
@@ -32,6 +32,18 @@ public class ReclamosDAO implements IReclamosDAO {
         Session session = entityManager.unwrap(Session.class);
 
         Query<Reclamo> q = session.createQuery("FROM Reclamo", Reclamo.class);
+        List<Reclamo> retorno = q.getResultList();
+
+        return retorno;
+    }
+
+    @Override
+    public List<Reclamo> findByIdEdificio(long idEdificio) {
+        Session session = entityManager.unwrap(Session.class);
+
+        Query<Reclamo> q = session.createQuery("FROM Reclamo WHERE Edificio.id =: id", Reclamo.class);
+        q.setParameter("id", idEdificio);
+
         List<Reclamo> retorno = q.getResultList();
 
         return retorno;
