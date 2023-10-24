@@ -61,6 +61,7 @@ public class AdminController {
     @PreAuthorize("hasAuthority('admin')")
     @PostMapping("/admin")
     public ResponseEntity<?> addAdmin(@RequestBody Admin admin) {
+
         adminService.save(admin);
         return new ResponseEntity<>(parseDTO(admin), null, HttpStatus.CREATED);
     }

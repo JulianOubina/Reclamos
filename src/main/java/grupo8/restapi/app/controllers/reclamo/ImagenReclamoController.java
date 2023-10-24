@@ -33,7 +33,7 @@ public class ImagenReclamoController {
     }
 
     @PostMapping("/subir")
-    public ResponseEntity<String> upload(@RequestParam("archivo") MultipartFile archivo, @RequestParam("id") Long id) {
+    public ResponseEntity<String> upload(@RequestParam("archivo") MultipartFile archivo, @RequestParam Long id) {
         try {
             ImagenReclamo imagenReclamo = new ImagenReclamo();
             imagenReclamo.setDatosImagen(archivo.getBytes());
@@ -42,8 +42,20 @@ public class ImagenReclamoController {
             return ResponseEntity.ok("Imagen subida exitosamente.");
         } catch (IOException e) {
             e.printStackTrace();
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error al subir la imagen.");
+            return new ResponseEntity<>("No Se pudo guardar la foto" ,null, HttpStatus.BAD_REQUEST);
         }
     }
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> drop(@PathVariable Long id){
+        ImagenReclamo imagenReclamo = imagenReclamoService.findById(id);
+
+        if(imagenReclamo == null){
+            return new ResponseEntity<>("No Se Encontro la foto con el id "+ id ,null, HttpStatus.BAD_REQUEST);
+        }
+
+        imagenReclamoService.delete(id);
+
+        return ResponseEntity.ok("Imagen eliminada exitosamente.");
+    }
 }

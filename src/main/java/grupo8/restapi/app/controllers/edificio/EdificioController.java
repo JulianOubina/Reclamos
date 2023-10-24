@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
+@PreAuthorize("hasAuthority('admin')")
 @RequestMapping("api")
 public class EdificioController {
     @Autowired
@@ -54,14 +55,18 @@ public class EdificioController {
         return new ResponseEntity<>(parseDTO(edificio), null, HttpStatus.OK);
     }
 
-    @PreAuthorize("hasAuthority('admin')")
     @PostMapping("/edificio")
     public ResponseEntity<?> addEdificio(@RequestBody Edificio edificio) {
+        if(edificio.getDireccion() == null){
+            String mensaje = "La direccion es obligatoria";
+            return new ResponseEntity<>(mensaje, null, 400);
+        }
+
         edificioService.save(edificio);
+
         return new ResponseEntity<>(parseDTO(edificio), null, HttpStatus.CREATED);
     }
 
-    @PreAuthorize("hasAuthority('admin')")
     @PutMapping("/edificio/{id}")
     public ResponseEntity<?> updateEdificio(@PathVariable long id, @RequestBody EdificioDTO edificioDTO){
         Edificio edificioViejo = edificioService.getById(id);
@@ -77,7 +82,6 @@ public class EdificioController {
         return new ResponseEntity<>(edificioDTO, null, HttpStatus.OK);
     }
 
-    @PreAuthorize("hasAuthority('admin')")
     @DeleteMapping("/edificio/{id}")
     public ResponseEntity<String> deleteEdificio(@PathVariable long id){
         Edificio edificio = edificioService.getById(id);

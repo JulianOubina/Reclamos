@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
+@PreAuthorize("hasAuthority('admin')")
 @RequestMapping("api")
 public class UnidadController {
     @Autowired
@@ -58,14 +59,12 @@ public class UnidadController {
         return new ResponseEntity<>(parseDTO(unidad), null, 200);
     }
 
-    @PreAuthorize("hasAuthority('admin')")
     @PostMapping("/unidad")
     public ResponseEntity<?> addUnidad(@RequestBody UnidadDTO unidad) {
         unidadService.save(parseToEntity(unidad));  // TODO SE ROMPE CON NULLS
         return new ResponseEntity<>(unidad, null, 201);
     }
 
-    @PreAuthorize("hasAuthority('admin')")
     @PutMapping("/unidad/{id}")
     public ResponseEntity<?> updateUnidad(@PathVariable long id, @RequestBody UnidadDTO unidadDTO){
         Unidad unidadViejo = unidadService.getById(id);
@@ -82,7 +81,6 @@ public class UnidadController {
         return new ResponseEntity<>(unidadDTO, null, 200);
     }
 
-    @PreAuthorize("hasAuthority('admin')")
     @DeleteMapping("/unidad/{id}")
     public ResponseEntity<String> deleteUnidad(@PathVariable long id){
         Unidad unidad = unidadService.getById(id);
