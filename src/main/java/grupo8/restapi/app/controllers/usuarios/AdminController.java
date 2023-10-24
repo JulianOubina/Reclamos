@@ -13,12 +13,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
+@PreAuthorize("hasAuthority('admin')")
 @RequestMapping("api")
 public class AdminController {
     @Autowired
     private IAdminService adminService;
 
-    @PreAuthorize("hasAuthority('admin')")
     @GetMapping("/admins")
     public List<AdminDTO> getAll() {
         List<AdminDTO> adminDTOList = new ArrayList<>();
@@ -30,7 +30,6 @@ public class AdminController {
         return adminDTOList;
     }
 
-    @PreAuthorize("hasAuthority('admin')")
     @GetMapping("/admin/{id}")
     public ResponseEntity<?> getById(@PathVariable long id) {
         Admin admin = adminService.getById(id);
@@ -45,7 +44,6 @@ public class AdminController {
         return new ResponseEntity<>(retorno, null, HttpStatus.OK);
     }
 
-    @PreAuthorize("hasAuthority('admin')")
     @GetMapping("/adminParam")
     public ResponseEntity<?> getAdminPararm(@RequestParam(name = "id") long adminId){
         Admin admin = adminService.getById(adminId);
@@ -58,7 +56,6 @@ public class AdminController {
         return new ResponseEntity<>(parseDTO(admin), null, HttpStatus.OK);
     }
 
-    @PreAuthorize("hasAuthority('admin')")
     @PostMapping("/admin")
     public ResponseEntity<?> addAdmin(@RequestBody Admin admin) {
 
@@ -66,7 +63,6 @@ public class AdminController {
         return new ResponseEntity<>(parseDTO(admin), null, HttpStatus.CREATED);
     }
 
-    @PreAuthorize("hasAuthority('admin')")
     @PutMapping("/admin/{id}")
     public ResponseEntity<?> updateAdmin(@PathVariable long id, @RequestBody AdminDTO dto){
         Admin adminViejo = adminService.getById(id);
@@ -83,7 +79,6 @@ public class AdminController {
         return new ResponseEntity<>(dto, null, HttpStatus.OK);
     }
 
-    @PreAuthorize("hasAuthority('admin')")
     @DeleteMapping("/admin/{adminId}")
     public ResponseEntity<String> deleteAdim(@PathVariable long adminId){
         Admin admin = adminService.getById(adminId);

@@ -13,12 +13,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
+@PreAuthorize("hasAuthority('admin')")
 @RequestMapping("api")
 public class DuenoController {
     @Autowired
     private IDuenoService duenoService;
 
-    @PreAuthorize("hasAuthority('admin')")
+
     @GetMapping("/duenos")
     public List<DuenoDTO> getAll() {
         List<DuenoDTO> dtoList = new ArrayList<>();
@@ -30,7 +31,6 @@ public class DuenoController {
         return dtoList;
     }
 
-    @PreAuthorize("hasAuthority('admin')")
     @GetMapping("/dueno/{id}")
     public ResponseEntity<?> getById(@PathVariable long id) {
         Dueno dueno = duenoService.findById(id);
@@ -45,7 +45,6 @@ public class DuenoController {
         return new ResponseEntity<>(duenoDTO, null, HttpStatus.OK);
     }
 
-    @PreAuthorize("hasAuthority('admin')")
     @GetMapping("/dueno/duenoParam")
     public ResponseEntity<?> getDuenoPararm(@RequestParam("duenoId") long duenoId){
         Dueno dueno = duenoService.findById(duenoId);
@@ -60,14 +59,12 @@ public class DuenoController {
         return new ResponseEntity<>(duenoDTO, null, HttpStatus.OK);
     }
 
-    @PreAuthorize("hasAuthority('admin')")
     @PostMapping("/dueno")
     public ResponseEntity<?> addDueno(@RequestBody Dueno dueno) {
         duenoService.save(dueno);
         return new ResponseEntity<>(parseDTO(dueno), null, HttpStatus.CREATED);
     }
 
-    @PreAuthorize("hasAuthority('admin')")
     @PutMapping("/dueno/{id}")
     public ResponseEntity<?> updateDueno(@PathVariable long id, @RequestBody DuenoDTO dto){
         Dueno duenoViejo = duenoService.findById(id);
@@ -84,7 +81,6 @@ public class DuenoController {
         return new ResponseEntity<>(dto, null, HttpStatus.OK);
     }
 
-    @PreAuthorize("hasAuthority('admin')")
     @DeleteMapping("/dueno/{id}")
     public ResponseEntity<String> deleteDueno(@PathVariable long id){
         Dueno dueno = duenoService.findById(id);

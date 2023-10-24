@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
+@PreAuthorize("hasAuthority('admin')")
 @RequestMapping("api")
 public class InquilinoController {
     @Autowired
@@ -24,7 +25,6 @@ public class InquilinoController {
     @Autowired
     private IUnidadService unidadService;
 
-    @PreAuthorize("hasAuthority('admin')")
     @GetMapping("/inquilinos")
     public List<InquilinoDTO> getAll() {
         List<InquilinoDTO> inquilinoDTOList = new ArrayList<>();
@@ -36,7 +36,6 @@ public class InquilinoController {
         return inquilinoDTOList;
     }
 
-    @PreAuthorize("hasAuthority('admin')")
     @GetMapping("/inquilino/{id}")
     public ResponseEntity<?> getById(@PathVariable long id) {
         Inquilino inquilino = inquilinoService.getById(id);
@@ -49,7 +48,6 @@ public class InquilinoController {
         return new ResponseEntity<>(parseDTO(inquilino), null, HttpStatus.OK);
     }
 
-    @PreAuthorize("hasAuthority('admin')")
     @GetMapping("/inquilinoParam")
     public ResponseEntity<?> getInquilinoPararm(@RequestParam("inquilinoId") long inquilinoId) {
         Inquilino inquilino = inquilinoService.getById(inquilinoId);
@@ -62,14 +60,12 @@ public class InquilinoController {
         return new ResponseEntity<>(parseDTO(inquilino), null, HttpStatus.OK);
     }
 
-    @PreAuthorize("hasAuthority('admin')")
     @PostMapping("/inquilino")
     public ResponseEntity<?> addInquilino(@RequestBody Inquilino inquilino) {   // TODO METODO SE ROMPE
         inquilinoService.save(inquilino);
         return new ResponseEntity<>(parseDTO(inquilino), null, HttpStatus.CREATED);
     }
 
-    @PreAuthorize("hasAuthority('admin')")
     @PutMapping("/inquilino/{id}")
     public ResponseEntity<?> updateInquilino(@PathVariable long id, @RequestBody InquilinoDTO inquilinoDTO) {
         Inquilino inquilinoViejo = inquilinoService.getById(id);
@@ -86,7 +82,6 @@ public class InquilinoController {
         return new ResponseEntity<>(inquilinoDTO, null, HttpStatus.CREATED);
     }
 
-    @PreAuthorize("hasAuthority('admin')")
     @DeleteMapping("/inquilino/{id}")
     public ResponseEntity<String> deleteInquilino(@PathVariable long id){
         Inquilino inquilino = inquilinoService.getById(id);
