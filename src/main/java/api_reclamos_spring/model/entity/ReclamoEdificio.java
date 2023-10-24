@@ -1,6 +1,8 @@
 package api_reclamos_spring.model.entity;
 
 
+import java.util.List;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -12,33 +14,27 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name = "reclamoEdificio")
 public class ReclamoEdificio extends Reclamo{
-	@Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+	private String descripcion; 
 	
-	@ManyToOne
-    @JoinColumn(name = "edificio_id")
-    private Edificio edificio;
-	//private foto BLOB;
-	
-    public ReclamoEdificio(String titulo, String comentario, Edificio edificio, Usuario creador) {
-        super();
-        this.setTitulo(titulo);
-        this.setComentario(comentario);
-        this.edificio = edificio;
-        this.setCreador(creador);
+	public ReclamoEdificio() {
     }
-
-	public Edificio getEdificio() {
-		return edificio;
+	
+	public ReclamoEdificio(String descripcion, Estado estado, String titulo) {
+        super(titulo, descripcion, estado, imagen);
 	}
 
-	public void setEdificio(Edificio edificio) {
-		this.edificio = edificio;
+	public String getDescripcion() {
+		return descripcion;
+	}
+
+	public void setDescripcion(String descripcion) {
+		this.descripcion = descripcion;
 	}
 
 	@Override
 	public String toString() {
-		return "ReclamoEdificio [edificio=" + edificio + "]";
+		return "ReclamoEdificio [descripcion=" + descripcion + "]";
 	}
+
+	
 }

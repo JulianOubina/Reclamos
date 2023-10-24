@@ -1,4 +1,4 @@
-package api_reclamos_spring.model.entity;
+package api_reclamos_spring.model.dto;
 
 import java.util.List;
 
@@ -19,36 +19,38 @@ public class UnidadDTO {
 		this.reclamos = reclamos;
 	}
 
-	public Usuario getDueño() {
+	public UsuarioDTO getDueño() {
 		return dueño;
 	}
 
-	public void setDueño(Usuario dueño) {
+	public void setDueño(UsuarioDTO dueño) {
 		this.dueño = dueño;
 	}
 
-	public List<Usuario> getInquilinos() {
+	public List<UsuarioDTO> getInquilinos() {
 		return inquilinos;
 	}
 
-	public void setInquilinos(List<Usuario> inquilinos) {
+	public void setInquilinos(List<UsuarioDTO> inquilinos) {
 		this.inquilinos = inquilinos;
 	}
 
-	public Edificio getEdificio() {
+	public EdificioDTO getEdificio() {
 		return edificio;
 	}
 
-	public void setEdificio(Edificio edificio) {
+	public void setEdificio(EdificioDTO edificio) {
 		this.edificio = edificio;
 	}
 
-	public List<ReclamoUnidad> getReclamos() {
+	public List<ReclamoUnidadDTO> getReclamos() {
 		return reclamos;
 	}
 
-	public void setReclamos(List<ReclamoUnidad> reclamos) {
+	public void setReclamos(List<ReclamoUnidadDTO> reclamos) {
 		this.reclamos = reclamos;
 	}
+
+	
 
 }

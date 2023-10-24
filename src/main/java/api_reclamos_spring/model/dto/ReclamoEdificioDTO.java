@@ -1,4 +1,4 @@
-package api_reclamos_spring.model.entity;
+package api_reclamos_spring.model.dto;
 
 public class ReclamoEdificioDTO extends ReclamoDTO{
 	private EdificioDTO edificio;

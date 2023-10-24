@@ -21,6 +21,7 @@ public class Edificio {
 	private int id;
 	private String calle;
 	private int numero;
+	private String ciudad;
 	
 	@OneToOne
 	@JoinColumn(name = "dueño_id")
@@ -29,24 +30,15 @@ public class Edificio {
 	@OneToMany(mappedBy = "edificio", cascade = CascadeType.ALL)
 	private List<Unidad> unidades = new ArrayList<Unidad>();
 	
-	@OneToMany(mappedBy = "edificio", cascade = CascadeType.REMOVE)
-	private List<ReclamoEdificio> reclamos = new ArrayList<ReclamoEdificio>();
-	
 	public Edificio() {
 		super();
 	}
 	
-	public Edificio(String calle, int numero) {
+	public Edificio(String calle, int numero, String ciudad) {
 		super();
 		this.calle = calle;
 		this.numero = numero;
-	}
-	
-	public Edificio(Usuario dueño, String calle, int numero) {
-		super();
-		this.calle = calle;
-		this.numero = numero;
-		this.dueño = dueño;
+		this.ciudad = ciudad;
 	}
 
 	public int getId() {
@@ -89,17 +81,17 @@ public class Edificio {
 		this.unidades = unidades;
 	}
 
-	public List<ReclamoEdificio> getReclamos() {
-		return reclamos;
+	public String getCiudad() {
+		return ciudad;
 	}
 
-	public void setReclamos(List<ReclamoEdificio> reclamos) {
-		this.reclamos = reclamos;
+	public void setCiudad(String ciudad) {
+		this.ciudad = ciudad;
 	}
 
 	@Override
 	public String toString() {
-		return "Edificio [id=" + id + ", dueño=" + dueño + ", calle=" + calle + ", numero=" + numero + ", unidades="
-				+ unidades + ", reclamos=" + reclamos + "]";
+		return "Edificio [id=" + id + ", calle=" + calle + ", numero=" + numero + ", ciudad=" + ciudad + ", dueño="
+				+ dueño + ", unidades=" + unidades + "]";
 	}
 }

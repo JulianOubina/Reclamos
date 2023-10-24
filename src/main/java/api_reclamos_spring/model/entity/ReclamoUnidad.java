@@ -1,5 +1,8 @@
 package api_reclamos_spring.model.entity;
 
+import java.util.List;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -10,30 +13,19 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "reclamoUnidad")
-public class ReclamoUnidad extends Reclamo{
-	@Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
-	
-	@ManyToOne
-    @JoinColumn(name = "edificio_id")
+public class ReclamoUnidad extends Reclamo {
+    @ManyToOne(cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "unidad_id")
     private Unidad unidad;
+    
+    private String descripcion;
 
-    public ReclamoUnidad(Unidad unidad, Usuario creador, String titulo, String comentario) {
-        super();
-        this.unidad = unidad;
-        this.setCreador(creador);
-        this.setTitulo(titulo);
-        this.setComentario(comentario);
+    public ReclamoUnidad(String titulo, String descripcion, Estado estado) {
+        super(titulo, descripcion, imagen, estado);
     }
 
-	public int getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
-	}
+    public ReclamoUnidad (){
+    }
 
 	public Unidad getUnidad() {
 		return unidad;
@@ -43,9 +35,11 @@ public class ReclamoUnidad extends Reclamo{
 		this.unidad = unidad;
 	}
 
-	@Override
-	public String toString() {
-		return "ReclamoUnidad [id=" + id + ", unidad=" + unidad + "]";
+	public String getDescripcion() {
+		return descripcion;
 	}
-    
+
+	public void setDescripcion(String descripcion) {
+		this.descripcion = descripcion;
+	}
 }

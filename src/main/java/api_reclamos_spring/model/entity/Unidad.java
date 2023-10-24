@@ -42,18 +42,22 @@ public class Unidad {
 	@OneToMany(mappedBy = "unidad", cascade = CascadeType.REMOVE, orphanRemoval = true)
 	private List<ReclamoUnidad> reclamos = new ArrayList<ReclamoUnidad>();
 	
+	public enum Estado {
+	    DISPONIBLE,
+	    NODISPONIBLE,
+	}
 	
-	//@Enumerated(EnumType.STRING)
-	//private StateUnidad estado;
+	private Estado estado;
 	
 	public Unidad() {
 		super();
 	}
 	
-	public Unidad(Usuario dueño, Edificio edificio) {
+	public Unidad(Usuario dueño, Edificio edificio, Estado estado) {
 		super();
 		this.dueño = dueño;
 		this.edificio = edificio;
+		this.estado = estado;
 	}
 
 	public int getId() {
@@ -96,9 +100,20 @@ public class Unidad {
 		this.reclamos = reclamos;
 	}
 
+	public Estado getEstado() {
+		return estado;
+	}
+
+	public void setEstado(Estado estado) {
+		this.estado = estado;
+	}
+
 	@Override
 	public String toString() {
-		return "Unidad [id=" + id + ", dueño=" + dueño + ", inquilinos=" + inquilinos + ", edificio=" + edificio + "]";
+		return "Unidad [id=" + id + ", dueño=" + dueño + ", edificio=" + edificio + ", inquilinos=" + inquilinos
+				+ ", reclamos=" + reclamos + ", estado=" + estado + "]";
 	}
+
+	
 }
 
