@@ -1,4 +1,4 @@
-package grupo8.restapi.app.controllers;
+package grupo8.restapi.app.controllers.usuarios;
 
 import grupo8.restapi.app.model.dto.usuarios.InquilinoDTO;
 import grupo8.restapi.app.service.implementaciones.UnidadService;
@@ -6,6 +6,7 @@ import grupo8.restapi.app.service.intefaces.IUnidadService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import grupo8.restapi.app.service.intefaces.IInquilinoService;
@@ -23,6 +24,7 @@ public class InquilinoController {
     @Autowired
     private IUnidadService unidadService;
 
+    @PreAuthorize("hasAuthority('admin')")
     @GetMapping("/inquilinos")
     public List<InquilinoDTO> getAll() {
         List<InquilinoDTO> inquilinoDTOList = new ArrayList<>();
@@ -34,6 +36,7 @@ public class InquilinoController {
         return inquilinoDTOList;
     }
 
+    @PreAuthorize("hasAuthority('admin')")
     @GetMapping("/inquilino/{id}")
     public ResponseEntity<?> getById(@PathVariable long id) {
         Inquilino inquilino = inquilinoService.getById(id);
@@ -46,6 +49,7 @@ public class InquilinoController {
         return new ResponseEntity<>(parseDTO(inquilino), null, HttpStatus.OK);
     }
 
+    @PreAuthorize("hasAuthority('admin')")
     @GetMapping("/inquilinoParam")
     public ResponseEntity<?> getInquilinoPararm(@RequestParam("inquilinoId") long inquilinoId) {
         Inquilino inquilino = inquilinoService.getById(inquilinoId);
@@ -58,12 +62,14 @@ public class InquilinoController {
         return new ResponseEntity<>(parseDTO(inquilino), null, HttpStatus.OK);
     }
 
+    @PreAuthorize("hasAuthority('admin')")
     @PostMapping("/inquilino")
     public ResponseEntity<?> addInquilino(@RequestBody Inquilino inquilino) {   // TODO METODO SE ROMPE
         inquilinoService.save(inquilino);
         return new ResponseEntity<>(parseDTO(inquilino), null, HttpStatus.CREATED);
     }
 
+    @PreAuthorize("hasAuthority('admin')")
     @PutMapping("/inquilino/{id}")
     public ResponseEntity<?> updateInquilino(@PathVariable long id, @RequestBody InquilinoDTO inquilinoDTO) {
         Inquilino inquilinoViejo = inquilinoService.getById(id);
@@ -80,6 +86,7 @@ public class InquilinoController {
         return new ResponseEntity<>(inquilinoDTO, null, HttpStatus.CREATED);
     }
 
+    @PreAuthorize("hasAuthority('admin')")
     @DeleteMapping("/inquilino/{id}")
     public ResponseEntity<String> deleteInquilino(@PathVariable long id){
         Inquilino inquilino = inquilinoService.getById(id);

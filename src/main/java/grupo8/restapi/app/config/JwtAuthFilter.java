@@ -1,12 +1,16 @@
 package grupo8.restapi.app.config;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.crypto.SecretKey;
 
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.web.filter.OncePerRequestFilter;
@@ -35,10 +39,12 @@ public class JwtAuthFilter extends OncePerRequestFilter {
 
             if (token != null && validateToken(token)) {
                 String username = extractUsernameFromToken(token);
+                List<GrantedAuthority> autorites = extractAuthoritiesFromToken(token);
+//                System.out.println(autorites.toString());
 
                 if (username != null) {
                     UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
-                            username, null, null);
+                            username, null, autorites);
                     authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
 
                     SecurityContextHolder.getContext().setAuthentication(authenticationToken);
@@ -48,10 +54,28 @@ public class JwtAuthFilter extends OncePerRequestFilter {
             // Manejar excepciones de token inválido aquí
             SecurityContextHolder.clearContext(); // Limpia el contexto de seguridad en caso de error
             response.sendError(HttpServletResponse.SC_UNAUTHORIZED, e.getMessage()); // Envia una respuesta de error 401
+            System.out.println("ERROR" + e.getMessage());
             return; // Detiene la ejecución
         }
 
         filterChain.doFilter(request, response);
+    }
+
+    private List<GrantedAuthority> extractAuthoritiesFromToken(String token) {
+        try {
+            Claims claims = Jwts.parserBuilder().setSigningKey(secretKey).build().parseClaimsJws(token).getBody();
+
+            String rol = claims.get("rol", String.class);
+
+            System.out.println(rol);
+
+            List<GrantedAuthority> authorities = new ArrayList<>();
+            authorities.add(new SimpleGrantedAuthority(rol));
+
+            return authorities;
+        } catch (Exception e){
+            return null;
+        }
     }
 
     private String extractJwtFromRequest(HttpServletRequest request) {

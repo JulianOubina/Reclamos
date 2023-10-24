@@ -1,4 +1,4 @@
-package grupo8.restapi.app.controllers;
+package grupo8.restapi.app.controllers.usuarios;
 
 import grupo8.restapi.app.model.dto.usuarios.DuenoDTO;
 import grupo8.restapi.app.model.entity.usuarios.Dueno;
@@ -6,6 +6,7 @@ import grupo8.restapi.app.service.intefaces.IDuenoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -17,6 +18,7 @@ public class DuenoController {
     @Autowired
     private IDuenoService duenoService;
 
+    @PreAuthorize("hasAuthority('admin')")
     @GetMapping("/duenos")
     public List<DuenoDTO> getAll() {
         List<DuenoDTO> dtoList = new ArrayList<>();
@@ -28,6 +30,7 @@ public class DuenoController {
         return dtoList;
     }
 
+    @PreAuthorize("hasAuthority('admin')")
     @GetMapping("/dueno/{id}")
     public ResponseEntity<?> getById(@PathVariable long id) {
         Dueno dueno = duenoService.findById(id);
@@ -42,6 +45,7 @@ public class DuenoController {
         return new ResponseEntity<>(duenoDTO, null, HttpStatus.OK);
     }
 
+    @PreAuthorize("hasAuthority('admin')")
     @GetMapping("/dueno/duenoParam")
     public ResponseEntity<?> getDuenoPararm(@RequestParam("duenoId") long duenoId){
         Dueno dueno = duenoService.findById(duenoId);
@@ -56,12 +60,14 @@ public class DuenoController {
         return new ResponseEntity<>(duenoDTO, null, HttpStatus.OK);
     }
 
+    @PreAuthorize("hasAuthority('admin')")
     @PostMapping("/dueno")
     public ResponseEntity<?> addDueno(@RequestBody Dueno dueno) {
         duenoService.save(dueno);
         return new ResponseEntity<>(parseDTO(dueno), null, HttpStatus.CREATED);
     }
 
+    @PreAuthorize("hasAuthority('admin')")
     @PutMapping("/dueno/{id}")
     public ResponseEntity<?> updateDueno(@PathVariable long id, @RequestBody DuenoDTO dto){
         Dueno duenoViejo = duenoService.findById(id);
@@ -78,6 +84,7 @@ public class DuenoController {
         return new ResponseEntity<>(dto, null, HttpStatus.OK);
     }
 
+    @PreAuthorize("hasAuthority('admin')")
     @DeleteMapping("/dueno/{id}")
     public ResponseEntity<String> deleteDueno(@PathVariable long id){
         Dueno dueno = duenoService.findById(id);

@@ -1,4 +1,4 @@
-package grupo8.restapi.app.controllers;
+package grupo8.restapi.app.controllers.reclamo;
 
 import grupo8.restapi.app.model.entity.reclamo.Reclamo;
 import grupo8.restapi.app.service.intefaces.IReclamosService;

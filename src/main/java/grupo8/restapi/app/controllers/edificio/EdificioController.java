@@ -1,9 +1,10 @@
-package grupo8.restapi.app.controllers;
+package grupo8.restapi.app.controllers.edificio;
 
 import grupo8.restapi.app.model.dto.edificio.EdificioDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import grupo8.restapi.app.service.intefaces.IEdificioService;
@@ -53,12 +54,14 @@ public class EdificioController {
         return new ResponseEntity<>(parseDTO(edificio), null, HttpStatus.OK);
     }
 
+    @PreAuthorize("hasAuthority('admin')")
     @PostMapping("/edificio")
     public ResponseEntity<?> addEdificio(@RequestBody Edificio edificio) {
         edificioService.save(edificio);
         return new ResponseEntity<>(parseDTO(edificio), null, HttpStatus.CREATED);
     }
 
+    @PreAuthorize("hasAuthority('admin')")
     @PutMapping("/edificio/{id}")
     public ResponseEntity<?> updateEdificio(@PathVariable long id, @RequestBody EdificioDTO edificioDTO){
         Edificio edificioViejo = edificioService.getById(id);
@@ -74,6 +77,7 @@ public class EdificioController {
         return new ResponseEntity<>(edificioDTO, null, HttpStatus.OK);
     }
 
+    @PreAuthorize("hasAuthority('admin')")
     @DeleteMapping("/edificio/{id}")
     public ResponseEntity<String> deleteEdificio(@PathVariable long id){
         Edificio edificio = edificioService.getById(id);

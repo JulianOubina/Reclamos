@@ -1,4 +1,4 @@
-package grupo8.restapi.app.controllers;
+package grupo8.restapi.app.controllers.unidad;
 
 import grupo8.restapi.app.model.dto.unidad.UnidadDTO;
 import grupo8.restapi.app.model.entity.unidad.Unidad;
@@ -7,6 +7,7 @@ import grupo8.restapi.app.service.intefaces.IEdificioService;
 import grupo8.restapi.app.service.intefaces.IUnidadService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -57,12 +58,14 @@ public class UnidadController {
         return new ResponseEntity<>(parseDTO(unidad), null, 200);
     }
 
+    @PreAuthorize("hasAuthority('admin')")
     @PostMapping("/unidad")
     public ResponseEntity<?> addUnidad(@RequestBody UnidadDTO unidad) {
         unidadService.save(parseToEntity(unidad));  // TODO SE ROMPE CON NULLS
         return new ResponseEntity<>(unidad, null, 201);
     }
 
+    @PreAuthorize("hasAuthority('admin')")
     @PutMapping("/unidad/{id}")
     public ResponseEntity<?> updateUnidad(@PathVariable long id, @RequestBody UnidadDTO unidadDTO){
         Unidad unidadViejo = unidadService.getById(id);
@@ -79,6 +82,7 @@ public class UnidadController {
         return new ResponseEntity<>(unidadDTO, null, 200);
     }
 
+    @PreAuthorize("hasAuthority('admin')")
     @DeleteMapping("/unidad/{id}")
     public ResponseEntity<String> deleteUnidad(@PathVariable long id){
         Unidad unidad = unidadService.getById(id);
