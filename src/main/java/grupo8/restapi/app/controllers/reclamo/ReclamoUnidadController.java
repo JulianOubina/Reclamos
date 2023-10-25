@@ -10,6 +10,7 @@ import grupo8.restapi.app.service.intefaces.IUsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -27,6 +28,7 @@ public class ReclamoUnidadController {
     @Autowired
     private IUnidadService unidadService;
 
+    @PreAuthorize("hasAuthority('admin')")
     @GetMapping("/reclamosUnidades")
     public List<ReclamoUnidadDTO> getAll() {
         List<ReclamoUnidadDTO> retorno = new ArrayList<>();
@@ -38,6 +40,7 @@ public class ReclamoUnidadController {
         return retorno;
     }
 
+    @PreAuthorize("hasAuthority('admin')")
     @GetMapping("/reclamoUnidad/{id}")
     public ResponseEntity<?> getById(@PathVariable long id){
         ReclamoUnidad reclamoUnidad = reclamoUnidadService.getById(id);
@@ -50,6 +53,7 @@ public class ReclamoUnidadController {
         return new ResponseEntity<>(parseDTO(reclamoUnidad), null, 200);
     }
 
+    @PreAuthorize("hasAuthority('admin')")
     @GetMapping("/reclamoUnidadParam")
     public ResponseEntity<?> getReclamoUnidadPararm(@PathVariable long reclamoUnidadId){
         ReclamoUnidad reclamoUnidad = reclamoUnidadService.getById(reclamoUnidadId);
@@ -61,16 +65,17 @@ public class ReclamoUnidadController {
 
         return new ResponseEntity<>(parseDTO(reclamoUnidad), null, 200);
     }
-
+    @PreAuthorize("hasAuthority('admin') or hasAuthority('inquilino') or hasAuthority('dueno')")
     @PostMapping("/reclamoUnidad")
     public ResponseEntity<?> addReclamoUnidad(@RequestBody ReclamoUnidadDTO reclamoUnidadDTO) {
         ReclamoUnidad reclamoUnidad = parseEntity(reclamoUnidadDTO);
         System.out.println("HASTA ACA FUNCIONA");
         reclamoUnidadService.save(reclamoUnidad);
 
-        return new ResponseEntity<>(parseDTO(reclamoUnidad), null, HttpStatus.CREATED);
+        return new ResponseEntity<>(parseDTO(reclamoUnidad), null, HttpStatus.CREATED); // TODO TIENE Q DEOLVER EL ID
     }
 
+    @PreAuthorize("hasAuthority('admin') or hasAuthority('inquilino') or hasAuthority('dueno')")
     @PutMapping("/reclamoUnidad/{id}")
     public ResponseEntity<?> updateReclamoUnidad(@PathVariable long id, @RequestBody ReclamoUnidadDTO reclamoUnidadDTO){
         ReclamoUnidad reclamoUnidadViejo = reclamoUnidadService.getById(id);
@@ -87,6 +92,7 @@ public class ReclamoUnidadController {
         return new ResponseEntity<>(parseDTO(reclamoUnidad), null, HttpStatus.OK);
     }
 
+    @PreAuthorize("hasAuthority('admin') or hasAuthority('inquilino') or hasAuthority('dueno')")
     @DeleteMapping("/reclamoUnidad/{id}")
     public ResponseEntity<String> deleteReclamoUnidad(@PathVariable long id){
         ReclamoUnidad reclamoUnidad = reclamoUnidadService.getById(id);

@@ -8,6 +8,7 @@ import grupo8.restapi.app.model.entity.reclamo.ReclamoUnidad;
 import grupo8.restapi.app.service.intefaces.IReclamosService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -20,6 +21,7 @@ public class ReclamosController {
     private IReclamosService reclamosService;
 
     // ESTE PUEDE SER EL ACCESO AL CLIENTE  //
+    @PreAuthorize("hasAuthority('admin')")
     @GetMapping("/reclamos")
     public List<ReclamosDTO> getAll() {
         List<ReclamosDTO> reclamosDTOS = new ArrayList<>();
@@ -31,6 +33,7 @@ public class ReclamosController {
         return reclamosDTOS;
     }
 
+    @PreAuthorize("hasAuthority('admin') or hasAuthority('inquilino') or hasAuthority('dueno')")
     @GetMapping("/reclamo/{id}")
     public ResponseEntity<?> getById(@PathVariable long id){
         Reclamo reclamo = reclamosService.findById(id);
@@ -42,6 +45,7 @@ public class ReclamosController {
         return new ResponseEntity<>(parseDTO(reclamo), null, 200);
     }
 
+    @PreAuthorize("hasAuthority('admin') or hasAuthority('inquilino') or hasAuthority('dueno')")
     @GetMapping("/reclamo/")
     public ResponseEntity<?> getByIdEdificio(@RequestParam long idEdificio){
         List<Reclamo> reclamos = reclamosService.findByIdEdificio(idEdificio);

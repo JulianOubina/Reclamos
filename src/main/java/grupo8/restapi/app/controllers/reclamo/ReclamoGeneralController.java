@@ -7,6 +7,7 @@ import grupo8.restapi.app.service.intefaces.IUsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import grupo8.restapi.app.service.intefaces.IReclamoGeneralService;
@@ -25,8 +26,9 @@ public class ReclamoGeneralController {
     @Autowired
     private IUsuarioService usuarioService;
 
+    @PreAuthorize("hasAuthority('admin')")
     @GetMapping("/reclamosGenerales")
-    public List<ReclamoGeneralDTO> getAll() {       // TODO HACER DTO LAS RESPUETAS
+    public List<ReclamoGeneralDTO> getAll() {
         List<ReclamoGeneralDTO> reclamosGeneralesDTO = new ArrayList<>();
 
         for (ReclamoGeneral rg : reclamoGeneralService.getAll()){
@@ -35,7 +37,7 @@ public class ReclamoGeneralController {
 
         return reclamosGeneralesDTO;
     }
-
+    @PreAuthorize("hasAuthority('admin')")
     @GetMapping("/reclamoGeneral/{id}")
     public ResponseEntity<?> getById(@PathVariable long id) {
         ReclamoGeneral reclamoGeneral = reclamoGeneralService.getById(id);
@@ -48,6 +50,7 @@ public class ReclamoGeneralController {
         return new ResponseEntity<>(parseDTO(reclamoGeneral), null, HttpStatus.OK);
     }
 
+    @PreAuthorize("hasAuthority('admin')")
     @GetMapping("/reclamoGeneralParam")
     public ResponseEntity<?> getReclamoGeneralPararm(@RequestParam("reclamoGeneralId") long reclamoGeneralId) {
         ReclamoGeneral reclamoGeneral = reclamoGeneralService.getById(reclamoGeneralId);
@@ -60,12 +63,14 @@ public class ReclamoGeneralController {
         return new ResponseEntity<>(parseDTO(reclamoGeneral), null, HttpStatus.OK);
     }
 
+    @PreAuthorize("hasAuthority('admin') or hasAuthority('inquilino') or hasAuthority('dueno')")
     @PostMapping("/reclamoGeneral")
     public ResponseEntity<?> addReclamoGeneral(@RequestBody ReclamoGeneralDTO reclamoGeneral) {
         reclamoGeneralService.save(parseEntity(reclamoGeneral));
         return new ResponseEntity<>(reclamoGeneral, null, HttpStatus.CREATED);
     }
 
+    @PreAuthorize("hasAuthority('admin') or hasAuthority('inquilino') or hasAuthority('dueno')")
     @PutMapping("/reclamoGeneral/{id}")
     public ResponseEntity<?> updateReclamoGeneral(@PathVariable long id, @RequestBody ReclamoGeneralDTO reclamoGeneralDTO){
         ReclamoGeneral reclamoGeneralViejo = reclamoGeneralService.getById(id);
@@ -82,6 +87,7 @@ public class ReclamoGeneralController {
         return new ResponseEntity<>(reclamoGeneralDTO, null, HttpStatus.CREATED);
     }
 
+    @PreAuthorize("hasAuthority('admin') or hasAuthority('inquilino') or hasAuthority('dueno')")
     @DeleteMapping("/reclamoGeneral/{id}")
     public ResponseEntity<String> deleteReclamoGeneral(@PathVariable long id){
         ReclamoGeneral reclamoGeneral = reclamoGeneralService.getById(id);
