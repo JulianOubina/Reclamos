@@ -83,7 +83,7 @@ public class ReclamosController {
         if(i instanceof ReclamoGeneral)
             return ((ReclamoGeneral) i).getLugar();
         else if (i instanceof ReclamoUnidad){
-            return "Departamento : "+((ReclamoUnidad) i).getUnidad().getDepartamento() + " piso: " + ((ReclamoUnidad) i).getUnidad().getPiso();
+            return "Departamento : "+((ReclamoUnidad) i).getUnidad().getDepartamento() + " Piso: " + ((ReclamoUnidad) i).getUnidad().getPiso();
         }
         else
             return null;

@@ -66,6 +66,8 @@ public class ReclamoGeneralController {
     @PreAuthorize("hasAuthority('admin') or hasAuthority('inquilino') or hasAuthority('dueno')")
     @PostMapping("/reclamoGeneral")
     public ResponseEntity<?> addReclamoGeneral(@RequestBody ReclamoGeneralDTO reclamoGeneral) {
+        // EL USUARIO TIENE QUE ESTAR RELACIONADO CON EL EDIFICIO
+
         reclamoGeneralService.save(parseEntity(reclamoGeneral));
         return new ResponseEntity<>(reclamoGeneral, null, HttpStatus.CREATED);
     }

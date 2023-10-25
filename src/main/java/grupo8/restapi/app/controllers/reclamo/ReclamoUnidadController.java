@@ -3,6 +3,10 @@ package grupo8.restapi.app.controllers.reclamo;
 import grupo8.restapi.app.model.dto.reclamo.ReclamoUnidadDTO;;
 import grupo8.restapi.app.model.entity.reclamo.ReclamoUnidad;
 import grupo8.restapi.app.model.entity.reclamo.estado.EstadoReclamo;
+import grupo8.restapi.app.model.entity.unidad.Unidad;
+import grupo8.restapi.app.model.entity.usuarios.Dueno;
+import grupo8.restapi.app.model.entity.usuarios.Inquilino;
+import grupo8.restapi.app.model.entity.usuarios.Usuario;
 import grupo8.restapi.app.service.intefaces.IEdificioService;
 import grupo8.restapi.app.service.intefaces.IReclamoUnidadService;
 import grupo8.restapi.app.service.intefaces.IUnidadService;
@@ -69,7 +73,13 @@ public class ReclamoUnidadController {
     @PostMapping("/reclamoUnidad")
     public ResponseEntity<?> addReclamoUnidad(@RequestBody ReclamoUnidadDTO reclamoUnidadDTO) {
         ReclamoUnidad reclamoUnidad = parseEntity(reclamoUnidadDTO);
-        System.out.println("HASTA ACA FUNCIONA");
+
+        //  EL USUARIO TIENE QUE ESTAR RELACIONADO AL EDIFICIO
+
+        if (!permitidoCargar(reclamoUnidad)) {
+            return new ResponseEntity<>("La unidad se encuentra alquilada, solo el inquilino puede generar reclamos", null, HttpStatus.BAD_REQUEST);
+        }
+
         reclamoUnidadService.save(reclamoUnidad);
 
         return new ResponseEntity<>(parseDTO(reclamoUnidad), null, HttpStatus.CREATED); // TODO TIENE Q DEOLVER EL ID
@@ -146,5 +156,23 @@ public class ReclamoUnidadController {
         retorno.setEstado(new EstadoReclamo(dto.getEstado(), dto.getMensaje()));
 
         return retorno;
+    }
+
+    private boolean permitidoCargar(ReclamoUnidad reclamoUnidad) {
+        // el dueño podrá generarlo, a menos que la unidad se encuentre alquilada en cuyo caso solo lo podrá hacer el inquilino
+        boolean flag = true;
+
+        Unidad unidad = reclamoUnidad.getUnidad();
+        Usuario usuario = reclamoUnidad.getUsuario();
+        String estado = unidad.getEstado().toLowerCase();
+
+        if(usuario instanceof Dueno)
+        {
+            if( estado.equals("alquilado") )
+                flag = false;
+
+        }
+
+        return flag;
     }
 }
