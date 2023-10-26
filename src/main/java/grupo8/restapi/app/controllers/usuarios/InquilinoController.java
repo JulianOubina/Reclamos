@@ -60,8 +60,25 @@ public class InquilinoController {
         return new ResponseEntity<>(parseDTO(inquilino), null, HttpStatus.OK);
     }
 
-    @PostMapping("/inquilino")
-    public ResponseEntity<?> addInquilino(@RequestBody Inquilino inquilino) {   // TODO METODO SE ROMPE
+    @PostMapping("/inquilino/{id}")
+    public ResponseEntity<?> addInquilino(@RequestBody Inquilino inquilino, @PathVariable Long id) {   // TODO METODO SE ROMPE
+
+        if(unidadService.getById(id) == null){
+            String mensaje = "La unidad con id " + id + " no existe";
+            return new ResponseEntity<>(mensaje, null, 404);
+        }
+
+        inquilino.setUnidad(unidadService.getById(id));
+
+        if(controlInquilinoParam(inquilino)){
+            String mensaje = "No tiene los parametros minimo para ingresarlo";
+            return new ResponseEntity<>(mensaje, null, 404);
+        }
+        if(inquilinoService.findUser(inquilino.getNombreUs(), inquilino.getContraseña()) != null){
+            String mensaje = "El inquilino ya existe";
+            return new ResponseEntity<>(mensaje, null, 404);
+        }
+
         inquilinoService.save(inquilino);
         return new ResponseEntity<>(parseDTO(inquilino), null, HttpStatus.CREATED);
     }
@@ -72,6 +89,11 @@ public class InquilinoController {
 
         if (inquilinoViejo == null) {
             String mensaje = "El inquilino con id " + id + " no existe";
+            return new ResponseEntity<>(mensaje, null, 404);
+        }
+
+        if(inquilinoService.existe(inquilinoDTO.getNombreUs()) && !inquilinoDTO.getNombreUs().equals(inquilinoViejo.getNombreUs())){
+            String mensaje = "El inquilino ya existe";
             return new ResponseEntity<>(mensaje, null, 404);
         }
 
@@ -128,5 +150,20 @@ public class InquilinoController {
         }
 
         return inquilino;
+    }
+
+    // METODOS DE VERIFICACION
+
+    private boolean controlInquilinoParam(Inquilino inquilino) {
+        if(inquilino.getNombre() == null)
+            return true;
+        if(inquilino.getNombreUs() == null)
+            return true;
+        if(inquilino.getContraseña() == null)
+            return true;
+        if(inquilino.getUnidad() == null)
+            return true;
+
+        return false;
     }
 }

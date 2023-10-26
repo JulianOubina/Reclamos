@@ -4,10 +4,12 @@ import grupo8.restapi.app.model.dao.interfaces.IInquilinoDAO;
 import grupo8.restapi.app.model.entity.unidad.Unidad;
 import grupo8.restapi.app.model.entity.usuarios.Inquilino;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.NoResultException;
 import jakarta.persistence.PersistenceContext;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -84,21 +86,43 @@ public class InquilinoDAO implements IInquilinoDAO {
 
     @Override
     public Inquilino findUser(String nombreUs, String contraseña) {
-        Session currentSession = entityManager.unwrap(Session.class);
+        try{
+            Session currentSession = entityManager.unwrap(Session.class);
 
-        Query<Inquilino> theQuery = currentSession.createQuery("FROM Inquilino WHERE nombreUs=:username", Inquilino.class);
-        theQuery.setParameter("username", nombreUs);
+            Query<Inquilino> theQuery = currentSession.createQuery("FROM Inquilino WHERE nombreUs=:username", Inquilino.class);
+            theQuery.setParameter("username", nombreUs);
 
-        Inquilino inquilino = theQuery.uniqueResult();
+            Inquilino inquilino = theQuery.uniqueResult();
 
-        if(inquilino != null && checkPassword(contraseña, inquilino.getContraseña())) {
-            return inquilino;
-        } else {
+            if(inquilino != null && checkPassword(contraseña, inquilino.getContraseña())) {
+                return inquilino;
+            } else {
+                return null;
+            }
+        }catch (NoResultException e){
             return null;
         }
     }
 
-    private boolean checkPassword(String contraseña, String contraseña1) {
-        return contraseña.equals(contraseña1);
+    @Override
+    public boolean existe(String nombreUs) {
+        try {
+            Session currentSession = entityManager.unwrap(Session.class);
+
+            Query<Inquilino> theQuery = currentSession.createQuery("FROM Inquilino WHERE nombreUs=:username", Inquilino.class);
+            theQuery.setParameter("username", nombreUs);
+
+            Inquilino inquilino = theQuery.uniqueResult();
+
+            return inquilino != null;
+        }catch (NoResultException e){
+            return false;
+        }
+    }
+
+    private boolean checkPassword(String contraseña, String contraseñaBD) {
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        boolean isPasswordMatch = passwordEncoder.matches(contraseña, contraseñaBD);
+        return isPasswordMatch;
     }
 }

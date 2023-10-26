@@ -58,4 +58,9 @@ public class InquilinoService implements IInquilinoService {
     public Inquilino findUser(String nombreUs, String contraseña) {
         return inquilinoDAO.findUser(nombreUs,contraseña);
     }
+
+    @Override
+    public boolean existe(String nombreUs) {
+        return inquilinoDAO.existe(nombreUs);
+    }
 }

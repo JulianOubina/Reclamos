@@ -9,7 +9,7 @@ public interface IInquilinoDAO {
     Inquilino getById(long id);
     void save(Inquilino inquilino);
     void delete(Inquilino inquilino);
-
     Inquilino findUser(String nombreUs, String contraseña);
+    boolean existe(String nombreUs);
 }
 
