@@ -55,4 +55,9 @@ public class AdminService implements IAdminService {
     public Admin findUser(String nombreUs, String contraseña) {
         return adminDAO.findUser(nombreUs, contraseña);
     }
+
+    @Override
+    public boolean existe(String nombreUs) {
+        return adminDAO.existe(nombreUs);
+    }
 }

@@ -10,4 +10,5 @@ public interface IAdminDAO {
     void save(Admin admin);
     void delete(Admin admin);
     Admin findUser(String nombreUs, String contraseña);
+    boolean existe(String nombreUs);
 }

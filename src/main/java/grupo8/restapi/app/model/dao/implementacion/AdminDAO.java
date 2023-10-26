@@ -5,7 +5,6 @@ import grupo8.restapi.app.model.entity.usuarios.Admin;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import org.hibernate.Session;
-import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Repository;
@@ -71,8 +70,21 @@ public class AdminDAO implements IAdminDAO {
         }
     }
 
-    private boolean checkPassword(String contraseña, String contraseña1) {
-        return contraseña.equals(contraseña1);
+    @Override
+    public boolean existe(String nombreUs) {
+        Session session = entityManager.unwrap(Session.class);
+
+        Query<Admin> q = session.createQuery("FROM Admin WHERE nombreUs=:nombreUs", Admin.class);
+        q.setParameter("nombreUs", nombreUs);
+        Admin retorno = q.getSingleResult();
+
+        return retorno != null;
+    }
+
+    private boolean checkPassword(String contraseña, String contraseñaBD) {
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        boolean isPasswordMatch = passwordEncoder.matches(contraseña, contraseñaBD);
+        return isPasswordMatch;
     }
 
 }

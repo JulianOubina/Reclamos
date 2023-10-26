@@ -59,9 +59,21 @@ public class AdminController {
     @PostMapping("/admin")
     public ResponseEntity<?> addAdmin(@RequestBody Admin admin) {
 
+        if(controlAdminParam(admin)){
+            String mensaje = "No tiene los parametros minimo para ingresarlo";
+            return new ResponseEntity<>(mensaje, null, 404);
+        }
+
+        if (adminService.findUser(admin.getNombreUs(), admin.getContraseña()) != null){
+            String mensaje = "El admin ya existe";
+            return new ResponseEntity<>(mensaje, null, 404);
+        }
+
         adminService.save(admin);
+
         return new ResponseEntity<>(parseDTO(admin), null, HttpStatus.CREATED);
     }
+
 
     @PutMapping("/admin/{id}")
     public ResponseEntity<?> updateAdmin(@PathVariable long id, @RequestBody AdminDTO dto){
@@ -71,6 +83,12 @@ public class AdminController {
             String mensaje = "El admin con id " + id + " no existe";
             return new ResponseEntity<>(mensaje, null, 404);
         }
+
+        if(adminService.existe(dto.getNombreUs()) && dto.getNombreUs().equals(adminViejo.getNombreUs())){
+            String mensaje = "El nombre de usuario ya esta en uso";
+            return new ResponseEntity<>(mensaje, null, 404);
+        }
+
 
         Admin admin = parseToEntity(dto);
 
@@ -109,5 +127,19 @@ public class AdminController {
         admin.setDirecion(adminDTO.getDirecion());
 
         return admin;
+    }
+
+    // -- METODOS DE VERIFICACION -- //
+    private boolean controlAdminParam(Admin admin) {
+        if(admin.getNombreUs() == null)
+            return true;
+
+        if(admin.getContraseña() == null)
+            return true;
+
+        if(admin.getNombre() == null)
+            return true;
+
+        return false;
     }
 }

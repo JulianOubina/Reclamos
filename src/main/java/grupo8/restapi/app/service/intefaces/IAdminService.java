@@ -11,4 +11,6 @@ public interface IAdminService {
     void update(long id, Admin admin);
     void delete(Admin admin);
     public Admin findUser(String nombreUs, String contraseña);
+
+    boolean existe(String nombreUs);
 }
