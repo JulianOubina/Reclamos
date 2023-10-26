@@ -58,4 +58,9 @@ public class DuenoService implements IDuenoService {
     public Dueno findUser(String nombreUs, String contraseña) {
         return duenoDAO.findUser(nombreUs,contraseña);
     }
+
+    @Override
+    public boolean existe(String nombreUs) {
+        return duenoDAO.existe(nombreUs);
+    }
 }

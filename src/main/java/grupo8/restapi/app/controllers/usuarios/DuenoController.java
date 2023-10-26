@@ -61,9 +61,21 @@ public class DuenoController {
 
     @PostMapping("/dueno")
     public ResponseEntity<?> addDueno(@RequestBody Dueno dueno) {
+        if(controlDuenoParam(dueno)){
+            String mensaje = "No tiene los parametros minimo para ingresarlo";
+            return new ResponseEntity<>(mensaje, null, 404);
+        }
+        if(duenoService.findUser(dueno.getNombreUs(), dueno.getContraseña()) != null){
+            String mensaje = "El dueno ya existe";
+            return new ResponseEntity<>(mensaje, null, 404);
+        }
+
         duenoService.save(dueno);
+
         return new ResponseEntity<>(parseDTO(dueno), null, HttpStatus.CREATED);
     }
+
+
 
     @PutMapping("/dueno/{id}")
     public ResponseEntity<?> updateDueno(@PathVariable long id, @RequestBody DuenoDTO dto){
@@ -71,6 +83,11 @@ public class DuenoController {
 
         if(duenoViejo == null) {
             String mensaje = "El dueno con id " + id + " no existe";
+            return new ResponseEntity<>(mensaje, null, 404);
+        }
+
+        if(duenoService.existe(dto.getNombreUs()) && !dto.getNombreUs().equals(duenoViejo.getNombreUs())){
+            String mensaje = "El nombre de usuario ya esta en uso";
             return new ResponseEntity<>(mensaje, null, 404);
         }
 
@@ -111,5 +128,20 @@ public class DuenoController {
         retorno.setDirecion(duenoDTO.getDirecion());
 
         return retorno;
+    }
+
+    // METODOS DE VERIFICACION
+
+    private boolean controlDuenoParam(Dueno dueno) {
+        if(dueno.getNombreUs() == null)
+            return true;
+
+        if(dueno.getContraseña() == null)
+            return true;
+
+        if(dueno.getNombre() == null)
+            return true;
+
+        return false;
     }
 }

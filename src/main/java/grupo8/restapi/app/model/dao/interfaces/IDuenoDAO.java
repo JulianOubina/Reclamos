@@ -10,4 +10,5 @@ public interface IDuenoDAO {
     void save(Dueno dueno);
     void delete(Dueno dueno);
     Dueno findUser(String nombreUs, String contraseña);
+    boolean existe(String nombreUs);
 }

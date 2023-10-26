@@ -3,6 +3,7 @@ package grupo8.restapi.app.model.dao.implementacion;
 import grupo8.restapi.app.model.dao.interfaces.IUsuarioDAO;
 import grupo8.restapi.app.model.entity.usuarios.Usuario;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.NoResultException;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.Query;
 import org.hibernate.Session;
@@ -56,19 +57,23 @@ public class UsuarioDAO implements IUsuarioDAO {
     @Override
     @Transactional
     public Usuario findUser(String nombreUs, String contraseña) {
-        Session session = entityManager.unwrap(Session.class);
+        try {
+            Session session = entityManager.unwrap(Session.class);
 
-        Query q = session.createQuery("FROM Usuario WHERE nombreUs=:nombreUs", Usuario.class);
-        q.setParameter("nombreUs", nombreUs);
+            Query q = session.createQuery("FROM Usuario WHERE nombreUs=:nombreUs", Usuario.class);
+            q.setParameter("nombreUs", nombreUs);
 
-        Usuario retorno = (Usuario) q.getSingleResult();
+            Usuario retorno = (Usuario) q.getSingleResult();
 
-        if(retorno != null && checkPassword(contraseña, retorno.getContraseña())) {
-            return retorno;
-        }
-        else {
+            if (retorno != null && checkPassword(contraseña, retorno.getContraseña())) {
+                return retorno;
+            } else {
+                return null;
+            }
+        }catch (NoResultException e) {
             return null;
         }
+
     }
     private boolean checkPassword(String contraseña, String contraseñaBD) {
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();

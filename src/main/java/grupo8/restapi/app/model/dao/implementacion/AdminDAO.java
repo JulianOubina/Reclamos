@@ -3,6 +3,7 @@ package grupo8.restapi.app.model.dao.implementacion;
 import grupo8.restapi.app.model.dao.interfaces.IAdminDAO;
 import grupo8.restapi.app.model.entity.usuarios.Admin;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.NoResultException;
 import jakarta.persistence.PersistenceContext;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
@@ -57,28 +58,36 @@ public class AdminDAO implements IAdminDAO {
 
     @Override
     public Admin findUser(String nombreUs, String contraseña) {
-        Session session = entityManager.unwrap(Session.class);
+        try {
+            Session session = entityManager.unwrap(Session.class);
 
-        Query<Admin> q = session.createQuery("FROM Admin WHERE nombreUs=:nombreUs", Admin.class);
-        q.setParameter("nombreUs", nombreUs);
-        Admin retorno = q.getSingleResult();
+            Query<Admin> q = session.createQuery("FROM Admin WHERE nombreUs=:nombreUs", Admin.class);
+            q.setParameter("nombreUs", nombreUs);
+            Admin retorno = q.getSingleResult();
 
-        if(retorno != null && checkPassword(contraseña, retorno.getContraseña())) {
-            return retorno;
-        } else {
+            if (retorno != null && checkPassword(contraseña, retorno.getContraseña())) {
+                return retorno;
+            } else {
+                return null;
+            }
+        }catch (NoResultException e){
             return null;
         }
     }
 
     @Override
     public boolean existe(String nombreUs) {
-        Session session = entityManager.unwrap(Session.class);
+        try{
+            Session session = entityManager.unwrap(Session.class);
 
-        Query<Admin> q = session.createQuery("FROM Admin WHERE nombreUs=:nombreUs", Admin.class);
-        q.setParameter("nombreUs", nombreUs);
-        Admin retorno = q.getSingleResult();
+            Query<Admin> q = session.createQuery("FROM Admin WHERE nombreUs=:nombreUs", Admin.class);
+            q.setParameter("nombreUs", nombreUs);
+            Admin retorno = q.getSingleResult();
 
-        return retorno != null;
+            return retorno != null;
+        }  catch (NoResultException e){
+            return false;
+        }
     }
 
     private boolean checkPassword(String contraseña, String contraseñaBD) {

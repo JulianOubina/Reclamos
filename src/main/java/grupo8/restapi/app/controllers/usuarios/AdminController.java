@@ -84,11 +84,10 @@ public class AdminController {
             return new ResponseEntity<>(mensaje, null, 404);
         }
 
-        if(adminService.existe(dto.getNombreUs()) && dto.getNombreUs().equals(adminViejo.getNombreUs())){
+        if(adminService.existe(dto.getNombreUs()) && !dto.getNombreUs().equals(adminViejo.getNombreUs())){
             String mensaje = "El nombre de usuario ya esta en uso";
             return new ResponseEntity<>(mensaje, null, 404);
         }
-
 
         Admin admin = parseToEntity(dto);
 

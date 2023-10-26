@@ -4,9 +4,11 @@ import grupo8.restapi.app.model.dao.interfaces.IDuenoDAO;
 import grupo8.restapi.app.model.entity.unidad.Unidad;
 import grupo8.restapi.app.model.entity.usuarios.Dueno;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.NoResultException;
 import jakarta.persistence.PersistenceContext;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -65,21 +67,42 @@ public class DuenoDAO implements IDuenoDAO {
 
     @Override
     public Dueno findUser(String nombreUs, String contraseña) {
-        Session session = entityManager.unwrap(Session.class);
+        try {
+            Session session = entityManager.unwrap(Session.class);
 
-        Query<Dueno> q = session.createQuery("FROM Dueno WHERE nombreUs=:nombreUs", Dueno.class);
-        q.setParameter("nombreUs", nombreUs);
-        Dueno retorno = q.getSingleResult();
+            Query<Dueno> q = session.createQuery("FROM Dueno WHERE nombreUs=:nombreUs", Dueno.class);
+            q.setParameter("nombreUs", nombreUs);
+            Dueno retorno = q.getSingleResult();
 
-        if(retorno != null && checkPassword(contraseña, retorno.getContraseña())) {
-            return retorno;
-        } else {
+            if (retorno != null && checkPassword(contraseña, retorno.getContraseña())) {
+                return retorno;
+            } else {
+                return null;
+            }
+        } catch (NoResultException e){
             return null;
         }
     }
 
-    private boolean checkPassword(String contraseña, String contraseña1) {
-        return contraseña.equals(contraseña1);
+    @Override
+    public boolean existe(String nombreUs) {
+        try {
+            Session session = entityManager.unwrap(Session.class);
+
+            Query<Dueno> q = session.createQuery("FROM Dueno WHERE nombreUs=:nombreUs", Dueno.class);
+            q.setParameter("nombreUs", nombreUs);
+            Dueno retorno = q.getSingleResult();
+
+            return retorno != null;
+        }catch (NoResultException e){
+            return false;
+        }
+    }
+
+    private boolean checkPassword(String contraseña, String contraseñaBD) {
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        boolean isPasswordMatch = passwordEncoder.matches(contraseña, contraseñaBD);
+        return isPasswordMatch;
     }
 }
 
