@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import api_reclamos_spring.model.dto.UsuarioDTO;
 import api_reclamos_spring.service.IUsuarioService;
 import io.jsonwebtoken.Jwts;
@@ -23,9 +22,13 @@ public class AuthController {
 	
 	@Autowired
 	private IUsuarioService usuarioService;
-
 	@Autowired
 	private SecretKey secretKey;
+	
+	public AuthController(IUsuarioService usuarioService, SecretKey secretKey) {
+        this.usuarioService = usuarioService;
+        this.secretKey = secretKey;
+    }
 
 	@PostMapping("/login")
 	public ResponseEntity<String> login(@RequestBody UsuarioDTO credentials) {
