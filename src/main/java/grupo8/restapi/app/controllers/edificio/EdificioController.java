@@ -57,8 +57,8 @@ public class EdificioController {
 
     @PostMapping("/edificio")
     public ResponseEntity<?> addEdificio(@RequestBody Edificio edificio) {
-        if(edificio.getDireccion() == null){
-            String mensaje = "La direccion es obligatoria";
+        if(controlEdificioParam(edificio)){
+            String mensaje = "El edificio no tiene todos los parametros necesarios";
             return new ResponseEntity<>(mensaje, null, 400);
         }
 
@@ -75,7 +75,13 @@ public class EdificioController {
             String mensaje = "El edificio con id " + id + " no existe";
             return new ResponseEntity<>(mensaje, null, 404);
         }
+
         Edificio edificio = parseToEntity(edificioDTO);
+
+        if(controlEdificioParam(edificio)){
+            String mensaje = "El edificio no tiene todos los parametros necesarios";
+            return new ResponseEntity<>(mensaje, null, 400);
+        }
 
         edificioService.update(id, edificio);
 
@@ -112,4 +118,11 @@ public class EdificioController {
 
         return edificio;
     }
+
+    private boolean controlEdificioParam(Edificio edificio) {
+        if(edificio.getDireccion() == null)
+            return true;
+        return false;
+    }
+
 }

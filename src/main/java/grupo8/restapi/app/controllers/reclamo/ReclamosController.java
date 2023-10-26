@@ -33,7 +33,7 @@ public class ReclamosController {
         return reclamosDTOS;
     }
 
-    @PreAuthorize("hasAuthority('admin') or hasAuthority('inquilino') or hasAuthority('dueno')")
+    @PreAuthorize("hasAnyAuthority('admin','inquilino','dueno')")
     @GetMapping("/reclamo/{id}")
     public ResponseEntity<?> getById(@PathVariable long id){
         Reclamo reclamo = reclamosService.findById(id);
@@ -45,7 +45,7 @@ public class ReclamosController {
         return new ResponseEntity<>(parseDTO(reclamo), null, 200);
     }
 
-    @PreAuthorize("hasAuthority('admin') or hasAuthority('inquilino') or hasAuthority('dueno')")
+    @PreAuthorize("hasAnyAuthority('admin','inquilino','dueno')")
     @GetMapping("/reclamo/")
     public ResponseEntity<?> getByIdEdificio(@RequestParam long idEdificio){
         List<Reclamo> reclamos = reclamosService.findByIdEdificio(idEdificio);

@@ -69,7 +69,7 @@ public class ReclamoUnidadController {
 
         return new ResponseEntity<>(parseDTO(reclamoUnidad), null, 200);
     }
-    @PreAuthorize("hasAuthority('admin') or hasAuthority('inquilino') or hasAuthority('dueno')")
+    @PreAuthorize("hasAnyAuthority('admin','inquilino','dueno')")
     @PostMapping("/reclamoUnidad")
     public ResponseEntity<?> addReclamoUnidad(@RequestBody ReclamoUnidadDTO reclamoUnidadDTO) {
         ReclamoUnidad reclamoUnidad = parseEntity(reclamoUnidadDTO);
@@ -85,7 +85,7 @@ public class ReclamoUnidadController {
         return new ResponseEntity<>(parseDTO(reclamoUnidad), null, HttpStatus.CREATED); // TODO TIENE Q DEOLVER EL ID
     }
 
-    @PreAuthorize("hasAuthority('admin') or hasAuthority('inquilino') or hasAuthority('dueno')")
+    @PreAuthorize("hasAnyAuthority('admin','inquilino','dueno')")
     @PutMapping("/reclamoUnidad/{id}")
     public ResponseEntity<?> updateReclamoUnidad(@PathVariable long id, @RequestBody ReclamoUnidadDTO reclamoUnidadDTO){
         ReclamoUnidad reclamoUnidadViejo = reclamoUnidadService.getById(id);
@@ -102,7 +102,7 @@ public class ReclamoUnidadController {
         return new ResponseEntity<>(parseDTO(reclamoUnidad), null, HttpStatus.OK);
     }
 
-    @PreAuthorize("hasAuthority('admin') or hasAuthority('inquilino') or hasAuthority('dueno')")
+    @PreAuthorize("hasAnyAuthority('admin','inquilino','dueno')")
     @DeleteMapping("/reclamoUnidad/{id}")
     public ResponseEntity<String> deleteReclamoUnidad(@PathVariable long id){
         ReclamoUnidad reclamoUnidad = reclamoUnidadService.getById(id);

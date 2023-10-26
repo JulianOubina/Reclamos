@@ -14,7 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 
 @RestController
-@PreAuthorize("hasAuthority('admin') or hasAuthority('inquilino') or hasAuthority('dueno')")
+@PreAuthorize("hasAnyAuthority('admin','inquilino','dueno')")
 @RequestMapping("/api/imagenreclamo")
 public class ImagenReclamoController {
     @Autowired

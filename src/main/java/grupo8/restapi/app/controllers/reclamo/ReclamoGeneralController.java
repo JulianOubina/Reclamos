@@ -63,7 +63,7 @@ public class ReclamoGeneralController {
         return new ResponseEntity<>(parseDTO(reclamoGeneral), null, HttpStatus.OK);
     }
 
-    @PreAuthorize("hasAuthority('admin') or hasAuthority('inquilino') or hasAuthority('dueno')")
+    @PreAuthorize("hasAnyAuthority('admin','inquilino','dueno')")
     @PostMapping("/reclamoGeneral")
     public ResponseEntity<?> addReclamoGeneral(@RequestBody ReclamoGeneralDTO reclamoGeneral) {
         // EL USUARIO TIENE QUE ESTAR RELACIONADO CON EL EDIFICIO
@@ -72,7 +72,7 @@ public class ReclamoGeneralController {
         return new ResponseEntity<>(reclamoGeneral, null, HttpStatus.CREATED);
     }
 
-    @PreAuthorize("hasAuthority('admin') or hasAuthority('inquilino') or hasAuthority('dueno')")
+    @PreAuthorize("hasAnyAuthority('admin','inquilino','dueno')")
     @PutMapping("/reclamoGeneral/{id}")
     public ResponseEntity<?> updateReclamoGeneral(@PathVariable long id, @RequestBody ReclamoGeneralDTO reclamoGeneralDTO){
         ReclamoGeneral reclamoGeneralViejo = reclamoGeneralService.getById(id);
@@ -89,7 +89,7 @@ public class ReclamoGeneralController {
         return new ResponseEntity<>(reclamoGeneralDTO, null, HttpStatus.CREATED);
     }
 
-    @PreAuthorize("hasAuthority('admin') or hasAuthority('inquilino') or hasAuthority('dueno')")
+    @PreAuthorize("hasAnyAuthority('admin','inquilino','dueno')")
     @DeleteMapping("/reclamoGeneral/{id}")
     public ResponseEntity<String> deleteReclamoGeneral(@PathVariable long id){
         ReclamoGeneral reclamoGeneral = reclamoGeneralService.getById(id);
