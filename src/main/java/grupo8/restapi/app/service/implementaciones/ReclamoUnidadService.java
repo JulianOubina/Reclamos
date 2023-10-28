@@ -37,7 +37,7 @@ public class ReclamoUnidadService implements IReclamoUnidadService {
 
             reclamoExiste.setDescripcion(reclamo.getDescripcion());
             reclamoExiste.setEstado(reclamo.getEstado());
-            reclamoExiste.setFecha(reclamo.getFecha());
+            //reclamoExiste.setFecha(reclamo.getFecha());
             reclamoExiste.setEdificio(reclamo.getEdificio());
             reclamoExiste.setUnidad(reclamo.getUnidad());
             reclamoExiste.setImagen(reclamo.getImagen());

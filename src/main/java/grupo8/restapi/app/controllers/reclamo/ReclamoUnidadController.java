@@ -74,7 +74,10 @@ public class ReclamoUnidadController {
     public ResponseEntity<?> addReclamoUnidad(@RequestBody ReclamoUnidadDTO reclamoUnidadDTO) {
         ReclamoUnidad reclamoUnidad = parseEntity(reclamoUnidadDTO);
 
-        //  EL USUARIO TIENE QUE ESTAR RELACIONADO AL EDIFICIO
+        if (verificarReclamoParam(reclamoUnidad)){
+            String mensaje = "No tiene los suficientes parametros o no estan bien ingresados";
+            return new ResponseEntity<>(mensaje, null, 400);
+        }
 
         if (!permitidoCargar(reclamoUnidad)) {
             return new ResponseEntity<>("La unidad se encuentra alquilada, solo el inquilino puede generar reclamos", null, HttpStatus.BAD_REQUEST);
@@ -84,6 +87,8 @@ public class ReclamoUnidadController {
 
         return new ResponseEntity<>(parseDTO(reclamoUnidad), null, HttpStatus.CREATED); // TODO TIENE Q DEOLVER EL ID
     }
+
+
 
     @PreAuthorize("hasAnyAuthority('admin','inquilino','dueno')")
     @PutMapping("/reclamoUnidad/{id}")
@@ -96,6 +101,12 @@ public class ReclamoUnidadController {
         }
 
         ReclamoUnidad reclamoUnidad = parseEntity(reclamoUnidadDTO);
+
+        if (verificarReclamoParam(reclamoUnidad)){
+            String mensaje = "No tiene los suficientes parametros o no estan bien ingresados";
+            return new ResponseEntity<>(mensaje, null, 400);
+        }
+
 
         reclamoUnidadService.update(id, reclamoUnidad);
 
@@ -158,6 +169,8 @@ public class ReclamoUnidadController {
         return retorno;
     }
 
+    // METODOS DE VERIFICACION
+
     private boolean permitidoCargar(ReclamoUnidad reclamoUnidad) {
         // el dueño podrá generarlo, a menos que la unidad se encuentre alquilada en cuyo caso solo lo podrá hacer el inquilino
         boolean flag = true;
@@ -174,5 +187,30 @@ public class ReclamoUnidadController {
         }
 
         return flag;
+    }
+
+    private boolean verificarReclamoParam(ReclamoUnidad reclamoUnidad) {
+        if(reclamoUnidad.getEstado() == null)
+            return true;
+        if(reclamoUnidad.getUsuario() == null)
+            return true;
+        if(reclamoUnidad.getEdificio() == null)
+            return true;
+        if (reclamoUnidad.getUnidad() == null)
+            return true;
+
+        Usuario usuario = reclamoUnidad.getUsuario(); // VALIDACION DE USUARIO //
+        if (usuario instanceof Inquilino){
+            if (((Inquilino) usuario).getUnidad() != reclamoUnidad.getUnidad())
+                return true;
+        }
+        if(usuario instanceof Dueno) {
+            if (reclamoUnidad.getUnidad().getDueño() != usuario)
+                return true;
+        }
+
+        if(reclamoUnidad.getUnidad().getEdificio().getIdEdificio() != reclamoUnidad.getEdificio().getIdEdificio()) // VALIDACION DE EDIFICIO //
+            return true;
+        return false;
     }
 }
