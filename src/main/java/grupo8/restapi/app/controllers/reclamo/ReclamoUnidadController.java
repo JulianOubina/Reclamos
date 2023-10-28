@@ -192,6 +192,12 @@ public class ReclamoUnidadController {
     private boolean verificarReclamoParam(ReclamoUnidad reclamoUnidad) {
         if(reclamoUnidad.getEstado() == null)
             return true;
+        else{
+            if(reclamoUnidad.getEstado().getEstado() == null)
+                return true;
+            if(reclamoUnidad.getEstado().getMensaje() == null)
+                return true;
+        }
         if(reclamoUnidad.getUsuario() == null)
             return true;
         if(reclamoUnidad.getEdificio() == null)

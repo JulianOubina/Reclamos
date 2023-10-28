@@ -1,7 +1,11 @@
 package grupo8.restapi.app.controllers.reclamo;
 
 import grupo8.restapi.app.model.dto.reclamo.ReclamoGeneralDTO;
+import grupo8.restapi.app.model.entity.reclamo.ReclamoUnidad;
 import grupo8.restapi.app.model.entity.reclamo.estado.EstadoReclamo;
+import grupo8.restapi.app.model.entity.usuarios.Dueno;
+import grupo8.restapi.app.model.entity.usuarios.Inquilino;
+import grupo8.restapi.app.model.entity.usuarios.Usuario;
 import grupo8.restapi.app.service.intefaces.IEdificioService;
 import grupo8.restapi.app.service.intefaces.IUsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -65,11 +69,17 @@ public class ReclamoGeneralController {
 
     @PreAuthorize("hasAnyAuthority('admin','inquilino','dueno')")
     @PostMapping("/reclamoGeneral")
-    public ResponseEntity<?> addReclamoGeneral(@RequestBody ReclamoGeneralDTO reclamoGeneral) {
-        // EL USUARIO TIENE QUE ESTAR RELACIONADO CON EL EDIFICIO
+    public ResponseEntity<?> addReclamoGeneral(@RequestBody ReclamoGeneralDTO reclamoGeneralDTO) {
+        ReclamoGeneral reclamoGeneral = parseEntity(reclamoGeneralDTO);
 
-        reclamoGeneralService.save(parseEntity(reclamoGeneral));
-        return new ResponseEntity<>(reclamoGeneral, null, HttpStatus.CREATED);
+        if(verificarReclamoParam(reclamoGeneral)){
+            String mensaje = "El reclamoGeneral no tiene todos los parametros necesarios o estan erroneos";
+            return new ResponseEntity<>(mensaje, null, 400);
+        }
+
+        reclamoGeneralService.save(reclamoGeneral);
+
+        return new ResponseEntity<>(reclamoGeneralDTO, null, HttpStatus.CREATED);
     }
 
     @PreAuthorize("hasAnyAuthority('admin','inquilino','dueno')")
@@ -83,6 +93,11 @@ public class ReclamoGeneralController {
         }
 
         ReclamoGeneral reclamoGeneral = parseEntity(reclamoGeneralDTO);
+
+        if(verificarReclamoParam(reclamoGeneral)){
+            String mensaje = "El reclamoGeneral no tiene todos los parametros necesarios o estan erroneos";
+            return new ResponseEntity<>(mensaje, null, 400);
+        }
 
         reclamoGeneralService.update(id, reclamoGeneral);
 
@@ -133,7 +148,7 @@ public class ReclamoGeneralController {
     private ReclamoGeneral parseEntity(ReclamoGeneralDTO reclamoGeneralDTO){
         ReclamoGeneral reclamoGeneral = new ReclamoGeneral();
 
-        reclamoGeneral.setFecha(reclamoGeneralDTO.getFecha());
+        // reclamoGeneral.setFecha(reclamoGeneralDTO.getFecha());
         reclamoGeneral.setDescripcion(reclamoGeneralDTO.getDescripcion());
 
         if (reclamoGeneralDTO.getIdEdificio() != null)
@@ -146,5 +161,33 @@ public class ReclamoGeneralController {
         reclamoGeneral.setLugar(reclamoGeneralDTO.getLugar());
 
         return reclamoGeneral;
+    }
+
+    // METODOS DE VERIFICACION
+
+    private boolean verificarReclamoParam(ReclamoGeneral reclamoGeneal) {
+        if(reclamoGeneal.getEstado() == null)
+            return true;
+        else{
+            if(reclamoGeneal.getEstado().getEstado() == null)
+                return true;
+            if(reclamoGeneal.getEstado().getMensaje() == null)
+                return true;
+        }
+
+        if(reclamoGeneal.getUsuario() == null)
+            return true;
+        if(reclamoGeneal.getEdificio() == null)
+            return true;
+        if (reclamoGeneal.getLugar() == null)
+            return true;
+
+        Usuario usuario = reclamoGeneal.getUsuario(); // VALIDACION DE USUARIO //
+        if (usuario instanceof Inquilino){
+            if (((Inquilino) usuario).getUnidad().getEdificio().getIdEdificio() != reclamoGeneal.getEdificio().getIdEdificio())
+                return true;
+        }
+
+        return false;
     }
 }
