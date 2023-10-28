@@ -79,7 +79,7 @@ public class ReclamoGeneralController {
 
         reclamoGeneralService.save(reclamoGeneral);
 
-        return new ResponseEntity<>(reclamoGeneralDTO, null, HttpStatus.CREATED);
+        return new ResponseEntity<>(reclamoGeneral.getIdReclamo(), null, HttpStatus.CREATED);
     }
 
     @PreAuthorize("hasAnyAuthority('admin','inquilino','dueno')")

@@ -85,7 +85,7 @@ public class ReclamoUnidadController {
 
         reclamoUnidadService.save(reclamoUnidad);
 
-        return new ResponseEntity<>(parseDTO(reclamoUnidad), null, HttpStatus.CREATED); // TODO TIENE Q DEOLVER EL ID
+        return new ResponseEntity<>(reclamoUnidad.getIdReclamo(), null, HttpStatus.CREATED); // TODO TIENE Q DEOLVER EL ID
     }
 
 
