@@ -37,6 +37,8 @@ public class ImagenReclamoController {
     @PostMapping("/subir")
     public ResponseEntity<String> upload(@RequestParam("archivo") MultipartFile archivo, @RequestParam Long id) {
         try {
+            if(reclamosService.findById(id) == null)
+                return new ResponseEntity<>("No Se Encontro el reclamo con el id "+ id ,null, HttpStatus.BAD_REQUEST);
             ImagenReclamo imagenReclamo = new ImagenReclamo();
             imagenReclamo.setDatosImagen(archivo.getBytes());
             imagenReclamo.setReclamo(reclamosService.findById(id));
