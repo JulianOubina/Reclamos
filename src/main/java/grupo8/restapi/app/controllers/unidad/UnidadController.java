@@ -60,10 +60,19 @@ public class UnidadController {
     }
 
     @PostMapping("/unidad")
-    public ResponseEntity<?> addUnidad(@RequestBody UnidadDTO unidad) {
-        unidadService.save(parseToEntity(unidad));  // TODO SE ROMPE CON NULLS
-        return new ResponseEntity<>(unidad, null, 201);
+    public ResponseEntity<?> addUnidad(@RequestBody UnidadDTO unidadDTO) {
+        Unidad unidad = parseToEntity(unidadDTO);
+
+        if (verificarUnidadParam(unidad)){
+            String mensaje = "No tiene los suficientes parametros";
+            return new ResponseEntity<>(mensaje, null, 400);
+        }
+
+        unidadService.save(unidad);  // TODO SE ROMPE CON NULLS
+        return new ResponseEntity<>(unidadDTO, null, 201);
     }
+
+
 
     @PutMapping("/unidad/{id}")
     public ResponseEntity<?> updateUnidad(@PathVariable long id, @RequestBody UnidadDTO unidadDTO){
@@ -75,6 +84,11 @@ public class UnidadController {
         }
 
         Unidad unidad = parseToEntity(unidadDTO);
+
+        if (verificarUnidadParam(unidad)){
+            String mensaje = "No tiene los suficientes parametros";
+            return new ResponseEntity<>(mensaje, null, 400);
+        }
 
         unidadService.update(id, unidad);
 
@@ -121,6 +135,20 @@ public class UnidadController {
             unidad.setEdificio(edificioService.getById(unidadDTO.getIdEdificio()));
 
         return unidad;
+    }
+
+    // METODOS DE VERIFICACION
+
+    private boolean verificarUnidadParam(Unidad unidad) {
+        if (unidad.getEdificio() == null)
+            return true;
+        if (unidad.getDueño() == null)
+            return true;
+        if(unidad.getEstado() == null)
+            return true;
+        if(unidad.getDepartamento() == null)
+            return true;
+        return false;
     }
 
 }
