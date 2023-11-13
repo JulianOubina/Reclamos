@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
+@CrossOrigin(origins = "*")
 @PreAuthorize("hasAuthority('admin')")
 @RequestMapping("api")
 public class DuenoController {
