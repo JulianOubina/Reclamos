@@ -135,6 +135,7 @@ public class ReclamoUnidadController {
     private ReclamoUnidadDTO parseDTO(ReclamoUnidad reclamoUnidad){
         ReclamoUnidadDTO retorno = new ReclamoUnidadDTO();
 
+        retorno.setIdReclamo(reclamoUnidad.getIdReclamo());
         retorno.setFecha(reclamoUnidad.getFecha());
         retorno.setDescripcion(reclamoUnidad.getDescripcion());
         if(reclamoUnidad.getUnidad() != null)
@@ -153,6 +154,7 @@ public class ReclamoUnidadController {
     private ReclamoUnidad parseEntity(ReclamoUnidadDTO dto){
         ReclamoUnidad retorno = new ReclamoUnidad();
 
+        retorno.setIdReclamo(dto.getIdReclamo());
         retorno.setFecha(dto.getFecha());
         retorno.setDescripcion(dto.getDescripcion());
 

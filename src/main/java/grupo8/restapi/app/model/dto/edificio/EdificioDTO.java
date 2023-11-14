@@ -1,6 +1,7 @@
 package grupo8.restapi.app.model.dto.edificio;
 
 public class EdificioDTO {
+    private long idEdificio;
     private String direccion;
     private String ciudad;
     private String codigoPostal;
@@ -9,7 +10,8 @@ public class EdificioDTO {
     public EdificioDTO() {
     }
 
-    public EdificioDTO(String direccion, String ciudad, String codigoPostal, String pais) {
+    public EdificioDTO(long idEdificio,String direccion, String ciudad, String codigoPostal, String pais) {
+        this.idEdificio = idEdificio;
         this.direccion = direccion;
         this.ciudad = ciudad;
         this.codigoPostal = codigoPostal;
@@ -30,6 +32,14 @@ public class EdificioDTO {
 
     public String getPais() {
         return pais;
+    }
+
+    public long getIdEdificio() {
+        return idEdificio;
+    }
+
+    public void setIdEdificio(long idEdificio) {
+        this.idEdificio = idEdificio;
     }
 
     public void setDireccion(String direccion) {

@@ -6,6 +6,7 @@ import grupo8.restapi.app.model.dto.usuarios.UsuarioDTO;
 import java.util.Date;
 
 public class ReclamoGeneralDTO {
+    private Long idReclamo;
     private Date fecha;
     private String descripcion;
     private Long idEdificio;
@@ -17,7 +18,8 @@ public class ReclamoGeneralDTO {
     public ReclamoGeneralDTO() {
     }
 
-    public ReclamoGeneralDTO(Date fecha, String descripcion, Long idEdificio, Long usuario, String lugar) {
+    public ReclamoGeneralDTO(Long idReclamo, Date fecha, String descripcion, Long idEdificio, Long usuario, String lugar) {
+        this.idReclamo = idReclamo;
         this.fecha = fecha;
         this.descripcion = descripcion;
         this.idEdificio = idEdificio;
@@ -51,6 +53,14 @@ public class ReclamoGeneralDTO {
 
     public String getMensaje() {
         return mensaje;
+    }
+
+    public Long getIdReclamo() {
+        return idReclamo;
+    }
+
+    public void setIdReclamo(Long idReclamo) {
+        this.idReclamo = idReclamo;
     }
 
     public void setFecha(Date fecha) {

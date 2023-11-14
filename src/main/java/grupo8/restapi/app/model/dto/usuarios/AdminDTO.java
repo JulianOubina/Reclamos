@@ -1,6 +1,7 @@
 package grupo8.restapi.app.model.dto.usuarios;
 
 public class AdminDTO {
+    private Long idAdmin;
     private String nombre;
     private String nombreUs;
     private int telefono;
@@ -11,7 +12,8 @@ public class AdminDTO {
 
     }
 
-    public AdminDTO(String nombre, String nombreUs, int telefono, String email, String direcion) {
+    public AdminDTO(Long idAdmin,String nombre, String nombreUs, int telefono, String email, String direcion) {
+        this.idAdmin = idAdmin;
         this.nombre = nombre;
         this.nombreUs = nombreUs;
         this.telefono = telefono;
@@ -37,6 +39,14 @@ public class AdminDTO {
 
     public String getDirecion() {
         return direcion;
+    }
+
+    public Long getIdAdmin() {
+        return idAdmin;
+    }
+
+    public void setIdAdmin(Long idAdmin) {
+        this.idAdmin = idAdmin;
     }
 
     public void setNombre(String nombre) {

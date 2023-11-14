@@ -5,6 +5,7 @@ import grupo8.restapi.app.model.dto.unidad.UnidadDTO;
 import java.util.Date;
 
 public class ReclamoUnidadDTO {
+    private long idReclamo;
     private Date fecha;
     private String descripcion;
     private Long idEdificio;
@@ -52,6 +53,14 @@ public class ReclamoUnidadDTO {
 
     public String getMensaje() {
         return mensaje;
+    }
+
+    public long getIdReclamo() {
+        return idReclamo;
+    }
+
+    public void setIdReclamo(long idReclamo) {
+        this.idReclamo = idReclamo;
     }
 
     public void setFecha(Date fecha) {

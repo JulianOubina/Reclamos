@@ -3,6 +3,7 @@ package grupo8.restapi.app.model.dto.reclamo;
 import java.util.Date;
 
 public class ReclamosDTO {
+    private Long idReclamo;
     private Date fecha;
     private String descripcion;
     private Long idEdificio;
@@ -14,7 +15,8 @@ public class ReclamosDTO {
     public ReclamosDTO() {
     }
 
-    public ReclamosDTO(Date fecha, String descripcion, Long idEdificio, Long idUsuario, String lugar, String estado, String mensaje) {
+    public ReclamosDTO(Long idReclamo,Date fecha, String descripcion, Long idEdificio, Long idUsuario, String lugar, String estado, String mensaje) {
+        this.idReclamo = idReclamo;
         this.fecha = fecha;
         this.descripcion = descripcion;
         this.idEdificio = idEdificio;
@@ -50,6 +52,14 @@ public class ReclamosDTO {
 
     public String getMensaje() {
         return mensaje;
+    }
+
+    public Long getIdReclamo() {
+        return idReclamo;
+    }
+
+    public void setIdReclamo(Long idReclamo) {
+        this.idReclamo = idReclamo;
     }
 
     public void setFecha(Date fecha) {

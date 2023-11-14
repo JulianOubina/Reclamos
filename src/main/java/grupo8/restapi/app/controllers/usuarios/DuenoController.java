@@ -116,12 +116,13 @@ public class DuenoController {
     // CONVERTIN ENTITY -> DTO y DTO -> ENTITY
 
     private DuenoDTO parseDTO(Dueno dueno){
-        return new DuenoDTO(dueno.getNombre(), dueno.getNombreUs(), dueno.getTelefono(), dueno.getEmail(), dueno.getDirecion());
+        return new DuenoDTO(dueno.getIdUsuario(),dueno.getNombre(), dueno.getNombreUs(), dueno.getTelefono(), dueno.getEmail(), dueno.getDirecion());
     }
 
     private Dueno parseEntity(DuenoDTO duenoDTO){
         Dueno retorno = new Dueno();
 
+        retorno.setIdUsuario(duenoDTO.getIdDueno());
         retorno.setNombre(duenoDTO.getNombre());
         retorno.setNombreUs(duenoDTO.getNombreUs());
         retorno.setTelefono(duenoDTO.getTelefono());

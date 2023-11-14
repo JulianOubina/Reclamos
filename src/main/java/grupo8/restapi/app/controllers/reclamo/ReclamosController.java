@@ -69,6 +69,7 @@ public class ReclamosController {
     private ReclamosDTO parseDTO(Reclamo i) {
         ReclamosDTO reclamosDTO = new ReclamosDTO();
 
+        reclamosDTO.setIdReclamo(i.getIdReclamo());
         reclamosDTO.setFecha(i.getFecha());
         reclamosDTO.setDescripcion(i.getDescripcion());
         reclamosDTO.setIdEdificio(i.getEdificio().getIdEdificio());

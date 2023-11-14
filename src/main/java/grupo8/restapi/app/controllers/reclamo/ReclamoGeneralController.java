@@ -126,6 +126,8 @@ public class ReclamoGeneralController {
     private ReclamoGeneralDTO parseDTO(ReclamoGeneral reclamoGeneral){
         ReclamoGeneralDTO reclamoGeneralDTO = new ReclamoGeneralDTO();
 
+        reclamoGeneralDTO.setIdReclamo(reclamoGeneral.getIdReclamo());
+
         reclamoGeneralDTO.setFecha(reclamoGeneral.getFecha());
 
         reclamoGeneralDTO.setDescripcion(reclamoGeneral.getDescripcion());
@@ -148,6 +150,8 @@ public class ReclamoGeneralController {
 
     private ReclamoGeneral parseEntity(ReclamoGeneralDTO reclamoGeneralDTO){
         ReclamoGeneral reclamoGeneral = new ReclamoGeneral();
+
+        reclamoGeneral.setIdReclamo(reclamoGeneralDTO.getIdReclamo());
 
         // reclamoGeneral.setFecha(reclamoGeneralDTO.getFecha());
         reclamoGeneral.setDescripcion(reclamoGeneralDTO.getDescripcion());

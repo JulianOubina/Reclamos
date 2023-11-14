@@ -5,13 +5,13 @@ import grupo8.restapi.app.model.entity.usuarios.Usuario;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.NoResultException;
 import jakarta.persistence.PersistenceContext;
-import jakarta.persistence.Query;
+import org.hibernate.query.Query;
 import org.hibernate.Session;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.sql.SQLOutput;
 import java.util.List;
 
 @Repository
@@ -24,7 +24,7 @@ public class UsuarioDAO implements IUsuarioDAO {
     public List<Usuario> getAll() {
         Session session = entityManager.unwrap(Session.class);
 
-        Query q = session.createQuery("FROM Usuario", Usuario.class);
+        Query<Usuario> q = session.createQuery("FROM Usuario", Usuario.class);
         List<Usuario> retorno = q.getResultList();
         return retorno;
     }
@@ -60,7 +60,7 @@ public class UsuarioDAO implements IUsuarioDAO {
         try {
             Session session = entityManager.unwrap(Session.class);
 
-            Query q = session.createQuery("FROM Usuario WHERE nombreUs=:nombreUs", Usuario.class);
+            Query<Usuario> q = session.createQuery("FROM Usuario WHERE nombreUs=:nombreUs", Usuario.class);
             q.setParameter("nombreUs", nombreUs);
 
             Usuario retorno = (Usuario) q.getSingleResult();
@@ -75,6 +75,25 @@ public class UsuarioDAO implements IUsuarioDAO {
         }
 
     }
+
+    @Override
+    public long findUser(String nombreUs) {
+        try {
+            Session session = entityManager.unwrap(Session.class);
+
+            Query<Usuario> q = session.createQuery("FROM Usuario WHERE nombreUs=:nombreUs", Usuario.class);
+            q.setParameter("nombreUs", nombreUs);
+
+            Usuario retorno = (Usuario) q.getSingleResult();
+
+            return retorno.getIdUsuario();
+        }catch (NoResultException e) {
+            System.out.println("No se encontro el usuario");
+            return 0;
+        }
+
+    }
+
     private boolean checkPassword(String contraseña, String contraseñaBD) {
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         boolean isPasswordMatch = passwordEncoder.matches(contraseña, contraseñaBD);

@@ -67,7 +67,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
 
             String rol = claims.get("rol", String.class);
 
-            System.out.println(rol);
+            //System.out.println(rol);
 
             List<GrantedAuthority> authorities = new ArrayList<>();
             authorities.add(new SimpleGrantedAuthority(rol));

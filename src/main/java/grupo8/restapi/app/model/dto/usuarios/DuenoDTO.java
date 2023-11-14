@@ -1,6 +1,7 @@
 package grupo8.restapi.app.model.dto.usuarios;
 
 public class DuenoDTO {
+    private Long idDueno;
     private String nombre;
     private String nombreUs;
     private int telefono;
@@ -9,7 +10,8 @@ public class DuenoDTO {
     public DuenoDTO() {
     }
 
-    public DuenoDTO(String nombre, String nombreUs, int telefono, String email, String direcion) {
+    public DuenoDTO(Long idDueno,String nombre, String nombreUs, int telefono, String email, String direcion) {
+        this.idDueno = idDueno;
         this.nombre = nombre;
         this.nombreUs = nombreUs;
         this.telefono = telefono;
@@ -37,6 +39,13 @@ public class DuenoDTO {
         return direcion;
     }
 
+    public Long getIdDueno() {
+        return idDueno;
+    }
+
+    public void setIdDueno(Long idDueno) {
+        this.idDueno = idDueno;
+    }
 
     public void setNombre(String nombre) {
         this.nombre = nombre;

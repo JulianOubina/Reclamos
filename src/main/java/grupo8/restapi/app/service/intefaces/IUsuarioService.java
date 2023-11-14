@@ -12,4 +12,5 @@ public interface IUsuarioService {
     void delete(Usuario usuario);
     public Usuario findUser(String nombreUs, String contraseña);
     String darRol(Usuario usuario);
+    long findUser(String nombreUs);
 }

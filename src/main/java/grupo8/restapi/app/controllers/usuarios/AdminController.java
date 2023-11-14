@@ -114,12 +114,13 @@ public class AdminController {
 
     // -- CONVERTIR A DTO -> ENTITY y ENTITY -> DTO -- //
     private AdminDTO parseDTO(Admin admin){
-        return new AdminDTO(admin.getNombre(), admin.getNombreUs(), admin.getTelefono(), admin.getEmail(), admin.getDirecion());
+        return new AdminDTO(admin.getIdUsuario(),admin.getNombre(), admin.getNombreUs(), admin.getTelefono(), admin.getEmail(), admin.getDirecion());
     }
 
     private Admin parseToEntity(AdminDTO adminDTO){
         Admin admin = new Admin();
 
+        admin.setIdUsuario(adminDTO.getIdAdmin());
         admin.setNombre(adminDTO.getNombre());
         admin.setNombreUs(adminDTO.getNombreUs());
         admin.setTelefono(adminDTO.getTelefono());

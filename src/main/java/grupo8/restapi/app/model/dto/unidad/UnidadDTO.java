@@ -1,6 +1,7 @@
 package grupo8.restapi.app.model.dto.unidad;
 
 public class UnidadDTO {
+    private Long idUnidad;
     private Long idDueno;
     private int piso;
     private String departamento;
@@ -36,6 +37,14 @@ public class UnidadDTO {
 
     public Long getIdEdificio() {
         return idEdificio;
+    }
+
+    public Long getIdUnidad() {
+        return idUnidad;
+    }
+
+    public void setIdUnidad(Long idUnidad) {
+        this.idUnidad = idUnidad;
     }
 
     public void setIdDueno(Long idDueno) {

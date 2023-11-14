@@ -106,12 +106,13 @@ public class EdificioController {
     // PASER METHODS
 
     public static EdificioDTO parseDTO(Edificio edificio){
-        return new EdificioDTO(edificio.getDireccion(), edificio.getCiudad(), edificio.getCodigoPostal(), edificio.getPais());
+        return new EdificioDTO(edificio.getIdEdificio(), edificio.getDireccion(), edificio.getCiudad(), edificio.getCodigoPostal(), edificio.getPais());
     }
 
     public static Edificio parseToEntity(EdificioDTO edificioDTO){
         Edificio edificio = new Edificio();
 
+        edificioDTO.setIdEdificio(edificio.getIdEdificio());
         edificio.setDireccion(edificioDTO.getDireccion());
         edificio.setCiudad(edificioDTO.getCiudad());
         edificio.setCodigoPostal(edificioDTO.getCodigoPostal());

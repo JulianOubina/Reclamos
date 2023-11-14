@@ -114,6 +114,7 @@ public class UnidadController {
     //PARSER METHOD
     public UnidadDTO parseDTO(Unidad unidad){
         UnidadDTO unidadDTO = new UnidadDTO();
+        unidadDTO.setIdUnidad(unidad.getIdUnidad());
         if(unidad.getDueño() != null)
             unidadDTO.setIdDueno(unidad.getDueño().getIdUsuario());
         unidadDTO.setDepartamento(unidad.getDepartamento());
@@ -127,6 +128,7 @@ public class UnidadController {
     public Unidad parseToEntity(UnidadDTO unidadDTO){
         Unidad unidad = new Unidad();
 
+        unidad.setIdUnidad(unidadDTO.getIdUnidad());
         if(unidadDTO.getIdDueno() != null)
             unidad.setDueño(duenoService.findById(unidadDTO.getIdDueno()));
         unidad.setPiso(unidadDTO.getPiso());
