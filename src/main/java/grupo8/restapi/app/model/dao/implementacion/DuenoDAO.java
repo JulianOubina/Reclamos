@@ -1,6 +1,7 @@
 package grupo8.restapi.app.model.dao.implementacion;
 
 import grupo8.restapi.app.model.dao.interfaces.IDuenoDAO;
+import grupo8.restapi.app.model.entity.reclamo.Reclamo;
 import grupo8.restapi.app.model.entity.unidad.Unidad;
 import grupo8.restapi.app.model.entity.usuarios.Dueno;
 import jakarta.persistence.EntityManager;
@@ -60,6 +61,13 @@ public class DuenoDAO implements IDuenoDAO {
         for (Unidad u : unidades) {
             u.setDueño(null);
             session.update(u);
+        }
+
+        List<Reclamo> reclamos = dueno.getReclamos();
+
+        for (Reclamo r: reclamos){
+            r.setUsuario(null);
+            session.update(r);
         }
 
         session.delete(dueno);

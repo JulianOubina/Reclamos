@@ -1,18 +1,11 @@
 package grupo8.restapi.app.model.entity.usuarios;
 
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-import jakarta.persistence.Temporal;
-import jakarta.persistence.TemporalType;
-import jakarta.persistence.DiscriminatorColumn;
-import jakarta.persistence.DiscriminatorType;
-import jakarta.persistence.Inheritance;
-import jakarta.persistence.InheritanceType;
+import grupo8.restapi.app.model.entity.reclamo.Reclamo;
+import jakarta.persistence.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)  // todos los hijos en la misma tabla
@@ -28,6 +21,8 @@ public class Usuario {
     protected int telefono;
     protected String email;
     protected String direcion;
+    @OneToMany(mappedBy = "usuario", cascade = CascadeType.PERSIST)
+    protected List<Reclamo> reclamos = new ArrayList<>();
 
     public Usuario() {
     }
@@ -67,6 +62,14 @@ public class Usuario {
 
     public String getContraseña() {
         return contraseña;
+    }
+
+    public List<Reclamo> getReclamos() {
+        return reclamos;
+    }
+
+    public void setReclamos(List<Reclamo> reclamos) {
+        this.reclamos = reclamos;
     }
 
     public void setContraseña(String contraseña) {

@@ -151,7 +151,8 @@ public class ReclamoGeneralController {
     private ReclamoGeneral parseEntity(ReclamoGeneralDTO reclamoGeneralDTO){
         ReclamoGeneral reclamoGeneral = new ReclamoGeneral();
 
-        reclamoGeneral.setIdReclamo(reclamoGeneralDTO.getIdReclamo());
+        if(reclamoGeneralDTO.getIdReclamo() != null)
+            reclamoGeneral.setIdReclamo(reclamoGeneralDTO.getIdReclamo());
 
         // reclamoGeneral.setFecha(reclamoGeneralDTO.getFecha());
         reclamoGeneral.setDescripcion(reclamoGeneralDTO.getDescripcion());

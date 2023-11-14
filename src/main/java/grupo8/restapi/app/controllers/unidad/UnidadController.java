@@ -128,7 +128,10 @@ public class UnidadController {
     public Unidad parseToEntity(UnidadDTO unidadDTO){
         Unidad unidad = new Unidad();
 
-        unidad.setIdUnidad(unidadDTO.getIdUnidad());
+        System.out.println(unidadDTO);
+
+        if(unidadDTO.getIdUnidad() != null)
+            unidad.setIdUnidad(unidadDTO.getIdUnidad());
         if(unidadDTO.getIdDueno() != null)
             unidad.setDueño(duenoService.findById(unidadDTO.getIdDueno()));
         unidad.setPiso(unidadDTO.getPiso());

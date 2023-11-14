@@ -1,6 +1,7 @@
 package grupo8.restapi.app.model.dao.implementacion;
 
 import grupo8.restapi.app.model.dao.interfaces.IInquilinoDAO;
+import grupo8.restapi.app.model.entity.reclamo.Reclamo;
 import grupo8.restapi.app.model.entity.unidad.Unidad;
 import grupo8.restapi.app.model.entity.usuarios.Inquilino;
 import jakarta.persistence.EntityManager;
@@ -81,6 +82,14 @@ public class InquilinoDAO implements IInquilinoDAO {
 
             session.update(unidad);
         }
+
+        List<Reclamo> reclamos = inquilino.getReclamos();
+
+        for (Reclamo r: reclamos){
+            r.setUsuario(null);
+            session.update(r);
+        }
+
         session.delete(inquilino);
     }
 
