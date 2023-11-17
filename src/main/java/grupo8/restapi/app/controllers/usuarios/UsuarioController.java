@@ -1,5 +1,8 @@
 package grupo8.restapi.app.controllers.usuarios;
 
+import grupo8.restapi.app.model.dto.usuarios.AdminDTO;
+import grupo8.restapi.app.model.entity.usuarios.Admin;
+import grupo8.restapi.app.model.entity.usuarios.Usuario;
 import grupo8.restapi.app.service.intefaces.IUsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +19,14 @@ public class UsuarioController {
 
     @GetMapping("/nombreUs/{nombreUs}")
     public ResponseEntity<?> getNombreUs(@PathVariable String nombreUs){
-        return new ResponseEntity<>(usuarioService.findUser(nombreUs), null, 200);
+        return new ResponseEntity<>(parseDTO(usuarioService.findUser(nombreUs)), null, 200);
     }
+
+
+    // PARSE DTO
+
+    private AdminDTO parseDTO(Usuario usuario){
+        return new AdminDTO(usuario.getIdUsuario(),usuario.getNombre(), usuario.getNombreUs(), usuario.getTelefono(), usuario.getEmail(), usuario.getDirecion());
+    }
+
 }

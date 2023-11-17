@@ -78,7 +78,7 @@ public class UsuarioDAO implements IUsuarioDAO {
     }
 
     @Override
-    public long findUser(String nombreUs) {
+    public Usuario findUser(String nombreUs) {
         try {
             Session session = entityManager.unwrap(Session.class);
 
@@ -87,10 +87,10 @@ public class UsuarioDAO implements IUsuarioDAO {
 
             Usuario retorno = (Usuario) q.getSingleResult();
 
-            return retorno.getIdUsuario();
+            return retorno;
         }catch (NoResultException e) {
             System.out.println("No se encontro el usuario");
-            return 0;
+            return null;
         }
 
     }

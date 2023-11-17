@@ -69,7 +69,7 @@ public class UsuarioService implements IUsuarioService {
     }
 
     @Override
-    public long findUser(String nombreUs) {
+    public Usuario findUser(String nombreUs) {
         return usuarioDAO.findUser(nombreUs);
     }
 }

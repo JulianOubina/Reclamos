@@ -10,5 +10,5 @@ public interface IUsuarioDAO {
     void save(Usuario usuario);
     void delete(Usuario usuario);
     Usuario findUser(String nombreUs, String contraseña);
-    long findUser(String nombreUs);
+    Usuario findUser(String nombreUs);
 }
