@@ -120,7 +120,8 @@ public class AdminController {
     private Admin parseToEntity(AdminDTO adminDTO){
         Admin admin = new Admin();
 
-        admin.setIdUsuario(adminDTO.getIdAdmin());
+        if(adminDTO.getIdAdmin() != null)
+            admin.setIdUsuario(adminDTO.getIdAdmin());
         admin.setNombre(adminDTO.getNombre());
         admin.setNombreUs(adminDTO.getNombreUs());
         admin.setTelefono(adminDTO.getTelefono());

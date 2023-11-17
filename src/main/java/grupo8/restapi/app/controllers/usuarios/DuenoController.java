@@ -122,7 +122,8 @@ public class DuenoController {
     private Dueno parseEntity(DuenoDTO duenoDTO){
         Dueno retorno = new Dueno();
 
-        retorno.setIdUsuario(duenoDTO.getIdDueno());
+        if(duenoDTO.getIdDueno() != null)
+            retorno.setIdUsuario(duenoDTO.getIdDueno());
         retorno.setNombre(duenoDTO.getNombre());
         retorno.setNombreUs(duenoDTO.getNombreUs());
         retorno.setTelefono(duenoDTO.getTelefono());

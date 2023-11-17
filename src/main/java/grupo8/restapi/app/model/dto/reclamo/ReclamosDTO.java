@@ -4,6 +4,7 @@ import java.util.Date;
 
 public class ReclamosDTO {
     private Long idReclamo;
+    private String tipo;
     private Date fecha;
     private String descripcion;
     private Long idEdificio;
@@ -11,6 +12,7 @@ public class ReclamosDTO {
     private String lugar;
     private String estado;
     private String mensaje;
+
 
     public ReclamosDTO() {
     }
@@ -56,6 +58,14 @@ public class ReclamosDTO {
 
     public Long getIdReclamo() {
         return idReclamo;
+    }
+
+    public String getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
     }
 
     public void setIdReclamo(Long idReclamo) {

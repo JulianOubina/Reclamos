@@ -72,13 +72,31 @@ public class ReclamosController {
         reclamosDTO.setIdReclamo(i.getIdReclamo());
         reclamosDTO.setFecha(i.getFecha());
         reclamosDTO.setDescripcion(i.getDescripcion());
-        reclamosDTO.setIdEdificio(i.getEdificio().getIdEdificio());
-        reclamosDTO.setIdUsuario(i.getUsuario().getIdUsuario());
+        try {
+            reclamosDTO.setIdEdificio(i.getEdificio().getIdEdificio());
+        }catch (NullPointerException e){
+            reclamosDTO.setIdEdificio(null);
+        }
+        try {
+            reclamosDTO.setIdUsuario(i.getUsuario().getIdUsuario());
+        }catch (NullPointerException e){
+            reclamosDTO.setIdUsuario(null);
+        }
+        reclamosDTO.setTipo(getTipo(i));
         reclamosDTO.setLugar(getLugar(i));
         reclamosDTO.setEstado(i.getEstado().getEstado());
         reclamosDTO.setMensaje(i.getEstado().getMensaje());
 
         return reclamosDTO;
+    }
+
+    private String getTipo(Reclamo i) {
+        if(i instanceof ReclamoGeneral)
+            return "General";
+        else if (i instanceof ReclamoUnidad)
+            return "Unidad";
+        else
+            return null;
     }
 
     private String getLugar(Reclamo i){

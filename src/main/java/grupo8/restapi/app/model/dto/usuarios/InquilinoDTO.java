@@ -3,7 +3,7 @@ package grupo8.restapi.app.model.dto.usuarios;
 import grupo8.restapi.app.model.dto.unidad.UnidadDTO;
 
 public class InquilinoDTO {
-    private long idInquilino;
+    private Long idInquilino;
     private String nombre;
     private String nombreUs;
     private int telefono;
@@ -47,11 +47,11 @@ public class InquilinoDTO {
         return idUnidad;
     }
 
-    public long getIdInquilino() {
+    public Long getIdInquilino() {
         return idInquilino;
     }
 
-    public void setIdInquilino(long idInquilino) {
+    public void setIdInquilino(Long idInquilino) {
         this.idInquilino = idInquilino;
     }
 

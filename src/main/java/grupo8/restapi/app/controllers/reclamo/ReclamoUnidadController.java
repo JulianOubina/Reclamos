@@ -21,7 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@CrossOrigin(origins = "*")
+@CrossOrigin(methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE}, origins = "*", allowedHeaders = "*")
 @RequestMapping("api")
 public class ReclamoUnidadController {
     @Autowired
@@ -156,6 +156,7 @@ public class ReclamoUnidadController {
 
         if(dto.getIdReclamo() != null)
             retorno.setIdReclamo(dto.getIdReclamo());
+
         retorno.setFecha(dto.getFecha());
         retorno.setDescripcion(dto.getDescripcion());
 

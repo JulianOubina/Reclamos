@@ -125,7 +125,6 @@ public class InquilinoController {
     private InquilinoDTO parseDTO(Inquilino inquilino){
         InquilinoDTO inquilinoDTO = new InquilinoDTO();
 
-        inquilinoDTO.setIdInquilino(inquilino.getIdUsuario());
         inquilinoDTO.setNombre(inquilino.getNombre());
         inquilinoDTO.setNombreUs(inquilino.getNombreUs());
         inquilinoDTO.setTelefono(inquilino.getTelefono());
@@ -141,7 +140,8 @@ public class InquilinoController {
     private Inquilino parseToEntity(InquilinoDTO inquilinoDTO){
         Inquilino inquilino = new Inquilino();
 
-        inquilino.setIdUsuario(inquilinoDTO.getIdInquilino());
+        if(inquilinoDTO.getIdInquilino() != null)
+            inquilino.setIdUsuario(inquilinoDTO.getIdInquilino());
         inquilino.setNombre(inquilinoDTO.getNombre());
         inquilino.setNombreUs(inquilinoDTO.getNombreUs());
         inquilino.setTelefono(inquilinoDTO.getTelefono());

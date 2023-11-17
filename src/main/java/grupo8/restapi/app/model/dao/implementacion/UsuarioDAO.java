@@ -35,6 +35,7 @@ public class UsuarioDAO implements IUsuarioDAO {
         Session session = entityManager.unwrap(Session.class);
 
         Usuario retorno = session.get(Usuario.class, id);
+        System.out.println(retorno);
         return retorno;
     }
 

@@ -69,7 +69,7 @@ public class UnidadController {
             return new ResponseEntity<>(mensaje, null, 400);
         }
 
-        unidadService.save(unidad);  // TODO SE ROMPE CON NULLS
+        unidadService.save(unidad);
         return new ResponseEntity<>(unidadDTO, null, 201);
     }
 
@@ -128,8 +128,6 @@ public class UnidadController {
     public Unidad parseToEntity(UnidadDTO unidadDTO){
         Unidad unidad = new Unidad();
 
-        System.out.println(unidadDTO);
-
         if(unidadDTO.getIdUnidad() != null)
             unidad.setIdUnidad(unidadDTO.getIdUnidad());
         if(unidadDTO.getIdDueno() != null)
@@ -146,14 +144,20 @@ public class UnidadController {
     // METODOS DE VERIFICACION
 
     private boolean verificarUnidadParam(Unidad unidad) {
-        if (unidad.getEdificio() == null)
-            return true;
-        if (unidad.getDueño() == null)
-            return true;
-        if(unidad.getEstado() == null)
-            return true;
-        if(unidad.getDepartamento() == null)
-            return true;
+        System.out.println(unidad);
+
+        if (unidad.getEdificio() == null){
+            System.out.println(unidad.getEdificio() == null);
+            return true;}
+        if (unidad.getDueño() == null){
+            System.out.println(unidad.getEdificio() == null);
+            return true;}
+        if(unidad.getEstado() == null){
+            System.out.println(unidad.getEdificio() == null);
+            return true;}
+        if(unidad.getDepartamento() == null){
+            System.out.println(unidad.getEdificio() == null);
+            return true;}
         return false;
     }
 
