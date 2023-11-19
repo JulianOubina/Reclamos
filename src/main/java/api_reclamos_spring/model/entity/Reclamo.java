@@ -5,38 +5,26 @@ import java.util.Date;
 import org.hibernate.annotations.CreationTimestamp;
 
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Inheritance;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
+import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
 
-public class Reclamo {
+@Entity
+@Table(name = "reclamos")
+public abstract class Reclamo {
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     private String titulo;
-   
-    public Date getFecha() {
-		return fecha;
-	}
-
-	public void setFecha(Date fecha) {
-		this.fecha = fecha;
-	}
-
-	public String getDescripcion() {
-		return descripcion;
-	}
-
-	public void setDescripcion(String descripcion) {
-		this.descripcion = descripcion;
-	}
-
 	private String comentario;
 
     @OneToOne
@@ -63,8 +51,7 @@ public class Reclamo {
     	super();
     }
     
-	public Reclamo(String titulo, String comentario, Usuario creador, Estado estado) {
-		super();
+	public Reclamo(String titulo, String comentario, Estado estado) {
 		this.titulo = titulo;
 		this.comentario = comentario;
 		this.estado = estado;
@@ -117,5 +104,21 @@ public class Reclamo {
 	
 	public void setCreador(Usuario creador) {
 		this.creador = creador;
+	}
+	
+	public Date getFecha() {
+		return fecha;
+	}
+
+	public void setFecha(Date fecha) {
+		this.fecha = fecha;
+	}
+
+	public String getDescripcion() {
+		return descripcion;
+	}
+
+	public void setDescripcion(String descripcion) {
+		this.descripcion = descripcion;
 	}
 }

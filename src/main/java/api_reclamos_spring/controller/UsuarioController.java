@@ -5,28 +5,43 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import api_reclamos_spring.model.dto.UsuarioDTO;
 import api_reclamos_spring.model.entity.Usuario;
 import api_reclamos_spring.service.IUsuarioService;
 
-
 @RestController
-@RequestMapping("/api")
+@CrossOrigin(origins = "http://localhost:3000")
+@RequestMapping("/usuario")
 public class UsuarioController {
 	
 	@Autowired
 	private IUsuarioService usuarioService;
-	
-	@GetMapping({ "/usuarios", ""})
+
+	@PostMapping("/register")
+	public ResponseEntity<?> register(@RequestBody Usuario usuario) {
+		System.out.println(usuario.getNombre_usuario());
+
+		String plainPassword = usuario.getContraseña();
+
+		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+		String hashedPassword = passwordEncoder.encode(plainPassword);
+		usuario.setContraseña(hashedPassword);
+
+		Usuario existingUser = usuarioService.findByUsername(usuario.getNombre_usuario());
+		if (existingUser != null) {
+			String mensaje = "El nombre de usuario '" + usuario.getNombre_usuario() + "' ya está en uso";
+			return new ResponseEntity<>(mensaje, HttpStatus.BAD_REQUEST);
+		}
+
+		usuarioService.save(usuario);
+
+		return new ResponseEntity<>(usuario, HttpStatus.CREATED);
+	}
+
+	@GetMapping({"/search"})
 	public List<UsuarioDTO> findAll(){
 		List<Usuario> usuarios = usuarioService.findAll();
         List<UsuarioDTO> usuarioDTOs = new ArrayList<>();
@@ -38,8 +53,8 @@ public class UsuarioController {
 
         return usuarioDTOs;
 	}
-	
-	@GetMapping("/usuarios/{usuarioId}")
+
+	@GetMapping("/searchId/{usuarioId}")
 	public ResponseEntity<?> getUsuario(@PathVariable int usuarioId) {
 		Usuario usuario = usuarioService.findById(usuarioId);		
 
@@ -51,12 +66,33 @@ public class UsuarioController {
 		UsuarioDTO usuarioDTO = convertToDTO(usuario);
 		return new ResponseEntity<>(usuarioDTO, HttpStatus.OK);
 	}
-	
-	@PostMapping("/usuarios")
+
+	@GetMapping("/searchUsername/{nombre_usuario}")
+	public ResponseEntity<?> getUsuarioByNombreUsuario(@PathVariable String nombre_usuario) {
+		Usuario usuario = usuarioService.findByUsername(nombre_usuario);
+
+		if (usuario == null) {
+			String mensaje = "Usuario no encontrado con ese nombre de usuario: " + nombre_usuario;
+			return new ResponseEntity<>(mensaje, HttpStatus.NOT_FOUND);
+		}
+
+		UsuarioDTO usuarioDTO = convertToDTO(usuario);
+		return new ResponseEntity<>(usuarioDTO, HttpStatus.OK);
+	}
+
+	@PostMapping("/add")
 	public ResponseEntity<UsuarioDTO> addUsuario(@RequestBody UsuarioDTO usuarioDTO) {
-		
+
+		String plainPassword = usuarioDTO.getContraseña();
+		System.out.println(plainPassword);
+		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+		String hashedPassword = passwordEncoder.encode(plainPassword);
+		System.out.println(hashedPassword);
+		usuarioDTO.setContraseña(hashedPassword);
+
+		System.out.println(passwordEncoder.matches(plainPassword, hashedPassword));
 		Usuario usuarioNew = convertToEntity(usuarioDTO);
-		
+
 		usuarioService.save(usuarioNew);
 		
 		UsuarioDTO nuevoClienteDTO = convertToDTO(usuarioNew);
@@ -64,7 +100,7 @@ public class UsuarioController {
 		return new ResponseEntity<>(nuevoClienteDTO, HttpStatus.CREATED);
 	}
 	
-	@PutMapping("/usuarios/{usuarioId}")
+	@PutMapping("/update/{usuarioId}")
 	public ResponseEntity<?> updateUsuario(@PathVariable int usuarioId, @RequestBody UsuarioDTO usuarioDTO) {
 
 		Usuario usuarioOld = usuarioService.findById(usuarioId);
@@ -81,7 +117,7 @@ public class UsuarioController {
 		return new ResponseEntity<>(usuarioUpdatedDTO, HttpStatus.OK);
 	}
 	
-	@DeleteMapping("usuarios/{usuarioId}")
+	@DeleteMapping("/delete/{usuarioId}")
 	public ResponseEntity<String> deleteUsuario(@PathVariable int usuarioId) {
 
 		Usuario usuario = usuarioService.findById(usuarioId);
@@ -96,17 +132,18 @@ public class UsuarioController {
 		String mensaje = "Usuario eliminado [usuarioId: " + usuarioId + "]";
 		return new ResponseEntity<>(mensaje, HttpStatus.OK);
 	}
-	
+
 	private UsuarioDTO convertToDTO(Usuario usuario) {
-		UsuarioDTO usuarioDTO = new UsuarioDTO(usuario.getNombre_usuario(), usuario.getContraseña());
+		UsuarioDTO usuarioDTO = new UsuarioDTO(usuario.getNombre_usuario(), usuario.getContraseña(), usuario.getTipo());
 		return usuarioDTO;
 	}
-	
+
 	private Usuario convertToEntity(UsuarioDTO usuarioDTO) {
 		Usuario usuario = new Usuario();
-		
-		usuario.setNombre(usuarioDTO.getNombre_usuario());
-		usuario.setApellido(usuarioDTO.getContraseña());
+
+		usuario.setNombre_usuario(usuarioDTO.getNombre_usuario());
+		usuario.setContraseña(usuarioDTO.getContraseña());
+		usuario.setTipo(usuarioDTO.getTipo());
 
 		return usuario;
 	}

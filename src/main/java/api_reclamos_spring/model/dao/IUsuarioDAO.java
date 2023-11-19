@@ -10,4 +10,5 @@ public interface IUsuarioDAO {
 	public void save(Usuario usuario);
 	public void deleteById(int id);
 	public Usuario findUser(String username, String password);
+	public Usuario findByUsername(String username);
 }

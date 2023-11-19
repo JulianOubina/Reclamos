@@ -10,6 +10,7 @@ import api_reclamos_spring.model.entity.Usuario;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 
+
 @Repository
 public class UsuarioDAOImpl implements IUsuarioDAO {
 	
@@ -28,6 +29,18 @@ public class UsuarioDAOImpl implements IUsuarioDAO {
 	}
 
 	@Override
+	public Usuario findByUsername(String username) {
+		Session currentSession = entityManager.unwrap(Session.class);
+		try {
+			Query query = currentSession.createQuery("SELECT u FROM Usuario u WHERE u.nombreUsuario = :username");
+			query.setParameter("username", username);
+			return (Usuario) query.getSingleResult();
+		} catch (Exception ex) {
+			return null;
+		}
+	}
+
+	@Override
 	@Transactional(readOnly = true)
 	public Usuario findById(int id) {
 		Session currentSession = entityManager.unwrap(Session.class);
@@ -38,10 +51,10 @@ public class UsuarioDAOImpl implements IUsuarioDAO {
 	}
 
 	@Override
-	@Transactional
+	@Transactional(rollbackFor = Exception.class)
 	public void save(Usuario usuario) {
 		Session currentSession = entityManager.unwrap(Session.class);
-		
+
 		currentSession.persist(usuario);
 
 	}
@@ -51,16 +64,17 @@ public class UsuarioDAOImpl implements IUsuarioDAO {
 	public void deleteById(int id) {
 		Session currentSession = entityManager.unwrap(Session.class);
 		
-		Query<Usuario> theQuery = currentSession.createQuery("delete from Usuario whre id=:idCliente");
+		Query<Usuario> theQuery = currentSession.createQuery("delete from Usuario where id=:idCliente");
 		theQuery.setParameter("idCliente", id);
 		theQuery.executeUpdate();
 	}
 
 	@Override
+	@Transactional(readOnly = true)
 	public Usuario findUser(String username, String password) {
 		Session currentSession = entityManager.unwrap(Session.class);
 
-		Query<Usuario> theQuery = currentSession.createQuery("FROM Usuario WHERE username=:username", Usuario.class);
+		Query<Usuario> theQuery = currentSession.createQuery("FROM Usuario WHERE nombreUsuario=:username", Usuario.class);
 		theQuery.setParameter("username", username);
 
 		Usuario user = theQuery.uniqueResult();
@@ -71,14 +85,11 @@ public class UsuarioDAOImpl implements IUsuarioDAO {
 			return null;
 		}
 	}
-	
-	private boolean checkPassword(String password, String passwordDB) {
-		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-		System.out.println("Password: " + password);
-		System.out.println("passwordDB: " + passwordDB);
-		boolean isPasswordMatch = passwordEncoder.matches(password, passwordDB);
-		
-		return isPasswordMatch;
-	}
 
+	public boolean checkPassword(String plainPassword, String hashedPassword) {
+		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+		boolean prueba = passwordEncoder.matches(plainPassword, hashedPassword);
+		System.out.println(prueba);
+		return passwordEncoder.matches(plainPassword, hashedPassword);
+	}
 }

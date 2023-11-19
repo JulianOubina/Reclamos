@@ -5,24 +5,20 @@ import javax.crypto.SecretKey;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import api_reclamos_spring.model.dto.UsuarioDTO;
 import api_reclamos_spring.service.IUsuarioService;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:3000")
 @RequestMapping("/auth")
 public class AuthController {
 	
-	private final int EXPIRATION_TIME_IN_MIN = 1;
-	
-	@Autowired
+	private final int EXPIRATION_TIME_IN_MIN = 60;
+
 	private IUsuarioService usuarioService;
-	@Autowired
 	private SecretKey secretKey;
 	
 	public AuthController(IUsuarioService usuarioService, SecretKey secretKey) {
@@ -42,5 +38,4 @@ public class AuthController {
 			return new ResponseEntity<>("Credenciales invalidas.", HttpStatus.UNAUTHORIZED);
 		}
 	}
-
 }

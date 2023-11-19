@@ -4,17 +4,14 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import api_reclamos_spring.model.entity.ReclamoEdificio;
 import api_reclamos_spring.service.IReclamoEdificioService;
 
 
 
 @RestController
+@CrossOrigin(origins = "*")
 @RequestMapping("/api")
 public class ReclamoEdificioController {
 	

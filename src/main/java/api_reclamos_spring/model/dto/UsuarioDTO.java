@@ -1,26 +1,30 @@
 package api_reclamos_spring.model.dto;
 
+import api_reclamos_spring.model.entity.Usuario;
+
 public class UsuarioDTO {
-	private String nombre_usuario;
+	private String nombreUsuario;
 	private String contraseña;
-	
-	public UsuarioDTO() {
+	private Usuario.Tipo tipo;
+
+	public UsuarioDTO(){
 		super();
 	}
-	
-	public UsuarioDTO(String nombre_usuario, String contraseña) {
+
+	public UsuarioDTO(String nombreUsuario, String contraseña, Usuario.Tipo tipo) {
 		super();
 		
-		this.nombre_usuario = nombre_usuario;
+		this.nombreUsuario = nombreUsuario;
 		this.contraseña = contraseña;
+		this.tipo = tipo;
 	}
 	
 	public String getNombre_usuario() {
-		return nombre_usuario;
+		return nombreUsuario;
 	}
 
-	public void setNombre_usuario(String nombre_usuario) {
-		this.nombre_usuario = nombre_usuario;
+	public void setNombre_usuario(String nombreUsuario) {
+		this.nombreUsuario = nombreUsuario;
 	}
 	
 	public String getContraseña() {
@@ -29,5 +33,12 @@ public class UsuarioDTO {
 
 	public void setContraseña(String contraseña) {
 		this.contraseña = contraseña;
+	}
+
+	public Usuario.Tipo getTipo() {
+		return tipo;
+	}
+	public void setTipo(Usuario.Tipo tipo) {
+		this.tipo = tipo;
 	}
 }

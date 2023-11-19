@@ -1,27 +1,27 @@
 package api_reclamos_spring.model.entity;
 
 
-import java.util.List;
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "reclamoEdificio")
 public class ReclamoEdificio extends Reclamo{
+	@Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
+	
 	private String descripcion; 
 	
 	public ReclamoEdificio() {
     }
 	
-	public ReclamoEdificio(String descripcion, Estado estado, String titulo) {
-        super(titulo, descripcion, estado, imagen);
+	public ReclamoEdificio(String titulo, String comentario, Estado estado, String descripcion) {
+        super(titulo, comentario, estado);
+        this.descripcion = descripcion;
 	}
+	
 
 	public String getDescripcion() {
 		return descripcion;

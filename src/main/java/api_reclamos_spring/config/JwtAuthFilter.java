@@ -41,9 +41,9 @@ public class JwtAuthFilter extends OncePerRequestFilter {
 				}
 			}
 		} catch (Exception e) {
-			SecurityContextHolder.clearContext(); 
-			response.sendError(HttpServletResponse.SC_UNAUTHORIZED, e.getMessage()); 
-			return; 
+			SecurityContextHolder.clearContext();
+			response.sendError(HttpServletResponse.SC_UNAUTHORIZED, e.getMessage());
+			return;
 		}
 
 		filterChain.doFilter(request, response);
@@ -53,7 +53,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
 		String bearerToken = request.getHeader("Authorization");
 
 		if (bearerToken != null && bearerToken.startsWith("Bearer ")) {
-			return bearerToken.substring(7); 
+			return bearerToken.substring(7);
 		}
 
 		return null;
@@ -96,6 +96,5 @@ public class JwtAuthFilter extends OncePerRequestFilter {
 			return null;
 		}
 	}
-
 }
 

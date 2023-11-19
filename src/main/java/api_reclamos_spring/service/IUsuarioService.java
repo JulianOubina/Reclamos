@@ -11,4 +11,6 @@ public interface IUsuarioService {
 	public void update(int usuarioId, Usuario usuario);
 	public void deleteById(int id);
 	public Usuario findUser(String username, String password);
+
+	public Usuario findByUsername(String username);
 }
