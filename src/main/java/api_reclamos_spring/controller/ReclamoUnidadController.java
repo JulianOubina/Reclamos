@@ -11,7 +11,7 @@ import api_reclamos_spring.service.IReclamoUnidadService;
 
 
 @RestController
-@CrossOrigin(origins = "*")
+@CrossOrigin(origins = "http://localhost:3000")
 @RequestMapping("/api")
 public class ReclamoUnidadController {
 	

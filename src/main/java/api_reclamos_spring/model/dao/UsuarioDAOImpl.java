@@ -29,6 +29,7 @@ public class UsuarioDAOImpl implements IUsuarioDAO {
 	}
 
 	@Override
+	@Transactional(readOnly = true)
 	public Usuario findByUsername(String username) {
 		Session currentSession = entityManager.unwrap(Session.class);
 		try {

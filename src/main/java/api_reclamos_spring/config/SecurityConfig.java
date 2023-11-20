@@ -20,15 +20,15 @@ public class SecurityConfig {
 	@Bean
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception { //'HttpSecurity' analiza cada solicitud http que es enviada a nuestra aplicacion
 		http.authorizeHttpRequests(
-			(authz) -> authz.anyRequest().authenticated())
-			.addFilterBefore(jwtAuth(), UsernamePasswordAuthenticationFilter.class)
-			.csrf(AbstractHttpConfigurer::disable);
+						(authz) -> authz.anyRequest().authenticated())
+				.addFilterBefore(jwtAuth(), UsernamePasswordAuthenticationFilter.class)
+				.csrf(AbstractHttpConfigurer::disable);
 		return http.build();
 	}
 
 	@Bean
 	public WebSecurityCustomizer webSecurityCustomizer() {
-		return (web) -> web.ignoring().requestMatchers("auth/login", "usuario/search", "usuario/register");
+		return (web) -> web.ignoring().requestMatchers("auth/login", "usuario/search", "usuario/searchUsername/**", "usuario/register", "/usuario/searchId/**", "/usuario/delete/**", "/usuario/update/**");
 	}
 
 	@Bean

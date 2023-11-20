@@ -15,16 +15,16 @@ import io.jsonwebtoken.SignatureAlgorithm;
 @CrossOrigin(origins = "http://localhost:3000")
 @RequestMapping("/auth")
 public class AuthController {
-	
+
 	private final int EXPIRATION_TIME_IN_MIN = 60;
 
 	private IUsuarioService usuarioService;
 	private SecretKey secretKey;
-	
+
 	public AuthController(IUsuarioService usuarioService, SecretKey secretKey) {
-        this.usuarioService = usuarioService;
-        this.secretKey = secretKey;
-    }
+		this.usuarioService = usuarioService;
+		this.secretKey = secretKey;
+	}
 
 	@PostMapping("/login")
 	public ResponseEntity<String> login(@RequestBody UsuarioDTO credentials) {

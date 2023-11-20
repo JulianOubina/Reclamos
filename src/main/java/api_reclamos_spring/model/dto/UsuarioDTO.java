@@ -3,6 +3,7 @@ package api_reclamos_spring.model.dto;
 import api_reclamos_spring.model.entity.Usuario;
 
 public class UsuarioDTO {
+	private int id;
 	private String nombreUsuario;
 	private String contraseña;
 	private Usuario.Tipo tipo;
@@ -11,14 +12,22 @@ public class UsuarioDTO {
 		super();
 	}
 
-	public UsuarioDTO(String nombreUsuario, String contraseña, Usuario.Tipo tipo) {
+	public UsuarioDTO(int id, String nombreUsuario, String contraseña, Usuario.Tipo tipo) {
 		super();
-		
+		this.id = id;
 		this.nombreUsuario = nombreUsuario;
 		this.contraseña = contraseña;
 		this.tipo = tipo;
 	}
-	
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
 	public String getNombre_usuario() {
 		return nombreUsuario;
 	}

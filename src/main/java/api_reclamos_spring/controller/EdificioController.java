@@ -12,18 +12,18 @@ import api_reclamos_spring.service.IEdificioService;
 
 
 @RestController
-@CrossOrigin(origins = "*")
-@RequestMapping("/api")
+@CrossOrigin(origins = "http://localhost:3000")
+@RequestMapping("/edificio")
 public class EdificioController {
-	
+
 	@Autowired
 	private IEdificioService edificioService;
-	
+
 	@GetMapping({ "/edificios", ""})
 	public List<Edificio> findAll(){
 		return edificioService.findAll();
 	}
-	
+
 	@GetMapping("/edificios/{edificioId}")
 	public ResponseEntity<?> getEdificio(@PathVariable int edificioId) {
 		Edificio edificio = edificioService.findById(edificioId);
@@ -35,15 +35,15 @@ public class EdificioController {
 
 		return new ResponseEntity<>(edificio, HttpStatus.OK);
 	}
-	
-	@PostMapping("/edificios")
+
+	@PostMapping("/add")
 	public ResponseEntity<Edificio> addEdificio(@RequestBody Edificio edificio) {
-		
+
 		edificioService.save(edificio);
 
 		return new ResponseEntity<>(edificio, HttpStatus.CREATED);
 	}
-	
+
 	@PutMapping("/edificios/{edificioId}")
 	public ResponseEntity<?> updateEdificio(@PathVariable int edificioId, @RequestBody Edificio edificio) {
 
@@ -58,7 +58,7 @@ public class EdificioController {
 
 		return new ResponseEntity<>(edificio, HttpStatus.OK);
 	}
-	
+
 	@DeleteMapping("edificios/{edificioId}")
 	public ResponseEntity<String> deleteEdificio(@PathVariable int edificioId) {
 

@@ -16,7 +16,7 @@ import api_reclamos_spring.service.IUsuarioService;
 @CrossOrigin(origins = "http://localhost:3000")
 @RequestMapping("/usuario")
 public class UsuarioController {
-	
+
 	@Autowired
 	private IUsuarioService usuarioService;
 
@@ -44,19 +44,19 @@ public class UsuarioController {
 	@GetMapping({"/search"})
 	public List<UsuarioDTO> findAll(){
 		List<Usuario> usuarios = usuarioService.findAll();
-        List<UsuarioDTO> usuarioDTOs = new ArrayList<>();
+		List<UsuarioDTO> usuarioDTOs = new ArrayList<>();
 
-        for (Usuario usuario : usuarios) {
-        	UsuarioDTO usuarioDTO = convertToDTO(usuario);
-        	usuarioDTOs.add(usuarioDTO);
-        }
+		for (Usuario usuario : usuarios) {
+			UsuarioDTO usuarioDTO = convertToDTO(usuario);
+			usuarioDTOs.add(usuarioDTO);
+		}
 
-        return usuarioDTOs;
+		return usuarioDTOs;
 	}
 
 	@GetMapping("/searchId/{usuarioId}")
 	public ResponseEntity<?> getUsuario(@PathVariable int usuarioId) {
-		Usuario usuario = usuarioService.findById(usuarioId);		
+		Usuario usuario = usuarioService.findById(usuarioId);
 
 		if (usuario == null) {
 			String mensaje = "Usuario no encontrado con ID: " + usuarioId;
@@ -94,12 +94,12 @@ public class UsuarioController {
 		Usuario usuarioNew = convertToEntity(usuarioDTO);
 
 		usuarioService.save(usuarioNew);
-		
+
 		UsuarioDTO nuevoClienteDTO = convertToDTO(usuarioNew);
 
 		return new ResponseEntity<>(nuevoClienteDTO, HttpStatus.CREATED);
 	}
-	
+
 	@PutMapping("/update/{usuarioId}")
 	public ResponseEntity<?> updateUsuario(@PathVariable int usuarioId, @RequestBody UsuarioDTO usuarioDTO) {
 
@@ -112,11 +112,11 @@ public class UsuarioController {
 
 		Usuario usuarioToUpdate = convertToEntity(usuarioDTO);
 		usuarioService.update(usuarioId, usuarioToUpdate);
-		
+
 		UsuarioDTO usuarioUpdatedDTO = convertToDTO(usuarioToUpdate);
 		return new ResponseEntity<>(usuarioUpdatedDTO, HttpStatus.OK);
 	}
-	
+
 	@DeleteMapping("/delete/{usuarioId}")
 	public ResponseEntity<String> deleteUsuario(@PathVariable int usuarioId) {
 
@@ -134,7 +134,7 @@ public class UsuarioController {
 	}
 
 	private UsuarioDTO convertToDTO(Usuario usuario) {
-		UsuarioDTO usuarioDTO = new UsuarioDTO(usuario.getNombre_usuario(), usuario.getContraseña(), usuario.getTipo());
+		UsuarioDTO usuarioDTO = new UsuarioDTO(usuario.getId(), usuario.getNombre_usuario(), usuario.getContraseña(), usuario.getTipo());
 		return usuarioDTO;
 	}
 
@@ -148,5 +148,7 @@ public class UsuarioController {
 		return usuario;
 	}
 }
+
+
 
 

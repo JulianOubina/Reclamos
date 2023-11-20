@@ -63,15 +63,14 @@ public class JwtAuthFilter extends OncePerRequestFilter {
 		try {
 			Jws<Claims> claimsJws = Jwts.parserBuilder().setSigningKey(secretKey).build().parseClaimsJws(token);
 
-			if (isTokenSignatureValid(claimsJws) && isTokenNotExpired(claimsJws.getBody().getExpiration())) {
-				return true;
-			}
+			// If the above line doesn't throw an exception, the token is valid
+			return true;
 		} catch (Exception e) {
 			System.out.println("ERROR: " + e.getMessage());
+			return false;
 		}
-
-		return false;
 	}
+
 
 	private boolean isTokenSignatureValid(Jws<Claims> claimsJws) {
 		try {
@@ -97,4 +96,3 @@ public class JwtAuthFilter extends OncePerRequestFilter {
 		}
 	}
 }
-
