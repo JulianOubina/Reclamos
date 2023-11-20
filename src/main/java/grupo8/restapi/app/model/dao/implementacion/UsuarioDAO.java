@@ -74,7 +74,6 @@ public class UsuarioDAO implements IUsuarioDAO {
         }catch (NoResultException e) {
             return null;
         }
-
     }
 
     @Override
@@ -87,9 +86,13 @@ public class UsuarioDAO implements IUsuarioDAO {
 
             Usuario retorno = (Usuario) q.getSingleResult();
 
+
             return retorno;
         }catch (NoResultException e) {
             System.out.println("No se encontro el usuario");
+            return null;
+        }catch (Exception e) {
+            System.out.println("Error al buscar el usuario");
             return null;
         }
 

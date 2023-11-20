@@ -6,6 +6,7 @@ import java.util.List;
 
 public interface IUsuarioService {
     List<Usuario> getAll();
+    List<Usuario> getClients();
     Usuario getById(long id);
     void save(Usuario usuario);
     void update(long id, Usuario usuario);

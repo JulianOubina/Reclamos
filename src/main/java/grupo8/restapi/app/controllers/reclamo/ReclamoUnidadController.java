@@ -188,8 +188,13 @@ public class ReclamoUnidadController {
         {
             if( estado.equals("alquilado") )
                 flag = false;
-
         }
+
+        /*if(usuario instanceof Inquilino)
+        {
+            if( ((Inquilino) usuario).getUnidad() != reclamoUnidad.getUnidad())
+                flag = false;
+        }*/
 
         return flag;
     }

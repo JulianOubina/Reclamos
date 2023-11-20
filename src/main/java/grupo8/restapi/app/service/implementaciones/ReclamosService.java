@@ -1,6 +1,7 @@
 package grupo8.restapi.app.service.implementaciones;
 
 import grupo8.restapi.app.model.entity.reclamo.Reclamo;
+import grupo8.restapi.app.model.entity.reclamo.imagen.ImagenReclamo;
 import grupo8.restapi.app.service.intefaces.IReclamosService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,5 +27,10 @@ public class ReclamosService implements IReclamosService {
     @Override
     public List<Reclamo> findByIdEdificio(long idEdificio) {
         return reclamoDAO.findByIdEdificio(idEdificio);
+    }
+
+    @Override
+    public List<ImagenReclamo> findFotos(Reclamo reclamo) {
+        return reclamoDAO.findFotos(reclamo);
     }
 }

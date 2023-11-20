@@ -9,16 +9,34 @@ import grupo8.restapi.app.service.intefaces.IUsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class UsuarioService implements IUsuarioService {
     @Autowired
     private UsuarioDAO usuarioDAO;
+    @Autowired
+    private DuenoService duenoService;
+    @Autowired
+    private InquilinoService inquilinoService;
 
     @Override
     public List<Usuario> getAll() {
         return usuarioDAO.getAll();
+    }
+
+    @Override
+    public List<Usuario> getClients() {
+        List<Usuario> retorno = new ArrayList<>();
+
+        List<Dueno> duenos = duenoService.findAll();
+        List<Inquilino> inquilinos = inquilinoService.getAll();
+
+        retorno.addAll(duenos);
+        retorno.addAll(inquilinos);
+
+        return retorno;
     }
 
     @Override

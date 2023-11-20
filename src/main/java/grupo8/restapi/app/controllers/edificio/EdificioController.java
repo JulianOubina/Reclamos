@@ -22,6 +22,7 @@ public class EdificioController {
     private IEdificioService edificioService;
 
     @GetMapping("/edificios")
+    @PreAuthorize("hasAnyAuthority('admin','inquilino','dueno')")
     public List<EdificioDTO> getAll() {
         List<EdificioDTO> listaEdifcios = new ArrayList<>();
 

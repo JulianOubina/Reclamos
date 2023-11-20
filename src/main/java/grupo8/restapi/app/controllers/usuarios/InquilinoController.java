@@ -125,6 +125,7 @@ public class InquilinoController {
     private InquilinoDTO parseDTO(Inquilino inquilino){
         InquilinoDTO inquilinoDTO = new InquilinoDTO();
 
+        inquilinoDTO.setIdInquilino(inquilino.getIdUsuario());
         inquilinoDTO.setNombre(inquilino.getNombre());
         inquilinoDTO.setNombreUs(inquilino.getNombreUs());
         inquilinoDTO.setTelefono(inquilino.getTelefono());

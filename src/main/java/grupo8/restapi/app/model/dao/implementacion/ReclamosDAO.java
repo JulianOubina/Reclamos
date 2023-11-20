@@ -2,6 +2,7 @@ package grupo8.restapi.app.model.dao.implementacion;
 
 import grupo8.restapi.app.model.dao.interfaces.IReclamosDAO;
 import grupo8.restapi.app.model.entity.reclamo.Reclamo;
+import grupo8.restapi.app.model.entity.reclamo.imagen.ImagenReclamo;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import org.hibernate.query.Query;
@@ -45,6 +46,18 @@ public class ReclamosDAO implements IReclamosDAO {
         q.setParameter("id", idEdificio);
 
         List<Reclamo> retorno = q.getResultList();
+
+        return retorno;
+    }
+
+    @Override
+    public List<ImagenReclamo> findFotos(Reclamo reclamo) {
+        Session session = entityManager.unwrap(Session.class);
+
+        Query<ImagenReclamo> q = session.createQuery("FROM ImagenReclamo WHERE reclamo=:reclamo", ImagenReclamo.class);
+        q.setParameter("reclamo", reclamo);
+
+        List<ImagenReclamo> retorno = q.getResultList();
 
         return retorno;
     }

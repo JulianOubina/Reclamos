@@ -1,5 +1,7 @@
 package grupo8.restapi.app.controllers.reclamo;
 
+import grupo8.restapi.app.model.dto.reclamo.ImagenReclamoDTO;
+import grupo8.restapi.app.model.entity.reclamo.Reclamo;
 import grupo8.restapi.app.model.entity.reclamo.imagen.ImagenReclamo;
 import grupo8.restapi.app.service.intefaces.IReclamosService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +14,8 @@ import grupo8.restapi.app.service.intefaces.IImagenReclamoService;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 @CrossOrigin(origins = "*")
@@ -33,6 +37,24 @@ public class ImagenReclamoController {
         else{
             return new ResponseEntity<>("No Se Encontro la foto con el id "+ id ,null, HttpStatus.BAD_REQUEST);
         }
+    }
+
+    @GetMapping("/reclamo/{id}")
+    public ResponseEntity<?> getImagenesDeReclamo(@PathVariable Long id){
+        Reclamo reclamo = reclamosService.findById(id);
+
+        if(reclamo == null){
+            return new ResponseEntity<>("No Se Encontro el reclamo con el id "+ id ,null, HttpStatus.BAD_REQUEST);
+        }
+
+        List<ImagenReclamo> fotos = reclamosService.findFotos(reclamo);
+        List<ImagenReclamoDTO> dto = new ArrayList<>();
+
+        for (ImagenReclamo ir : fotos) {
+            dto.add(parseDto(ir));
+        }
+
+        return new ResponseEntity<>( dto ,null, HttpStatus.OK);
     }
 
     @PostMapping("/subir")
@@ -62,5 +84,17 @@ public class ImagenReclamoController {
         imagenReclamoService.delete(id);
 
         return ResponseEntity.ok("Imagen eliminada exitosamente.");
+    }
+
+    // PARSER DTOS
+
+    private ImagenReclamoDTO parseDto(ImagenReclamo imagenReclamo){
+        ImagenReclamoDTO imagenReclamoDTO = new ImagenReclamoDTO();
+
+        imagenReclamoDTO.setId(imagenReclamo.getId());
+
+        imagenReclamoDTO.setIdReclamo(imagenReclamo.getReclamo().getIdReclamo());
+
+        return imagenReclamoDTO;
     }
 }
