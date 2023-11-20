@@ -1,12 +1,9 @@
 package api_reclamos_spring.model.entity;
 
-
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-
+import api_reclamos_spring.model.entity.Unidad;
+import jakarta.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "usuario")
@@ -19,7 +16,10 @@ public class Usuario {
 	private String nombre;
 	private String apellido;
 	private int telefono;
-	
+	@ManyToOne
+	@JoinColumn(name = "unidad_id")
+	private Unidad unidad;
+
 	public enum Tipo {
 	    ADMINISTRADOR,
 	    DUEÑO,
@@ -41,6 +41,18 @@ public class Usuario {
 		this.apellido = apellido;
 		this.telefono = telefono;
 		this.tipo = tipo;
+	}
+
+	public Usuario(String nombreUsuario, String contraseña, String nombre, String apellido, int telefono, Tipo tipo, Unidad unidad) {
+		super();
+
+		this.nombreUsuario = nombreUsuario;
+		this.contraseña = contraseña;
+		this.nombre = nombre;
+		this.apellido = apellido;
+		this.telefono = telefono;
+		this.tipo = tipo;
+		this.unidad = unidad;
 	}
 
 	public int getId() {

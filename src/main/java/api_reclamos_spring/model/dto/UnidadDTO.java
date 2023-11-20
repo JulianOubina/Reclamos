@@ -4,53 +4,69 @@ import java.util.List;
 
 public class UnidadDTO {
 
-	private UsuarioDTO dueño;
-	private List<UsuarioDTO> inquilinos;
-	private EdificioDTO edificio;
-	private List<ReclamoUnidadDTO> reclamos;
+	private int id;
+	private int idDueno;
+	private int piso;
+	private String departamento;
+	private String estado;
+	private int idEdificio;
 
 	public UnidadDTO() {
 	}
 
-	public UnidadDTO(UsuarioDTO dueño, List<UsuarioDTO> inquilinos, EdificioDTO edificio, List<ReclamoUnidadDTO> reclamos) {
-		this.dueño = dueño;
-		this.inquilinos = inquilinos;
-		this.edificio = edificio;
-		this.reclamos = reclamos;
+	public UnidadDTO(int idDueno, int piso, String departamento, String estado, int idEdificio) {
+		this.idDueno = idDueno;
+		this.piso = piso;
+		this.departamento = departamento;
+		this.estado = estado;
+		this.idEdificio = idEdificio;
 	}
 
-	public UsuarioDTO getDueño() {
-		return dueño;
+	public int getId() {
+		return id;
 	}
 
-	public void setDueño(UsuarioDTO dueño) {
-		this.dueño = dueño;
+	public void setId(int id) {
+		this.id = id;
 	}
 
-	public List<UsuarioDTO> getInquilinos() {
-		return inquilinos;
+	public int getIdDueno() {
+		return idDueno;
 	}
 
-	public void setInquilinos(List<UsuarioDTO> inquilinos) {
-		this.inquilinos = inquilinos;
+	public void setIdDueno(int idDueno) {
+		this.idDueno = idDueno;
 	}
 
-	public EdificioDTO getEdificio() {
-		return edificio;
+	public int getPiso() {
+		return piso;
 	}
 
-	public void setEdificio(EdificioDTO edificio) {
-		this.edificio = edificio;
+	public void setPiso(int piso) {
+		this.piso = piso;
 	}
 
-	public List<ReclamoUnidadDTO> getReclamos() {
-		return reclamos;
+	public String getDepartamento() {
+		return departamento;
 	}
 
-	public void setReclamos(List<ReclamoUnidadDTO> reclamos) {
-		this.reclamos = reclamos;
+	public void setDepartamento(String departamento) {
+		this.departamento = departamento;
 	}
 
-	
+	public String getEstado() {
+		return estado;
+	}
 
+	public void setEstado(String estado) {
+		this.estado = estado;
+	}
+
+	public int getIdEdificio() {
+		return idEdificio;
+	}
+
+	public void setIdEdificio(int idEdificio) {
+		this.idEdificio = idEdificio;
+	}
 }

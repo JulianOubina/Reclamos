@@ -46,8 +46,9 @@ public class EdificioServiceImpl implements IEdificioService {
 		if(edificioExist != null) {
 			edificioExist.setDueño(edificio.getDueño());
 			edificioExist.setCalle(edificio.getCalle());
-			edificioExist.setNumero(1010);
-			
+			edificioExist.setNumero(edificio.getNumero());
+			edificioExist.setCiudad(edificio.getCiudad());
+			edificioExist.setUnidades(edificio.getUnidades());
 			
 			edificioDAO.save(edificioExist);
 		}

@@ -19,6 +19,22 @@ public class ReclamoUnidadImpl implements IReclamoUnidadService {
 	}
 
 	@Override
+	public void update(int id, ReclamoUnidad reclamo) {
+		ReclamoUnidad reclamoExiste = reclamoUnidadDAO.findById(id);
+
+		if(reclamoExiste != null){
+
+			reclamoExiste.setDescripcion(reclamo.getDescripcion());
+			reclamoExiste.setEstado(reclamo.getEstado());
+			reclamoExiste.setFecha(reclamo.getFecha());
+			reclamoExiste.setEdificio(reclamo.getEdificio());
+			reclamoExiste.setUnidad(reclamo.getUnidad());
+
+			reclamoUnidadDAO.save(reclamoExiste);
+		}
+	}
+
+	@Override
 	public ReclamoUnidad findById(int id) {
 		ReclamoUnidad reclamo = reclamoUnidadDAO.findById(id);
 		return reclamo;

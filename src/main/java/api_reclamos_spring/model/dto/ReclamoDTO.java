@@ -1,6 +1,7 @@
 package api_reclamos_spring.model.dto;
 
 public class ReclamoDTO {
+	private int id;
 	private String titulo;
 	private String comentario;
 	private UsuarioDTO creador;
@@ -9,10 +10,19 @@ public class ReclamoDTO {
     	super();
     }
     
-	public ReclamoDTO(String titulo, String comentario, UsuarioDTO creador) {
+	public ReclamoDTO(int id, String titulo, String comentario, UsuarioDTO creador) {
+		this.id = id;
 		this.titulo = titulo;
 		this.comentario = comentario;
 		this.creador = creador;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	public String getTitulo() {

@@ -25,26 +25,6 @@ public class ReclamoServiceImpl implements IReclamoService {
 	}
 
 	@Override
-	public void save(Reclamo reclamo) {
-		reclamo.setTitulo("hola");
-		reclamoDAO.save(reclamo);
-	}
-
-	@Override
-	public void update(int reclamoId, Reclamo reclamo) {
-		Reclamo reclamoExist = reclamoDAO.findById(reclamoId);
-		
-		if(reclamoExist != null) {
-			reclamoExist.setComentario(reclamo.getComentario());
-			reclamoExist.setTitulo("hola");
-			reclamoExist.setCreador(reclamo.getCreador());
-			
-			
-			reclamoDAO.save(reclamoExist);
-		}
-	}
-
-	@Override
 	public void deleteById(int id) {
 		reclamoDAO.deleteById(id);
 	}

@@ -36,11 +36,11 @@ public class UnidadServiceImpl implements IUnidadService {
 		Unidad unidadExist = unidadDAO.findById(unidadId);
 		
 		if(unidadExist != null) {
-			unidadExist.setDueño(unidad.getDueño());
+			unidadExist.setPiso(unidad.getPiso());
+			unidadExist.setDepartamento(unidad.getDepartamento());
 			unidadExist.setEdificio(unidad.getEdificio());
 			unidadExist.setInquilinos(unidad.getInquilinos());
-			unidadExist.setReclamos(unidad.getReclamos());
-			unidadExist.setId(1010);
+			unidadExist.setId(unidad.getId());
 			
 			unidadDAO.save(unidadExist);
 		}

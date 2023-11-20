@@ -53,6 +53,7 @@ public class UsuarioServiceImpl implements IUsuarioService {
 			usuarioExist.setApellido(usuario.getApellido());
 			usuarioExist.setTelefono(usuario.getTelefono());
 			usuarioExist.setTipo(usuario.getTipo());
+
 			usuarioDAO.save(usuarioExist);
 		}
 	}

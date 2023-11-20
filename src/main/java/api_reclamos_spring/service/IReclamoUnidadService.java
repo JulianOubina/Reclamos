@@ -6,6 +6,9 @@ import api_reclamos_spring.model.entity.ReclamoUnidad;
 
 public interface IReclamoUnidadService {
 	public List<ReclamoUnidad> findAll();
-	public ReclamoUnidad findById(int id);
+
+    void update(int id, ReclamoUnidad reclamo);
+
+    public ReclamoUnidad findById(int id);
 	public void deleteById(int id);
 }

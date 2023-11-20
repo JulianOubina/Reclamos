@@ -34,29 +34,6 @@ public class ReclamoController {
 		return new ResponseEntity<>(reclamo, HttpStatus.OK);
 	}
 	
-	@PostMapping("/reclamos")
-	public ResponseEntity<Reclamo> addEdificio(@RequestBody Reclamo reclamo) {
-		
-		reclamoService.save(reclamo);
-
-		return new ResponseEntity<>(reclamo, HttpStatus.CREATED);
-	}
-	
-	@PutMapping("/reclamos/{reclamoId}")
-	public ResponseEntity<?> updateEdificio(@PathVariable int reclamoId, @RequestBody Reclamo reclamo) {
-
-		Reclamo reclamoOld = reclamoService.findById(reclamoId);
-
-		if (reclamoOld == null) {
-			String mensaje = "Reclamo no encontrado con ID: " + reclamoId;
-			return new ResponseEntity<>(mensaje, HttpStatus.NOT_FOUND);
-		}
-
-		reclamoService.update(reclamoId, reclamo);
-
-		return new ResponseEntity<>(reclamo, HttpStatus.OK);
-	}
-	
 	@DeleteMapping("reclamos/{reclamoId}")
 	public ResponseEntity<String> deleteEdificio(@PathVariable int reclamoId) {
 

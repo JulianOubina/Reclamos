@@ -23,24 +23,14 @@ public class Unidad {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-	
-	@OneToOne
-	@JoinColumn(name = "dueño_id")
-	private Usuario dueño;
-	
+
+	private int piso;
+	private String departamento;
 	@ManyToOne
 	@JoinColumn(name = "edificio_id")
 	private Edificio edificio;
-	
-	@ManyToMany(cascade = CascadeType.PERSIST)
-	@JoinTable(name = "inquilinos_id", 
-					joinColumns = @JoinColumn(name = "unidad_FK_id"), 
-	inverseJoinColumns = @JoinColumn(name = "usuario_FK_id"))
+	@OneToMany(mappedBy = "unidad", cascade = CascadeType.ALL)
 	private List<Usuario> inquilinos = new ArrayList<Usuario>();
-	
-	
-	@OneToMany(mappedBy = "unidad", cascade = CascadeType.REMOVE, orphanRemoval = true)
-	private List<ReclamoUnidad> reclamos = new ArrayList<ReclamoUnidad>();
 	
 	public enum Estado {
 	    DISPONIBLE,
@@ -53,11 +43,26 @@ public class Unidad {
 		super();
 	}
 	
-	public Unidad(Usuario dueño, Edificio edificio, Estado estado) {
-		super();
-		this.dueño = dueño;
-		this.edificio = edificio;
+	public Unidad(int piso, String departamento, Estado estado) {
+		this.piso = piso;
+		this.departamento = departamento;
 		this.estado = estado;
+	}
+
+	public String getDepartamento() {
+		return departamento;
+	}
+
+	public void setDepartamento(String departamento) {
+		this.departamento = departamento;
+	}
+
+	public int getPiso() {
+		return piso;
+	}
+
+	public void setPiso(int piso) {
+		this.piso = piso;
 	}
 
 	public int getId() {
@@ -66,14 +71,6 @@ public class Unidad {
 
 	public void setId(int id) {
 		this.id = id;
-	}
-
-	public Usuario getDueño() {
-		return dueño;
-	}
-
-	public void setDueño(Usuario dueño) {
-		this.dueño = dueño;
 	}
 
 	public List<Usuario> getInquilinos() {
@@ -91,14 +88,6 @@ public class Unidad {
 	public void setEdificio(Edificio edificio) {
 		this.edificio = edificio;
 	}
-	
-	public List<ReclamoUnidad> getReclamos() {
-		return reclamos;
-	}
-
-	public void setReclamos(List<ReclamoUnidad> reclamos) {
-		this.reclamos = reclamos;
-	}
 
 	public Estado getEstado() {
 		return estado;
@@ -107,13 +96,6 @@ public class Unidad {
 	public void setEstado(Estado estado) {
 		this.estado = estado;
 	}
-
-	@Override
-	public String toString() {
-		return "Unidad [id=" + id + ", dueño=" + dueño + ", edificio=" + edificio + ", inquilinos=" + inquilinos
-				+ ", reclamos=" + reclamos + ", estado=" + estado + "]";
-	}
-
 	
 }
 

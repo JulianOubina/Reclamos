@@ -26,6 +26,22 @@ public class ReclamoEdificioImpl implements IReclamoEdificioService {
 	}
 
 	@Override
+	public void update(int id, ReclamoEdificio reclamo) {
+		ReclamoEdificio reclamoExiste = reclamoEdificioDAO.findById(id);
+
+		if(reclamoExiste != null){
+			reclamoExiste.setDescripcion(reclamo.getDescripcion());
+			reclamoExiste.setEstado(reclamo.getEstado());
+			reclamoExiste.setFecha(reclamo.getFecha());
+			reclamoExiste.setEdificio(reclamo.getEdificio());
+			reclamoExiste.setComentario(reclamo.getComentario());
+			reclamoExiste.setTitulo(reclamo.getTitulo());
+
+			reclamoEdificioDAO.save(reclamoExiste);
+		}
+	}
+
+	@Override
 	public void deleteById(int id) {
 		reclamoEdificioDAO.deleteById(id);
 

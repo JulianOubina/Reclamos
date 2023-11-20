@@ -8,10 +8,6 @@ import jakarta.persistence.Id;
 
 @Entity
 public class ReclamoEdificio extends Reclamo{
-	@Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
-	
 	private String descripcion; 
 	
 	public ReclamoEdificio() {
