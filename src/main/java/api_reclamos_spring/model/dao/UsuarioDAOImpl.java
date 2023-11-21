@@ -52,6 +52,20 @@ public class UsuarioDAOImpl implements IUsuarioDAO {
 	}
 
 	@Override
+	@Transactional(readOnly = true)
+	public List<Usuario> findByTipo(Usuario.Tipo tipo) {
+		Session currentSession = entityManager.unwrap(Session.class);
+
+		String hql = "FROM Usuario u WHERE u.tipo = :tipoUsuario";
+		Query<Usuario> query = currentSession.createQuery(hql, Usuario.class);
+		query.setParameter("tipoUsuario", tipo);
+
+		List<Usuario> usuarios = query.getResultList();
+
+		return usuarios;
+	}
+
+	@Override
 	@Transactional(rollbackFor = Exception.class)
 	public void save(Usuario usuario) {
 		Session currentSession = entityManager.unwrap(Session.class);

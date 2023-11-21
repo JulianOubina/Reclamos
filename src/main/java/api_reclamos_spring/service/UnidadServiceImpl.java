@@ -27,7 +27,6 @@ public class UnidadServiceImpl implements IUnidadService {
 
 	@Override
 	public void save(Unidad unidad) {
-		unidad.setId(1010);
 		unidadDAO.save(unidad);
 	}
 
@@ -39,7 +38,7 @@ public class UnidadServiceImpl implements IUnidadService {
 			unidadExist.setPiso(unidad.getPiso());
 			unidadExist.setDepartamento(unidad.getDepartamento());
 			unidadExist.setEdificio(unidad.getEdificio());
-			unidadExist.setInquilinos(unidad.getInquilinos());
+			unidadExist.setInquilino(unidad.getInquilino());
 			unidadExist.setId(unidad.getId());
 			
 			unidadDAO.save(unidadExist);

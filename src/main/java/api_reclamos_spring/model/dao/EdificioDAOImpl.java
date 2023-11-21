@@ -45,7 +45,7 @@ public class EdificioDAOImpl implements IEdificioDAO {
 	public void deleteById(int id) {
 		Session currentSession = entityManager.unwrap(Session.class);
 		
-		Query<Edificio> theQuery = currentSession.createQuery("delete from Edificio whre id=:idEdificio");
+		Query<Edificio> theQuery = currentSession.createQuery("delete from Edificio where id=:idEdificio");
 		theQuery.setParameter("idEdificio", id);
 		theQuery.executeUpdate();
 	}

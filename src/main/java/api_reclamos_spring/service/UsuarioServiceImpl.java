@@ -37,6 +37,7 @@ public class UsuarioServiceImpl implements IUsuarioService {
 	}
 
 	@Override
+	@Transactional(noRollbackFor = Exception.class)
 	public void save(Usuario usuario) {
 		usuarioDAO.save(usuario);
 	}
@@ -46,7 +47,6 @@ public class UsuarioServiceImpl implements IUsuarioService {
 		Usuario usuarioExist = usuarioDAO.findById(usuarioId);
 		
 		if(usuarioExist != null) {
-			usuarioExist.setId(usuario.getId());
 			usuarioExist.setNombre_usuario(usuario.getNombre_usuario());
 			usuarioExist.setContraseña(usuario.getContraseña());
 			usuarioExist.setNombre(usuario.getNombre());
@@ -61,6 +61,14 @@ public class UsuarioServiceImpl implements IUsuarioService {
 	@Override
 	public void deleteById(int id) {
 		usuarioDAO.deleteById(id);
+	}
+
+	@Override
+	public List<Usuario> findByTipo(Usuario.Tipo tipo) {
+
+		List<Usuario> usuarios = usuarioDAO.findByTipo(tipo);
+
+		return usuarios;
 	}
 
 	@Override

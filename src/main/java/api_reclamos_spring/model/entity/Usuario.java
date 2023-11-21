@@ -9,14 +9,14 @@ import java.util.List;
 @Table(name = "usuario")
 public class Usuario {
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
 	private String nombreUsuario;
 	private String contraseña;
 	private String nombre;
 	private String apellido;
 	private int telefono;
-	@ManyToOne
+	@OneToOne
 	@JoinColumn(name = "unidad_id")
 	private Unidad unidad;
 
@@ -31,17 +31,6 @@ public class Usuario {
 	public Usuario() {
 		super();
 	}
-	
-	public Usuario(String nombreUsuario, String contraseña, String nombre, String apellido, int telefono, Tipo tipo) {
-		super();
-		
-		this.nombreUsuario = nombreUsuario;
-		this.contraseña = contraseña;
-		this.nombre = nombre;
-		this.apellido = apellido;
-		this.telefono = telefono;
-		this.tipo = tipo;
-	}
 
 	public Usuario(String nombreUsuario, String contraseña, String nombre, String apellido, int telefono, Tipo tipo, Unidad unidad) {
 		super();
@@ -54,6 +43,19 @@ public class Usuario {
 		this.tipo = tipo;
 		this.unidad = unidad;
 	}
+
+	public Usuario(String nombreUsuario, String contraseña, String nombre, String apellido, int telefono, Tipo tipo) {
+		super();
+		
+		this.nombreUsuario = nombreUsuario;
+		this.contraseña = contraseña;
+		this.nombre = nombre;
+		this.apellido = apellido;
+		this.telefono = telefono;
+		this.tipo = tipo;
+	}
+
+
 
 	public int getId() {
 		return id;
@@ -107,6 +109,14 @@ public class Usuario {
 
 	public void setTipo(Tipo tipo) {
 		this.tipo = tipo;
+	}
+
+	public Unidad getUnidad() {
+		return unidad;
+	}
+
+	public void setUnidad(Unidad unidad) {
+		this.unidad = unidad;
 	}
 
 	@Override

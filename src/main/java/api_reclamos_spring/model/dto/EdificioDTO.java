@@ -5,13 +5,15 @@ public class EdificioDTO {
 	private String calle;
 	private int numero;
 
+	private String ciudad;
 	public EdificioDTO() {
 	}
 
-	public EdificioDTO(int id, String calle, int numero) {
+	public EdificioDTO(int id, String calle, int numero, String ciudad) {
 		this.id = id;
 		this.calle = calle;
 		this.numero = numero;
+		this.ciudad = ciudad;
 	}
 
 	public int getId() {

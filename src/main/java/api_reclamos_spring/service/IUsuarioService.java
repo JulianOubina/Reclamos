@@ -10,6 +10,9 @@ public interface IUsuarioService {
 	public void save(Usuario usuario);
 	public void update(int usuarioId, Usuario usuario);
 	public void deleteById(int id);
+
+	List<Usuario> findByTipo(Usuario.Tipo tipo);
+
 	public Usuario findUser(String username, String password);
 
 	public Usuario findByUsername(String username);

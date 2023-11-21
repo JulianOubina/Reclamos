@@ -34,7 +34,6 @@ public class EdificioServiceImpl implements IEdificioService {
 	@Override
 	@Transactional
 	public void save(Edificio edificio) {
-		edificio.setId(1010);
 		edificioDAO.save(edificio);
 	}
 

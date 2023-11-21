@@ -29,8 +29,9 @@ public class Unidad {
 	@ManyToOne
 	@JoinColumn(name = "edificio_id")
 	private Edificio edificio;
-	@OneToMany(mappedBy = "unidad", cascade = CascadeType.ALL)
-	private List<Usuario> inquilinos = new ArrayList<Usuario>();
+	@OneToOne
+	@JoinColumn(name = "inquilino_id")
+	private Usuario inquilino;
 	
 	public enum Estado {
 	    DISPONIBLE,
@@ -73,14 +74,6 @@ public class Unidad {
 		this.id = id;
 	}
 
-	public List<Usuario> getInquilinos() {
-		return inquilinos;
-	}
-
-	public void setInquilinos(List<Usuario> inquilinos) {
-		this.inquilinos = inquilinos;
-	}
-
 	public Edificio getEdificio() {
 		return edificio;
 	}
@@ -96,6 +89,13 @@ public class Unidad {
 	public void setEstado(Estado estado) {
 		this.estado = estado;
 	}
-	
+
+	public Usuario getInquilino() {
+		return inquilino;
+	}
+
+	public void setInquilino(Usuario inquilino) {
+		this.inquilino = inquilino;
+	}
 }
 

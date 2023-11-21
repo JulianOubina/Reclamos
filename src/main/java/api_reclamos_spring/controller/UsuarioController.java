@@ -22,8 +22,9 @@ public class UsuarioController {
 
 	@PostMapping("/register")
 	public ResponseEntity<?> register(@RequestBody Usuario usuario) {
-		System.out.println(usuario.getNombre_usuario());
 
+		System.out.println(usuario.getNombre_usuario());
+		System.out.println(usuario.getUnidad());
 		String plainPassword = usuario.getContraseña();
 
 		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
@@ -101,8 +102,8 @@ public class UsuarioController {
 	}
 
 	@PutMapping("/update/{usuarioId}")
-	public ResponseEntity<?> updateUsuario(@PathVariable int usuarioId, @RequestBody UsuarioDTO usuarioDTO) {
-
+	public ResponseEntity<?> updateUsuario(@PathVariable int usuarioId, @RequestBody Usuario usuario) {
+		System.out.println(usuarioId);
 		Usuario usuarioOld = usuarioService.findById(usuarioId);
 
 		if (usuarioOld == null) {
@@ -110,10 +111,10 @@ public class UsuarioController {
 			return new ResponseEntity<>(mensaje, HttpStatus.NOT_FOUND);
 		}
 
-		Usuario usuarioToUpdate = convertToEntity(usuarioDTO);
-		usuarioService.update(usuarioId, usuarioToUpdate);
 
-		UsuarioDTO usuarioUpdatedDTO = convertToDTO(usuarioToUpdate);
+		usuarioService.update(usuarioId, usuario);
+
+		UsuarioDTO usuarioUpdatedDTO = convertToDTO(usuario);
 		return new ResponseEntity<>(usuarioUpdatedDTO, HttpStatus.OK);
 	}
 
@@ -131,6 +132,24 @@ public class UsuarioController {
 
 		String mensaje = "Usuario eliminado [usuarioId: " + usuarioId + "]";
 		return new ResponseEntity<>(mensaje, HttpStatus.OK);
+	}
+
+	@GetMapping("/searchByTipo/{tipo}")
+	public ResponseEntity<?> getUsuariosByTipo(@PathVariable Usuario.Tipo tipo) {
+		List<Usuario> usuarios = usuarioService.findByTipo(tipo);
+
+		if (usuarios.isEmpty()) {
+			String mensaje = "No se encontraron usuarios con el tipo: " + tipo;
+			return new ResponseEntity<>(mensaje, HttpStatus.NOT_FOUND);
+		}
+
+		List<UsuarioDTO> usuariosDTO = new ArrayList<>();
+		for (Usuario usuario : usuarios) {
+			UsuarioDTO usuarioDTO = convertToDTO(usuario);
+			usuariosDTO.add(usuarioDTO);
+		}
+
+		return new ResponseEntity<>(usuariosDTO, HttpStatus.OK);
 	}
 
 	private UsuarioDTO convertToDTO(Usuario usuario) {

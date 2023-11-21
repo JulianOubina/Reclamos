@@ -33,7 +33,23 @@ public class Edificio {
 	public Edificio() {
 		super();
 	}
-	
+
+	public Edificio(String calle, int numero, String ciudad, Usuario dueño, List<Unidad> unidades) {
+		super();
+		this.calle = calle;
+		this.numero = numero;
+		this.ciudad = ciudad;
+		this.dueño = dueño;
+		this.unidades = unidades;
+	}
+	public Edificio(String calle, int numero, String ciudad, Usuario dueño) {
+		super();
+		this.calle = calle;
+		this.numero = numero;
+		this.ciudad = ciudad;
+		this.dueño = dueño;
+	}
+
 	public Edificio(String calle, int numero, String ciudad) {
 		super();
 		this.calle = calle;

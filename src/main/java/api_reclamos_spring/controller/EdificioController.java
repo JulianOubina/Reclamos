@@ -19,12 +19,12 @@ public class EdificioController {
 	@Autowired
 	private IEdificioService edificioService;
 
-	@GetMapping({ "/edificios", ""})
+	@GetMapping({ "/search", ""})
 	public List<Edificio> findAll(){
 		return edificioService.findAll();
 	}
 
-	@GetMapping("/edificios/{edificioId}")
+	@GetMapping("/searchId/{edificioId}")
 	public ResponseEntity<?> getEdificio(@PathVariable int edificioId) {
 		Edificio edificio = edificioService.findById(edificioId);
 
@@ -44,7 +44,7 @@ public class EdificioController {
 		return new ResponseEntity<>(edificio, HttpStatus.CREATED);
 	}
 
-	@PutMapping("/edificios/{edificioId}")
+	@PutMapping("/update/{edificioId}")
 	public ResponseEntity<?> updateEdificio(@PathVariable int edificioId, @RequestBody Edificio edificio) {
 
 		Edificio edificioOld = edificioService.findById(edificioId);
@@ -59,7 +59,7 @@ public class EdificioController {
 		return new ResponseEntity<>(edificio, HttpStatus.OK);
 	}
 
-	@DeleteMapping("edificios/{edificioId}")
+	@DeleteMapping("delete/{edificioId}")
 	public ResponseEntity<String> deleteEdificio(@PathVariable int edificioId) {
 
 		Edificio edificio = edificioService.findById(edificioId);
