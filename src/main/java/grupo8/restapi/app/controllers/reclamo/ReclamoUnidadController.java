@@ -1,6 +1,7 @@
 package grupo8.restapi.app.controllers.reclamo;
 
-import grupo8.restapi.app.model.dto.reclamo.ReclamoUnidadDTO;;
+import grupo8.restapi.app.model.dto.reclamo.ReclamoUnidadDTO;
+import grupo8.restapi.app.model.dtoSinReferencias.reclamo.ReclamoUnidadDTOSinRef;
 import grupo8.restapi.app.model.entity.reclamo.ReclamoUnidad;
 import grupo8.restapi.app.model.entity.reclamo.estado.EstadoReclamo;
 import grupo8.restapi.app.model.entity.unidad.Unidad;
@@ -57,6 +58,21 @@ public class ReclamoUnidadController {
 
         return new ResponseEntity<>(parseDTO(reclamoUnidad), null, 200);
     }
+
+    @PreAuthorize("hasAuthority('admin')")
+    @GetMapping("/reclamoUnidadSinRef/{id}")
+    public ResponseEntity<?> getByIdSinRef(@PathVariable long id){
+        ReclamoUnidad reclamoUnidad = reclamoUnidadService.getById(id);
+
+        if(reclamoUnidad == null) {
+            String mensaje = "El reclamoUnidad con id " + id + " no existe";
+            return new ResponseEntity<>(mensaje, null, 404);
+        }
+
+        return new ResponseEntity<>(parseDTOSinRef(reclamoUnidad), null, 200);
+    }
+
+
 
     @PreAuthorize("hasAuthority('admin')")
     @GetMapping("/reclamoUnidadParam")
@@ -131,6 +147,26 @@ public class ReclamoUnidadController {
     }
 
     // PARSE METHODS
+
+    private ReclamoUnidadDTOSinRef parseDTOSinRef(ReclamoUnidad reclamoUnidad) {
+        ReclamoUnidadDTOSinRef retorno = new ReclamoUnidadDTOSinRef();
+
+        retorno.setIdReclamo(reclamoUnidad.getIdReclamo());
+        retorno.setFecha(reclamoUnidad.getFecha());
+        retorno.setDescripcion(reclamoUnidad.getDescripcion());
+        if(reclamoUnidad.getUnidad() != null)
+            retorno.setIdEdificio(reclamoUnidad.getEdificio().getDireccion());
+        if(reclamoUnidad.getUsuario() != null)
+            retorno.setUsuario(reclamoUnidad.getUsuario().getNombreUs());
+        if(reclamoUnidad.getUnidad() != null)
+            retorno.setUnidad(reclamoUnidad.getUnidad().getPiso() + " " + reclamoUnidad.getUnidad().getDepartamento());
+        if(reclamoUnidad.getEstado() != null){
+            retorno.setEstado(reclamoUnidad.getEstado().getEstado());
+            retorno.setMensaje(reclamoUnidad.getEstado().getMensaje());
+        }
+
+        return retorno;
+    }
 
     private ReclamoUnidadDTO parseDTO(ReclamoUnidad reclamoUnidad){
         ReclamoUnidadDTO retorno = new ReclamoUnidadDTO();

@@ -35,7 +35,7 @@ public class ReclamoGeneralService implements IReclamoGeneralService{
         if(reclamoExiste != null){
             reclamoExiste.setDescripcion(reclamo.getDescripcion());
             reclamoExiste.setEstado(reclamo.getEstado());
-            reclamoExiste.setFecha(reclamo.getFecha());
+            //reclamoExiste.setFecha(reclamo.getFecha());
             reclamoExiste.setEdificio(reclamo.getEdificio());
             reclamoExiste.setLugar(reclamo.getLugar());
             reclamoExiste.setImagen(reclamo.getImagen());

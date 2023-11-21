@@ -2,6 +2,7 @@ package grupo8.restapi.app.model.dao.implementacion;
 
 import grupo8.restapi.app.model.dao.interfaces.IUnidadDAO;
 import grupo8.restapi.app.model.entity.edificio.Edificio;
+import grupo8.restapi.app.model.entity.reclamo.Reclamo;
 import grupo8.restapi.app.model.entity.unidad.Unidad;
 import grupo8.restapi.app.model.entity.usuarios.Dueno;
 import jakarta.persistence.EntityManager;
@@ -72,7 +73,6 @@ public class UnidadDAO implements IUnidadDAO {
             edificio.setListaUnidades(unidades);
             session.update(edificio);
         }
-
     }
 
     @Override
@@ -97,5 +97,17 @@ public class UnidadDAO implements IUnidadDAO {
 
         session.update(unidad);
         session.update(dueno);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<Unidad> getByEstado(String estado) {
+        Session session = entityManager.unwrap(Session.class);
+
+        Query<Unidad> q = session.createQuery("FROM Unidad WHERE estado=:estado", Unidad.class);
+        q.setParameter("estado", estado);
+        List<Unidad> retorno = q.getResultList();
+
+        return retorno;
     }
 }

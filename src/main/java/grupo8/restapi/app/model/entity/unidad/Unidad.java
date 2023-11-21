@@ -1,6 +1,7 @@
 package grupo8.restapi.app.model.entity.unidad;
 
 import grupo8.restapi.app.model.entity.edificio.Edificio;
+import grupo8.restapi.app.model.entity.reclamo.ReclamoUnidad;
 import grupo8.restapi.app.model.entity.usuarios.Dueno;
 import grupo8.restapi.app.model.entity.usuarios.Inquilino;
 
@@ -25,6 +26,9 @@ public class Unidad {
     private Edificio edificio;
     @OneToMany(mappedBy = "unidad", cascade = CascadeType.ALL)
     private List<Inquilino> inquilinos = new ArrayList<Inquilino>();
+    @OneToMany(mappedBy = "unidad", cascade = CascadeType.ALL)
+    private List<ReclamoUnidad> reclamos = new ArrayList<ReclamoUnidad>();
+
 
     public Unidad(int piso, String departamento, EstadoUnidad estado) {
         this.piso = piso;
@@ -68,6 +72,14 @@ public class Unidad {
     }
     public void setEstado(String estado) {
         this.estado = estado;
+    }
+
+    public List<ReclamoUnidad> getReclamos() {
+        return reclamos;
+    }
+
+    public void setReclamos(List<ReclamoUnidad> reclamos) {
+        this.reclamos = reclamos;
     }
 
     public Edificio getEdificio() {

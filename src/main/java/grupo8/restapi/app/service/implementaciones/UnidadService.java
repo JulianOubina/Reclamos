@@ -49,6 +49,8 @@ public class UnidadService implements IUnidadService {
 
     @Override
     public void delete(Unidad unidad) {
+
+
         unidadDAO.delete(unidad);
     }
 
@@ -60,5 +62,10 @@ public class UnidadService implements IUnidadService {
     @Override
     public void unirDuenoUnidad(Unidad unidad, Dueno dueno) {
         unidadDAO.unirDuenoUnidad(unidad, dueno);
+    }
+
+    @Override
+    public List<Unidad> getByEstado(String estado) {
+        return unidadDAO.getByEstado(estado);
     }
 }

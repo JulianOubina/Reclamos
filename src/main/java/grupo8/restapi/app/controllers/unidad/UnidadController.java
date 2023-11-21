@@ -1,6 +1,7 @@
 package grupo8.restapi.app.controllers.unidad;
 
 import grupo8.restapi.app.model.dto.unidad.UnidadDTO;
+import grupo8.restapi.app.model.dtoSinReferencias.unidad.UnidadDTOSinRef;
 import grupo8.restapi.app.model.entity.unidad.Unidad;
 import grupo8.restapi.app.service.intefaces.IDuenoService;
 import grupo8.restapi.app.service.intefaces.IEdificioService;
@@ -31,6 +32,31 @@ public class UnidadController {
         List<UnidadDTO> unidadDTOList = new ArrayList<>();
 
         for (Unidad i : unidadService.getAll()) {
+            unidadDTOList.add(parseDTO(i));
+        }
+
+        return unidadDTOList;
+    }
+
+    @GetMapping("/unidadesSinRef")
+    @PreAuthorize("hasAnyAuthority('admin','inquilino','dueno')")
+    public List<UnidadDTOSinRef> getAllSinRef() {
+        List<UnidadDTOSinRef> unidadDTOList = new ArrayList<>();
+
+        for (Unidad i : unidadService.getAll()) {
+            unidadDTOList.add(parseDTOSinRef(i));
+        }
+
+        return unidadDTOList;
+    }
+
+
+
+    @GetMapping("/estado/{estado}")
+    public List<UnidadDTO> getByEstado(@PathVariable String estado){
+        List<UnidadDTO> unidadDTOList = new ArrayList<>();
+
+        for (Unidad i : unidadService.getByEstado(estado)) {
             unidadDTOList.add(parseDTO(i));
         }
 
@@ -113,6 +139,19 @@ public class UnidadController {
     }
 
     //PARSER METHOD
+    //
+    private UnidadDTOSinRef parseDTOSinRef(Unidad i) {
+        UnidadDTOSinRef unidadDTOSinRef = new UnidadDTOSinRef();
+
+        unidadDTOSinRef.setIdUnidad(i.getIdUnidad());
+        unidadDTOSinRef.setDepartamento(i.getDepartamento());
+        unidadDTOSinRef.setPiso(i.getPiso());
+        unidadDTOSinRef.setEstado(i.getEstado());
+        unidadDTOSinRef.setDueno(i.getDueño().getNombreUs());
+        unidadDTOSinRef.setEdificio(i.getEdificio().getDireccion());
+
+        return unidadDTOSinRef;
+    }
     public UnidadDTO parseDTO(Unidad unidad){
         UnidadDTO unidadDTO = new UnidadDTO();
         unidadDTO.setIdUnidad(unidad.getIdUnidad());

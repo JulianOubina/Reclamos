@@ -1,7 +1,7 @@
 package grupo8.restapi.app.controllers.reclamo;
 
-import grupo8.restapi.app.model.dto.reclamo.ReclamoGeneralDTO;
 import grupo8.restapi.app.model.dto.reclamo.ReclamosDTO;
+import grupo8.restapi.app.model.dtoSinReferencias.reclamo.ReclamosDTOSinRef;
 import grupo8.restapi.app.model.entity.reclamo.Reclamo;
 import grupo8.restapi.app.model.entity.reclamo.ReclamoGeneral;
 import grupo8.restapi.app.model.entity.reclamo.ReclamoUnidad;
@@ -34,6 +34,32 @@ public class ReclamosController {
         return reclamosDTOS;
     }
 
+    @PreAuthorize("hasAnyAuthority('admin')")
+    @GetMapping("/reclamos2")
+    public List<ReclamosDTOSinRef> getAllSinRef() {
+        List<ReclamosDTOSinRef> reclamosDTOS = new ArrayList<>();
+
+        for(Reclamo i : reclamosService.findAll()){
+            reclamosDTOS.add(parseDTOSinRef(i));
+        }
+
+        return reclamosDTOS;
+    }
+
+
+
+    @PreAuthorize("hasAuthority('admin')")
+    @GetMapping("/estadoreclamos/{estado}")
+    public List<ReclamosDTOSinRef> getByEstado(@PathVariable String estado) {
+        List<ReclamosDTOSinRef> reclamosDTOS = new ArrayList<>();
+
+        for(Reclamo i : reclamosService.findByEstado(estado)){
+            reclamosDTOS.add(parseDTOSinRef(i));
+        }
+
+        return reclamosDTOS;
+    }
+
     @PreAuthorize("hasAnyAuthority('admin','inquilino','dueno')")
     @GetMapping("/reclamo/{id}")
     public ResponseEntity<?> getById(@PathVariable long id){
@@ -47,6 +73,18 @@ public class ReclamosController {
     }
 
     @PreAuthorize("hasAnyAuthority('admin','inquilino','dueno')")
+    @GetMapping("/reclamoSinRef/{id}")
+    public ResponseEntity<?> getByIdSinRef(@PathVariable long id){
+        Reclamo reclamo = reclamosService.findById(id);
+
+        if (reclamo == null){
+            String mensaje = "El reclamo con id " + id + " no fue encontrado";
+            return new ResponseEntity<>(mensaje, null, 404);
+        }
+        return new ResponseEntity<>(parseDTOSinRef(reclamo), null, 200);
+    }
+
+    @PreAuthorize("hasAnyAuthority('admin','inquilino','dueno')")
     @GetMapping("/reclamo/")
     public ResponseEntity<?> getByIdEdificio(@RequestParam long idEdificio){
         List<Reclamo> reclamos = reclamosService.findByIdEdificio(idEdificio);
@@ -56,10 +94,10 @@ public class ReclamosController {
             return new ResponseEntity<>(mensaje, null, 404);
         }
 
-        List<ReclamosDTO> reclamosDTOS = new ArrayList<>();
+        List<ReclamosDTOSinRef> reclamosDTOS = new ArrayList<>();
 
         for(Reclamo i : reclamos){
-            reclamosDTOS.add(parseDTO(i));
+            reclamosDTOS.add(parseDTOSinRef(i));
         }
 
         return new ResponseEntity<>(reclamosDTOS, null, 200);
@@ -88,6 +126,30 @@ public class ReclamosController {
         reclamosDTO.setMensaje(i.getEstado().getMensaje());
 
         return reclamosDTO;
+    }
+
+    private ReclamosDTOSinRef parseDTOSinRef(Reclamo i) {
+        ReclamosDTOSinRef reclamosDTOSinRef = new ReclamosDTOSinRef();
+
+        reclamosDTOSinRef.setIdReclamo(i.getIdReclamo());
+        reclamosDTOSinRef.setFecha(i.getFecha());
+        reclamosDTOSinRef.setDescripcion(i.getDescripcion());
+        try {
+            reclamosDTOSinRef.setIdEdificio(i.getEdificio().getDireccion());
+        }catch (NullPointerException e){
+            reclamosDTOSinRef.setIdEdificio(null);
+        }
+        try {
+            reclamosDTOSinRef.setUsuario(i.getUsuario().getNombreUs());
+        }catch (NullPointerException e){
+            reclamosDTOSinRef.setUsuario(null);
+        }
+        reclamosDTOSinRef.setTipo(getTipo(i));
+        reclamosDTOSinRef.setLugar(getLugar(i));
+        reclamosDTOSinRef.setEstado(i.getEstado().getEstado());
+        reclamosDTOSinRef.setMensaje(i.getEstado().getMensaje());
+
+        return reclamosDTOSinRef;
     }
 
     private String getTipo(Reclamo i) {

@@ -13,4 +13,5 @@ public interface IUnidadDAO {
     void delete(Unidad unidad);
     void conectarUnidadAEd(Unidad unidad, Edificio edificio);
     void unirDuenoUnidad(Unidad unidad, Dueno dueno);
+    List<Unidad> getByEstado(String estado);
 }

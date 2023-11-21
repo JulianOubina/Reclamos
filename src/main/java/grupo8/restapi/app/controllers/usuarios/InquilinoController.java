@@ -1,6 +1,7 @@
 package grupo8.restapi.app.controllers.usuarios;
 
 import grupo8.restapi.app.model.dto.usuarios.InquilinoDTO;
+import grupo8.restapi.app.model.dtoSinReferencias.usuarios.InquilinoDTOSinRef;
 import grupo8.restapi.app.service.implementaciones.UnidadService;
 import grupo8.restapi.app.service.intefaces.IUnidadService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +37,19 @@ public class InquilinoController {
 
         return inquilinoDTOList;
     }
+
+    @GetMapping("/inquilinosSinRef")
+    public List<InquilinoDTOSinRef> getAllSinRef() {
+        List<InquilinoDTOSinRef> inquilinoDTOList = new ArrayList<>();
+
+        for (Inquilino i : inquilinoService.getAll()){
+            inquilinoDTOList.add(parseDTOSinRef(i));
+        }
+
+        return inquilinoDTOList;
+    }
+
+
 
     @GetMapping("/inquilino/{id}")
     public ResponseEntity<?> getById(@PathVariable long id) {
@@ -122,6 +136,21 @@ public class InquilinoController {
     }
 
     // PASAR ENTITY -> DTO o DTO -> ENTITY //
+
+    private InquilinoDTOSinRef parseDTOSinRef(Inquilino i) {
+        InquilinoDTOSinRef inquilinoDTOSinRef = new InquilinoDTOSinRef();
+
+        inquilinoDTOSinRef.setIdInquilino(i.getIdUsuario());
+        inquilinoDTOSinRef.setNombre(i.getNombre());
+        inquilinoDTOSinRef.setNombreUs(i.getNombreUs());
+        inquilinoDTOSinRef.setTelefono(i.getTelefono());
+        inquilinoDTOSinRef.setEmail(i.getEmail());
+        inquilinoDTOSinRef.setDirecion(i.getDirecion());
+        inquilinoDTOSinRef.setUnidad(i.getUnidad().getPiso() + " " + i.getUnidad().getDepartamento());
+
+        return inquilinoDTOSinRef;
+    }
+
     private InquilinoDTO parseDTO(Inquilino inquilino){
         InquilinoDTO inquilinoDTO = new InquilinoDTO();
 

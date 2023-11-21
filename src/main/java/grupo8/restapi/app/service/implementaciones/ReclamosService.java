@@ -33,4 +33,9 @@ public class ReclamosService implements IReclamosService {
     public List<ImagenReclamo> findFotos(Reclamo reclamo) {
         return reclamoDAO.findFotos(reclamo);
     }
+
+    @Override
+    public List<Reclamo> findByEstado(String estado) {
+        return reclamoDAO.findByEstado(estado);
+    }
 }

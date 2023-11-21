@@ -10,4 +10,5 @@ public interface IReclamosService {
     List<Reclamo> findAll();
     List<Reclamo> findByIdEdificio(long idEdificio);
     List<ImagenReclamo> findFotos(Reclamo reclamo);
+    List<Reclamo> findByEstado(String estado);
 }

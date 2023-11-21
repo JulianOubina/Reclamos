@@ -9,7 +9,7 @@ import java.util.List;
 
 @Entity
 public class ReclamoUnidad extends Reclamo {
-    @ManyToOne(cascade = CascadeType.PERSIST)
+    @ManyToOne
     @JoinColumn(name = "id_unidad")
     private Unidad unidad;
 
