@@ -39,6 +39,7 @@ public class UnidadDAOImpl implements IUnidadDAO {
 	}
 
 	@Override
+	@Transactional
 	public void save(Unidad unidad) {
 		Session currentSession = entityManager.unwrap(Session.class);
 		
@@ -46,10 +47,11 @@ public class UnidadDAOImpl implements IUnidadDAO {
 	}
 
 	@Override
+	@Transactional
 	public void deleteById(int id) {
 		Session currentSession = entityManager.unwrap(Session.class);
 		
-		Query<Unidad> theQuery = currentSession.createQuery("delete from Unidad whre id=:idUnidad");
+		Query<Unidad> theQuery = currentSession.createQuery("delete from Unidad where id=:idUnidad");
 		theQuery.setParameter("idUnidad", id);
 		theQuery.executeUpdate();
 	}

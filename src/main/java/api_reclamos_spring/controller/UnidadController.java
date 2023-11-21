@@ -9,22 +9,20 @@ import org.springframework.web.bind.annotation.*;
 import api_reclamos_spring.model.entity.Unidad;
 import api_reclamos_spring.service.IUnidadService;
 
-
-
 @RestController
 @CrossOrigin(origins = "http://localhost:3000")
-@RequestMapping("/api")
+@RequestMapping("/unidad")
 public class UnidadController {
 	
 	@Autowired
 	private IUnidadService unidadService;
 	
-	@GetMapping({ "/unidades", ""})
+	@GetMapping({ "/search", ""})
 	public List<Unidad> findAll(){
 		return unidadService.findAll();
 	}
 	
-	@GetMapping("/unidades/{unidadId}")
+	@GetMapping("/searchId/{unidadId}")
 	public ResponseEntity<?> getUnidad(@PathVariable int unidadId) {
 		Unidad unidad = unidadService.findById(unidadId);
 
@@ -36,7 +34,7 @@ public class UnidadController {
 		return new ResponseEntity<>(unidad, HttpStatus.OK);
 	}
 	
-	@PostMapping("/unidades")
+	@PostMapping("/add")
 	public ResponseEntity<Unidad> addUsuario(@RequestBody Unidad unidad) {
 		
 		unidadService.save(unidad);
@@ -44,7 +42,7 @@ public class UnidadController {
 		return new ResponseEntity<>(unidad, HttpStatus.CREATED);
 	}
 	
-	@PutMapping("/unidades/{unidadId}")
+	@PutMapping("/update/{unidadId}")
 	public ResponseEntity<?> updateUnidad(@PathVariable int unidadId, @RequestBody Unidad unidad) {
 
 		Unidad unidadOld = unidadService.findById(unidadId);
@@ -59,7 +57,7 @@ public class UnidadController {
 		return new ResponseEntity<>(unidad, HttpStatus.OK);
 	}
 	
-	@DeleteMapping("unidades/{usuarioId}")
+	@DeleteMapping("delete/{unidadId}")
 	public ResponseEntity<String> deleteUnidad(@PathVariable int unidadId) {
 
 		Unidad unidad = unidadService.findById(unidadId);

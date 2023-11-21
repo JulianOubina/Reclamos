@@ -30,7 +30,7 @@ public class SecurityConfig {
 	public WebSecurityCustomizer webSecurityCustomizer() {
 		return (web) -> web.ignoring().requestMatchers("auth/login", "usuario/search", "usuario/searchUsername/**", "usuario/register",
 				"/usuario/delete/**", "/usuario/update/**", "/edificio/add", "/edificio/delete/**", "/edificio/searchId/**", "/edificio/search",
-				"/usuario/searchByTipo/**", "/edificio/update/**");
+				"/usuario/searchByTipo/**", "/edificio/update/**", "/unidad/add", "/unidad/searchId/**", "/unidad/search", "/unidad/delete/**");
 	}
 
 	@Bean
