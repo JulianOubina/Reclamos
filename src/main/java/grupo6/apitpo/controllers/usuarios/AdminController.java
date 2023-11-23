@@ -14,7 +14,7 @@ import java.util.List;
 
 @RestController
 @CrossOrigin(methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE}, origins = "http://localhost:5173", allowedHeaders = "*")
-@PreAuthorize("hasAuthority('admin')")
+//@PreAuthorize("hasAuthority('admin')")
 @RequestMapping("api")
 public class AdminController {
     @Autowired

@@ -40,7 +40,6 @@ public class JwtAuthFilter extends OncePerRequestFilter {
             if (token != null && validateToken(token)) {
                 String username = extractUsernameFromToken(token);
                 List<GrantedAuthority> autorites = extractAuthoritiesFromToken(token);
-//                System.out.println(autorites.toString());
 
                 if (username != null) {
                     UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
