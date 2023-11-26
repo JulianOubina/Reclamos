@@ -17,16 +17,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@CrossOrigin(methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE}, origins = "http://localhost:5173", allowedHeaders = "*")
-@PreAuthorize("hasAuthority('admin')")
-@RequestMapping("api")
+@CrossOrigin(methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE}, origins = "http://localhost:3000", allowedHeaders = "*")
+@RequestMapping("inquilino")
 public class InquilinoController {
     @Autowired
     private IInquilinoService inquilinoService;
     @Autowired
     private IUnidadService unidadService;
 
-    @GetMapping("/inquilinos")
+    @GetMapping("/search")
     public List<InquilinoDTO> getAll() {
         List<InquilinoDTO> inquilinoDTOList = new ArrayList<>();
 
@@ -37,7 +36,7 @@ public class InquilinoController {
         return inquilinoDTOList;
     }
 
-    @GetMapping("/inquilinosSinRef")
+    @GetMapping("/searchAll")
     public List<InquilinoDTOSinRef> getAllSinRef() {
         List<InquilinoDTOSinRef> inquilinoDTOList = new ArrayList<>();
 
@@ -50,7 +49,7 @@ public class InquilinoController {
 
 
 
-    @GetMapping("/inquilino/{id}")
+    @GetMapping("/searchById/{id}")
     public ResponseEntity<?> getById(@PathVariable Integer id) {
         Inquilino inquilino = inquilinoService.getById(id);
 
@@ -74,7 +73,7 @@ public class InquilinoController {
         return new ResponseEntity<>(parseDTO(inquilino), null, HttpStatus.OK);
     }
 
-    @PostMapping("/inquilino/{id}")
+    @PostMapping("/addToUnidad/{id}")
     public ResponseEntity<?> addInquilino(@RequestBody Inquilino inquilino, @PathVariable Integer id) {
 
         if(unidadService.getById(id) == null){
@@ -97,7 +96,23 @@ public class InquilinoController {
         return new ResponseEntity<>(parseDTO(inquilino), null, HttpStatus.CREATED);
     }
 
-    @PutMapping("/inquilino/{id}")
+    @PostMapping("/add")
+    public ResponseEntity<?> addInquilino(@RequestBody Inquilino inquilino) {
+        if(controlInquilinoParam(inquilino)){
+            String mensaje = "No tiene los parámetros mínimos para ingresarlo";
+            return new ResponseEntity<>(mensaje, null, HttpStatus.BAD_REQUEST);
+        }
+
+        if(inquilinoService.findUser(inquilino.getNombreUsuario(), inquilino.getContraseña()) != null){
+            String mensaje = "El inquilino ya existe";
+            return new ResponseEntity<>(mensaje, null, HttpStatus.CONFLICT);
+        }
+
+        inquilinoService.save(inquilino);
+        return new ResponseEntity<>(parseDTO(inquilino), null, HttpStatus.CREATED);
+    }
+
+    @PutMapping("/update/{id}")
     public ResponseEntity<?> updateInquilino(@PathVariable Integer id, @RequestBody InquilinoDTO inquilinoDTO) {
         Inquilino inquilinoViejo = inquilinoService.getById(id);
 
@@ -118,7 +133,7 @@ public class InquilinoController {
         return new ResponseEntity<>(inquilinoDTO, null, HttpStatus.CREATED);
     }
 
-    @DeleteMapping("/inquilino/{id}")
+    @DeleteMapping("/delete/{id}")
     public ResponseEntity<String> deleteInquilino(@PathVariable Integer id){
         Inquilino inquilino = inquilinoService.getById(id);
 
@@ -134,8 +149,6 @@ public class InquilinoController {
         return new ResponseEntity<>(mensaje, null, HttpStatus.OK);
     }
 
-    // PASAR ENTITY -> DTO o DTO -> ENTITY //
-
     private InquilinoDTOSinRef parseDTOSinRef(Inquilino i) {
         InquilinoDTOSinRef inquilinoDTOSinRef = new InquilinoDTOSinRef();
 
@@ -144,7 +157,7 @@ public class InquilinoController {
         inquilinoDTOSinRef.setNombreUsuario(i.getNombreUsuario());
         inquilinoDTOSinRef.setTelefono(i.getTelefono());
 
-        inquilinoDTOSinRef.setDirecion(i.getDirecion());
+        inquilinoDTOSinRef.setDireccion(i.getDireccion());
         inquilinoDTOSinRef.setUnidad(i.getUnidad().getPiso() + " " + i.getUnidad().getDepartamento());
 
         return inquilinoDTOSinRef;
@@ -158,7 +171,7 @@ public class InquilinoController {
         inquilinoDTO.setNombreUsuario(inquilino.getNombreUsuario());
         inquilinoDTO.setTelefono(inquilino.getTelefono());
 
-        inquilinoDTO.setDirecion(inquilino.getDirecion());
+        inquilinoDTO.setDireccion(inquilino.getDireccion());
 
         if (inquilino.getUnidad() != null)
             inquilinoDTO.setIdUnidad(inquilino.getUnidad().getIdUnidad());
@@ -174,7 +187,7 @@ public class InquilinoController {
         inquilino.setNombre(inquilinoDTO.getNombre());
         inquilino.setNombreUsuario(inquilinoDTO.getNombreUsuario());
         inquilino.setTelefono(inquilinoDTO.getTelefono());
-        inquilino.setDirecion(inquilinoDTO.getDirecion());
+        inquilino.setDireccion(inquilinoDTO.getDireccion());
 
         if(inquilinoDTO.getIdUnidad() != null) {
             inquilino.setUnidad(unidadService.getById(inquilinoDTO.getIdUnidad()));
@@ -183,8 +196,6 @@ public class InquilinoController {
         return inquilino;
     }
 
-    // METODOS DE VERIFICACION
-
     private boolean controlInquilinoParam(Inquilino inquilino) {
         if(inquilino.getNombre() == null)
             return true;
@@ -192,9 +203,6 @@ public class InquilinoController {
             return true;
         if(inquilino.getContraseña() == null)
             return true;
-        if(inquilino.getUnidad() == null)
-            return true;
-
         return false;
     }
 }

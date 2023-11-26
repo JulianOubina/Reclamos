@@ -40,7 +40,7 @@ public class DuenoService implements IDuenoService {
             duenoExiste.setNombre(dueno.getNombre());
             duenoExiste.setNombreUsuario(dueno.getNombreUsuario());
             duenoExiste.setTelefono(dueno.getTelefono());
-            duenoExiste.setDirecion(dueno.getDirecion());
+            duenoExiste.setDireccion(dueno.getDireccion());
             duenoExiste.setUnidades(dueno.getUnidades());
 
             duenoDAO.save(duenoExiste);

@@ -39,7 +39,7 @@ public class AdminService implements IAdminService {
             adminExiste.setNombre(admin.getNombre());
             adminExiste.setNombreUsuario(admin.getNombreUsuario());
             adminExiste.setTelefono(admin.getTelefono());
-            adminExiste.setDirecion(admin.getDirecion());
+            adminExiste.setDireccion(admin.getDireccion());
 
             adminDAO.save(adminExiste);
         }

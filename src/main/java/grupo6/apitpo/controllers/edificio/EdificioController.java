@@ -14,14 +14,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@CrossOrigin(origins = "*")
-@PreAuthorize("hasAuthority('admin')")
-@RequestMapping("api")
+@CrossOrigin(methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE}, origins = "http://localhost:3000", allowedHeaders = "*")
+@RequestMapping("edificios")
 public class EdificioController {
     @Autowired
     private IEdificioService edificioService;
 
-    @GetMapping("/edificios")
+    @GetMapping("/search")
     @PreAuthorize("hasAnyAuthority('admin','inquilino','dueno')")
     public List<EdificioDTO> getAll() {
         List<EdificioDTO> listaEdifcios = new ArrayList<>();
@@ -33,7 +32,7 @@ public class EdificioController {
         return listaEdifcios;
     }
 
-    @GetMapping("/edificio/{id}")
+    @GetMapping("/searchById/{id}")
     public ResponseEntity<?> getById(@PathVariable Integer id) {
         Edificio edificio = edificioService.getById(id);
 
@@ -57,7 +56,7 @@ public class EdificioController {
         return new ResponseEntity<>(parseDTO(edificio), null, HttpStatus.OK);
     }
 
-    @PostMapping("/edificio")
+    @PostMapping("/add")
     public ResponseEntity<?> addEdificio(@RequestBody Edificio edificio) {
         if(controlEdificioParam(edificio)){
             String mensaje = "El edificio no tiene todos los parametros necesarios";
@@ -69,7 +68,7 @@ public class EdificioController {
         return new ResponseEntity<>(parseDTO(edificio), null, HttpStatus.CREATED);
     }
 
-    @PutMapping("/edificio/{id}")
+    @PutMapping("/update/{id}")
     public ResponseEntity<?> updateEdificio(@PathVariable Integer id, @RequestBody EdificioDTO edificioDTO){
         Edificio edificioViejo = edificioService.getById(id);
 
@@ -90,7 +89,7 @@ public class EdificioController {
         return new ResponseEntity<>(edificioDTO, null, HttpStatus.OK);
     }
 
-    @DeleteMapping("/edificio/{id}")
+    @DeleteMapping("/delete/{id}")
     public ResponseEntity<String> deleteEdificio(@PathVariable Integer id){
         Edificio edificio = edificioService.getById(id);
 

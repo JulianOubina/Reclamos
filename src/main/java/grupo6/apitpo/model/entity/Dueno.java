@@ -16,11 +16,11 @@ public class Dueno extends Usuario {
     public Dueno() {
 
     }
-    public Dueno(String nombre, String apellido, String nombreUsuario, String contraseña, Integer telefono, String direcion) {
-        super(nombre, apellido, nombreUsuario, contraseña, telefono, direcion);
+    public Dueno(String nombre, String apellido, String nombreUsuario, String contraseña, Integer telefono, String direccion) {
+        super(nombre, apellido, nombreUsuario, contraseña, telefono, direccion);
     }
-    public Dueno(String nombre, String apellido, String nombreUsuario, String contraseña, Integer telefono, String direcion, List<Unidad> unidades) {
-        super(nombre, apellido, nombreUsuario, contraseña, telefono, direcion);
+    public Dueno(String nombre, String apellido, String nombreUsuario, String contraseña, Integer telefono, String direccion, List<Unidad> unidades) {
+        super(nombre, apellido, nombreUsuario, contraseña, telefono, direccion);
         this.unidades = unidades;
     }
 
@@ -40,7 +40,7 @@ public class Dueno extends Usuario {
                 ", nombreUsuario='" + nombreUsuario + '\'' +
                 ", contraseña='" + contraseña + '\'' +
                 ", telefono=" + telefono +
-                ", direcion='" + direcion + '\'' +
+                ", direccion='" + direccion + '\'' +
                 '}';
     }
 }

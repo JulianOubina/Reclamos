@@ -11,13 +11,13 @@ public class Inquilino extends Usuario {
     @JoinColumn(name = "unidad_id")
     private Unidad unidad;
 
-    public Inquilino(String nombre, String apellido, String nombreUsuario, String contraseña, Integer telefono, String direcion, Unidad unidad) {
-        super(nombre, apellido, nombreUsuario, contraseña, telefono, direcion);
+    public Inquilino(String nombre, String apellido, String nombreUsuario, String contraseña, Integer telefono, String direccion, Unidad unidad) {
+        super(nombre, apellido, nombreUsuario, contraseña, telefono, direccion);
         this.unidad = unidad;
     }
 
-    public Inquilino(String nombre, String apellido, String nombreUsuario, String contraseña, Integer telefono, String direcion) {
-        super(nombre, apellido, nombreUsuario, contraseña, telefono, direcion);
+    public Inquilino(String nombre, String apellido, String nombreUsuario, String contraseña, Integer telefono, String direccion) {
+        super(nombre, apellido, nombreUsuario, contraseña, telefono, direccion);
     }
 
     public Inquilino() {
@@ -41,7 +41,7 @@ public class Inquilino extends Usuario {
                 ", nombreUsuario='" + nombreUsuario + '\'' +
                 ", contraseña='" + contraseña + '\'' +
                 ", telefono=" + telefono +
-                ", direcion='" + direcion + '\'' +
+                ", direccion='" + direccion + '\'' +
                 '}';
     }
 }

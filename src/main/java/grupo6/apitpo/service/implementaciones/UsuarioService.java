@@ -57,7 +57,7 @@ public class UsuarioService implements IUsuarioService {
             usuarioExiste.setNombre(usuario.getNombre());
             usuarioExiste.setNombreUsuario(usuario.getNombreUsuario());
             usuarioExiste.setTelefono(usuario.getTelefono());
-            usuarioExiste.setDirecion(usuario.getDirecion());
+            usuarioExiste.setDireccion(usuario.getDireccion());
 
             usuarioDAO.save(usuario);
         }

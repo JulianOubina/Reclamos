@@ -39,7 +39,7 @@ public class SecurityConfig {
 
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer() {
-        return (web) -> web.ignoring().requestMatchers("/auth/login", "/api/admin");
+        return (web) -> web.ignoring().requestMatchers("/auth/login", "/dueno/add", "/inquilino/add", "/admin/add");
     }
 
     @Bean
@@ -53,7 +53,6 @@ public class SecurityConfig {
         byte[] encodedKey = secretKey.getEncoded();
         String encodedKeyBase64 = Base64.getEncoder().encodeToString(encodedKey);
 
-        // Registro de la clave secreta (solo para fines de depuración)
         System.out.println("Secret Key (Base64): " + encodedKeyBase64);
 
         return secretKey;
@@ -64,7 +63,7 @@ public class SecurityConfig {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         CorsConfiguration config = new CorsConfiguration();
         config.setAllowCredentials(true);
-        config.addAllowedOrigin("http://localhost:5173");
+        config.addAllowedOrigin("http://localhost:3000");
         config.setAllowedHeaders(Arrays.asList(
                 HttpHeaders.AUTHORIZATION,
                 HttpHeaders.CONTENT_TYPE,

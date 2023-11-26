@@ -18,20 +18,20 @@ public class Usuario {
     protected String nombreUsuario;
     protected String contraseña;
     protected Integer telefono;
-    protected String direcion;
+    protected String direccion;
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.PERSIST)
     protected List<Reclamo> reclamos = new ArrayList<>();
 
     public Usuario() {
     }
 
-    public Usuario(String nombre, String apellido, String nombreUsuario, String contraseña, Integer telefono, String direcion) {
+    public Usuario(String nombre, String apellido, String nombreUsuario, String contraseña, Integer telefono, String direccion) {
         this.nombre = nombre;
         this.apellido = apellido;
         this.nombreUsuario = nombreUsuario;
         this.contraseña = contraseña;
         this.telefono = telefono;
-        this.direcion = direcion;
+        this.direccion = direccion;
     }
 
     public Integer getIdUsuario() {
@@ -82,12 +82,12 @@ public class Usuario {
         this.telefono = telefono;
     }
 
-    public String getDirecion() {
-        return direcion;
+    public String getDireccion() {
+        return direccion;
     }
 
-    public void setDirecion(String direcion) {
-        this.direcion = direcion;
+    public void setDireccion(String direccion) {
+        this.direccion = direccion;
     }
 
     public List<Reclamo> getReclamos() {
@@ -107,7 +107,7 @@ public class Usuario {
                 ", nombreUsuario='" + nombreUsuario + '\'' +
                 ", contraseña='" + contraseña + '\'' +
                 ", telefono=" + telefono +
-                ", direcion='" + direcion + '\'' +
+                ", direccion='" + direccion + '\'' +
                 ", reclamos=" + reclamos +
                 '}';
     }

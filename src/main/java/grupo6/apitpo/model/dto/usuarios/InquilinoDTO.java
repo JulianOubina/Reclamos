@@ -6,18 +6,18 @@ public class InquilinoDTO {
     private String apellido;
     private String nombreUsuario;
     private Integer telefono;
-    private String direcion;
+    private String direccion;
     private Integer idUnidad;
 
     public InquilinoDTO() {
     }
 
-    public InquilinoDTO(String nombre, String apellido, String nombreUsuario, Integer telefono, String direcion, Integer unidad) {
+    public InquilinoDTO(String nombre, String apellido, String nombreUsuario, Integer telefono, String direccion, Integer unidad) {
         this.nombre = nombre;
         this.apellido = apellido;
         this.nombreUsuario = nombreUsuario;
         this.telefono = telefono;
-        this.direcion = direcion;
+        this.direccion = direccion;
         this.idUnidad = unidad;
     }
 
@@ -33,8 +33,8 @@ public class InquilinoDTO {
         return telefono;
     }
 
-    public String getDirecion() {
-        return direcion;
+    public String getDireccion() {
+        return direccion;
     }
 
     public Integer getIdUnidad() {
@@ -61,8 +61,8 @@ public class InquilinoDTO {
         this.telefono = telefono;
     }
 
-    public void setDirecion(String direcion) {
-        this.direcion = direcion;
+    public void setDireccion(String direccion) {
+        this.direccion = direccion;
     }
 
     public void setIdUnidad(Integer idUnidad) {

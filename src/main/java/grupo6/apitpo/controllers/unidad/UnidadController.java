@@ -16,8 +16,7 @@ import java.util.List;
 
 @RestController
 @CrossOrigin(origins = "*")
-@PreAuthorize("hasAuthority('admin')")
-@RequestMapping("api")
+@RequestMapping("unidad")
 public class UnidadController {
     @Autowired
     private IUnidadService unidadService;
@@ -26,7 +25,7 @@ public class UnidadController {
     @Autowired
     private IEdificioService edificioService;
 
-    @GetMapping("/unidades")
+    @GetMapping("/search")
     @PreAuthorize("hasAnyAuthority('admin','inquilino','dueno')")
     public List<UnidadDTO> getAll() {
         List<UnidadDTO> unidadDTOList = new ArrayList<>();

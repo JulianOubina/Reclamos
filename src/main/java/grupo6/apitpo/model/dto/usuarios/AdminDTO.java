@@ -5,18 +5,18 @@ public class AdminDTO {
     private String nombre;
     private String nombreUsuario;
     private Integer telefono;
-    private String direcion;
+    private String direccion;
 
     public AdminDTO() {
 
     }
 
-    public AdminDTO(Integer idAdmin,String nombre, String nombreUsuario, Integer telefono, String direcion) {
+    public AdminDTO(Integer idAdmin,String nombre, String nombreUsuario, Integer telefono, String direccion) {
         this.idAdmin = idAdmin;
         this.nombre = nombre;
         this.nombreUsuario = nombreUsuario;
         this.telefono = telefono;
-        this.direcion = direcion;
+        this.direccion = direccion;
     }
 
     public String getNombre() {
@@ -31,8 +31,8 @@ public class AdminDTO {
         return telefono;
     }
 
-    public String getDirecion() {
-        return direcion;
+    public String getDireccion() {
+        return direccion;
     }
 
     public Integer getIdAdmin() {
@@ -55,7 +55,7 @@ public class AdminDTO {
         this.telefono = telefono;
     }
 
-    public void setDirecion(String direcion) {
-        this.direcion = direcion;
+    public void setDireccion(String direccion) {
+        this.direccion = direccion;
     }
 }

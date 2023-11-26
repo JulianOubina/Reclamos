@@ -13,15 +13,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@CrossOrigin(methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE}, origins = "http://localhost:5173", allowedHeaders = "*")
-//@PreAuthorize("hasAuthority('admin')")
-@RequestMapping("api")
+@CrossOrigin(methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE}, origins = "http://localhost:3000", allowedHeaders = "*")
+@RequestMapping("dueno")
 public class DuenoController {
     @Autowired
     private IDuenoService duenoService;
 
-
-    @GetMapping("/duenos")
+    @GetMapping("/search")
     public List<DuenoDTO> getAll() {
         List<DuenoDTO> dtoList = new ArrayList<>();
 
@@ -32,7 +30,7 @@ public class DuenoController {
         return dtoList;
     }
 
-    @GetMapping("/dueno/{id}")
+    @GetMapping("/searchById/{id}")
     public ResponseEntity<?> getById(@PathVariable Integer id) {
         Dueno dueno = duenoService.findById(id);
 
@@ -46,7 +44,7 @@ public class DuenoController {
         return new ResponseEntity<>(duenoDTO, null, HttpStatus.OK);
     }
 
-    @GetMapping("/dueno/duenoParam")
+    @GetMapping("/searchParam/duenoParam")
     public ResponseEntity<?> getDuenoPararm(@RequestParam("duenoId") Integer duenoId){
         Dueno dueno = duenoService.findById(duenoId);
 
@@ -60,7 +58,7 @@ public class DuenoController {
         return new ResponseEntity<>(duenoDTO, null, HttpStatus.OK);
     }
 
-    @PostMapping("/dueno")
+    @PostMapping("/add")
     public ResponseEntity<?> addDueno(@RequestBody Dueno dueno) {
         if(controlDuenoParam(dueno)){
             String mensaje = "No tiene los parametros minimo para ingresarlo";
@@ -76,9 +74,7 @@ public class DuenoController {
         return new ResponseEntity<>(parseDTO(dueno), null, HttpStatus.CREATED);
     }
 
-
-
-    @PutMapping("/dueno/{id}")
+    @PutMapping("/update/{id}")
     public ResponseEntity<?> updateDueno(@PathVariable Integer id, @RequestBody DuenoDTO dto){
         Dueno duenoViejo = duenoService.findById(id);
 
@@ -99,7 +95,7 @@ public class DuenoController {
         return new ResponseEntity<>(dto, null, HttpStatus.OK);
     }
 
-    @DeleteMapping("/dueno/{id}")
+    @DeleteMapping("/delete/{id}")
     public ResponseEntity<String> deleteDueno(@PathVariable Integer id){
         Dueno dueno = duenoService.findById(id);
 
@@ -113,10 +109,8 @@ public class DuenoController {
         return new ResponseEntity<>("El dueno con id " + id + " fue eliminado", null, HttpStatus.OK);
     }
 
-    // CONVERTIN ENTITY -> DTO y DTO -> ENTITY
-
     private DuenoDTO parseDTO(Dueno dueno){
-        return new DuenoDTO(dueno.getIdUsuario(),dueno.getNombre(), dueno.getNombreUsuario(), dueno.getTelefono(), dueno.getDirecion());
+        return new DuenoDTO(dueno.getIdUsuario(),dueno.getNombre(), dueno.getNombreUsuario(), dueno.getTelefono(), dueno.getDireccion());
     }
 
     private Dueno parseEntity(DuenoDTO duenoDTO){
@@ -128,12 +122,10 @@ public class DuenoController {
         retorno.setNombreUsuario(duenoDTO.getNombreUsuario());
         retorno.setTelefono(duenoDTO.getTelefono());
 
-        retorno.setDirecion(duenoDTO.getDirecion());
+        retorno.setDireccion(duenoDTO.getDireccion());
 
         return retorno;
     }
-
-    // METODOS DE VERIFICACION
 
     private boolean controlDuenoParam(Dueno dueno) {
         if(dueno.getNombreUsuario() == null)

@@ -13,14 +13,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@CrossOrigin(methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE}, origins = "http://localhost:5173", allowedHeaders = "*")
-//@PreAuthorize("hasAuthority('admin')")
-@RequestMapping("api")
+@CrossOrigin(methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE}, origins = "http://localhost:3000", allowedHeaders = "*")
+@RequestMapping("admin")
 public class AdminController {
     @Autowired
     private IAdminService adminService;
 
-    @GetMapping("/admins")
+    @GetMapping("/search")
     public List<AdminDTO> getAll() {
         List<AdminDTO> adminDTOList = new ArrayList<>();
 
@@ -31,7 +30,7 @@ public class AdminController {
         return adminDTOList;
     }
 
-    @GetMapping("/admin/{id}")
+    @GetMapping("/searchById/{id}")
     public ResponseEntity<?> getById(@PathVariable Integer id) {
         Admin admin = adminService.getById(id);
 
@@ -45,7 +44,7 @@ public class AdminController {
         return new ResponseEntity<>(retorno, null, HttpStatus.OK);
     }
 
-    @GetMapping("/adminParam")
+    @GetMapping("searchParam/adminParam")
     public ResponseEntity<?> getAdminPararm(@RequestParam(name = "id") Integer adminId){
         Admin admin = adminService.getById(adminId);
 
@@ -57,7 +56,7 @@ public class AdminController {
         return new ResponseEntity<>(parseDTO(admin), null, HttpStatus.OK);
     }
 
-    @PostMapping("/admin")
+    @PostMapping("/add")
     public ResponseEntity<?> addAdmin(@RequestBody Admin admin) {
 
         if(controlAdminParam(admin)){
@@ -76,7 +75,7 @@ public class AdminController {
     }
 
 
-    @PutMapping("/admin/{id}")
+    @PutMapping("/update/{id}")
     public ResponseEntity<?> updateAdmin(@PathVariable Integer id, @RequestBody AdminDTO dto){
         Admin adminViejo = adminService.getById(id);
 
@@ -97,7 +96,7 @@ public class AdminController {
         return new ResponseEntity<>(dto, null, HttpStatus.OK);
     }
 
-    @DeleteMapping("/admin/{adminId}")
+    @DeleteMapping("/delete/{adminId}")
     public ResponseEntity<String> deleteAdim(@PathVariable Integer adminId){
         Admin admin = adminService.getById(adminId);
 
@@ -112,9 +111,8 @@ public class AdminController {
         return new ResponseEntity<>(mensaje, null, HttpStatus.OK);
     }
 
-    // -- CONVERTIR A DTO -> ENTITY y ENTITY -> DTO -- //
     private AdminDTO parseDTO(Admin admin){
-        return new AdminDTO(admin.getIdUsuario(),admin.getNombre(), admin.getNombreUsuario(), admin.getTelefono(), admin.getDirecion());
+        return new AdminDTO(admin.getIdUsuario(),admin.getNombre(), admin.getNombreUsuario(), admin.getTelefono(), admin.getDireccion());
     }
 
     private Admin parseToEntity(AdminDTO adminDTO){
@@ -125,12 +123,10 @@ public class AdminController {
         admin.setNombre(adminDTO.getNombre());
         admin.setNombreUsuario(adminDTO.getNombreUsuario());
         admin.setTelefono(adminDTO.getTelefono());
-        admin.setDirecion(adminDTO.getDirecion());
+        admin.setDireccion(adminDTO.getDireccion());
 
         return admin;
     }
-
-    // -- METODOS DE VERIFICACION -- //
     private boolean controlAdminParam(Admin admin) {
         if(admin.getNombreUsuario() == null)
             return true;

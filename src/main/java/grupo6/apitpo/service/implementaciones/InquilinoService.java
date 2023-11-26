@@ -40,7 +40,7 @@ public class InquilinoService implements IInquilinoService {
             inquilinoExiste.setNombre(inquilino.getNombre());
             inquilinoExiste.setNombreUsuario(inquilino.getNombreUsuario());
             inquilinoExiste.setTelefono(inquilino.getTelefono());
-            inquilinoExiste.setDirecion(inquilino.getDirecion());
+            inquilinoExiste.setDireccion(inquilino.getDireccion());
             inquilinoExiste.setUnidad(inquilino.getUnidad());
 
             inquilinoDAO.save(inquilinoExiste);

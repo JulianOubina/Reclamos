@@ -13,7 +13,6 @@ import java.util.List;
 
 @RestController
 @CrossOrigin(origins = "*")
-@PreAuthorize("hasAnyAuthority('admin','inquilino','dueno')")
 @RequestMapping("api")
 public class UsuarioController {
     @Autowired
@@ -48,11 +47,8 @@ public class UsuarioController {
         return new ResponseEntity<>(parseDTO(usuario), null, 200);
     }
 
-
-    // PARSE DTO
-
     private AdminDTO parseDTO(Usuario usuario){
-        return new AdminDTO(usuario.getIdUsuario(),usuario.getNombre(), usuario.getNombreUsuario(), usuario.getTelefono(), usuario.getDirecion());
+        return new AdminDTO(usuario.getIdUsuario(), usuario.getNombre(), usuario.getNombreUsuario(), usuario.getTelefono(), usuario.getDireccion());
     }
 
 }

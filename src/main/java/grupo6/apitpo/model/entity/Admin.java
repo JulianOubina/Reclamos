@@ -8,8 +8,8 @@ public class Admin extends Usuario {
     public Admin() {
 
     }
-    public Admin(String nombre, String apellido, String nombreUsuario, String contraseña, Integer telefono, String direcion) {
-        super(nombre, apellido, nombreUsuario, contraseña, telefono, direcion);
+    public Admin(String nombre, String apellido, String nombreUsuario, String contraseña, Integer telefono, String direccion) {
+        super(nombre, apellido, nombreUsuario, contraseña, telefono, direccion);
     }
 
     @Override
@@ -20,7 +20,7 @@ public class Admin extends Usuario {
                 ", nombreUsuario='" + nombreUsuario + '\'' +
                 ", contraseña='" + contraseña + '\'' +
                 ", telefono=" + telefono +
-                ", direcion='" + direcion + '\'' +
+                ", direccion='" + direccion + '\'' +
                 '}';
     }
 }

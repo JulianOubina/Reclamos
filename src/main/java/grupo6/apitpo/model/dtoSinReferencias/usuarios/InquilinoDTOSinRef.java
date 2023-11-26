@@ -5,17 +5,17 @@ public class InquilinoDTOSinRef {
     private String nombre;
     private String nombreUsuario;
     private Integer telefono;
-    private String direcion;
+    private String direccion;
     private String unidad;
 
     public InquilinoDTOSinRef() {
     }
 
-    public InquilinoDTOSinRef(String nombre, String nombreUsuario, Integer telefono, String direcion, String unidad) {
+    public InquilinoDTOSinRef(String nombre, String nombreUsuario, Integer telefono, String direccion, String unidad) {
         this.nombre = nombre;
         this.nombreUsuario = nombreUsuario;
         this.telefono = telefono;
-        this.direcion = direcion;
+        this.direccion = direccion;
         this.unidad = unidad;
     }
 
@@ -31,8 +31,8 @@ public class InquilinoDTOSinRef {
         return telefono;
     }
 
-    public String getDirecion() {
-        return direcion;
+    public String getDireccion() {
+        return direccion;
     }
 
     public String getUnidad() {
@@ -59,8 +59,8 @@ public class InquilinoDTOSinRef {
         this.telefono = telefono;
     }
 
-    public void setDirecion(String direcion) {
-        this.direcion = direcion;
+    public void setDireccion(String direccion) {
+        this.direccion = direccion;
     }
 
     public void setUnidad(String unidad) {

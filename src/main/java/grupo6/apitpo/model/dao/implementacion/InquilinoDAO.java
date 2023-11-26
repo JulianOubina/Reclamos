@@ -70,7 +70,6 @@ public class InquilinoDAO implements IInquilinoDAO {
     public void delete(Inquilino inquilino) {
         Session session = entityManager.unwrap(Session.class);
 
-        // TENGO QUE ACTUALIZAR TODOS LOS
         Unidad unidad = inquilino.getUnidad();
 
         if(unidad != null) {
